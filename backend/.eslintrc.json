@@ -1,0 +1,6 @@
+{  
+  "rules": {
+    "eqeqeq": "off",
+    "no-console": "off"
+  }
+}
