@@ -39,10 +39,10 @@ export default function DashboardAppPage() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
-        if(!token){
-          navigate('/login', {replace: true});
-        }
-        else{
+        // if(!token){
+        //   navigate('/login', {replace: true});
+        // }
+        // else{
           const response = await axios.get("http://localhost:5000/api/auth/verify", {
             headers: {
               "x-auth-token": token, // Pass the JWT token in the request header
@@ -57,7 +57,7 @@ export default function DashboardAppPage() {
           setBasic(user.basic);
           // console.log(user);
           setUser(user);
-        }
+        // }
         // Make a request to the protected API route using Axios
         
 
