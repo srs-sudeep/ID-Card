@@ -2,6 +2,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const { signUp, logIn, logOut } = require("../controllers/auth");
+const auth = require("../middleware/auth");
 
 router.post("/signup", signUp);
 router.post("/login", logIn);

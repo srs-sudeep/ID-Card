@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
@@ -31,8 +32,11 @@ export default function AccountPopover() {
     setOpen(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setOpen(null);
+  const navigate = useNavigate();
+  const handleClose = async (e) => {
+    e.preventDefault();
+    localStorage.removeItem("jwtToken");
+    navigate('/login', { replace: true });
   };
 
   return (

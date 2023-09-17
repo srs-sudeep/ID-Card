@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const auth = require("../middleware/auth");
 
 exports.signUp = async (req, res) => {
   try {
@@ -52,16 +53,16 @@ exports.logIn = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
-    res.json(existingUser);
-    // const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
-    // console.log("token",token);
-    // res.json({
-    //   token,
-    //   user: {
-    //     id: existingUser._id,
-    //     displayName: existingUser.displayName,
-    //   },
-    // });
+    // res.json(existingUser);
+    const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
+    // localStorage.setItem(token,token)
+    console.log("token",token);
+    res.json({
+      token,
+      user: {
+        id: existingUser._id,
+      },
+    });
   } catch (err) {
     console.log('there is error in catch block');
     res.status(500).json({ error: err.message });
