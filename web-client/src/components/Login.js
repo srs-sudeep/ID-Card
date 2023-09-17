@@ -11,7 +11,15 @@ const Login = () => {
       const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
       console.log(response.data);
     } catch (error) {
-      console.error(error);
+      // Handle error response here
+  if (error.response && error.response.data && error.response.data.msg) {
+    const errorMessage = error.response.data.msg;
+    // Display the error message to the user (e.g., using an alert or on the UI)
+    alert(errorMessage);
+  } else {
+    // Handle unexpected errors
+    console.error(error);
+  }
     }
   };
 
@@ -19,8 +27,8 @@ const Login = () => {
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+        <input type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Login</button>
       </form>
     </div>
