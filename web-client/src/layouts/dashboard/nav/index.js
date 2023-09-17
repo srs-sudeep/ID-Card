@@ -79,8 +79,8 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
+      {/* <Box sx={{ px: 2.5, pb: 3, mt: 10 }}> */}
+       {/* <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
           <Box
             component="img"
             src="/assets/illustrations/illustration_avatar.png"
@@ -100,8 +100,8 @@ export default function Nav({ openNav, onCloseNav }) {
           <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
             Upgrade to Pro
           </Button>
-        </Stack>
-      </Box>
+        </Stack>  */}
+      {/* </Box> */}
     </Scrollbar>
   );
 
