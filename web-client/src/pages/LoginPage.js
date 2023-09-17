@@ -70,15 +70,15 @@ export default function LoginPage() {
         <Container maxWidth="sm">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in, to know your Mess Info...
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+              {/* Don’t have an account? {''}
+              <Link variant="subtitle2">Get started</Link> */}
             </Typography>
 
-            <Stack direction="row" spacing={2}>
+            {/* <Stack direction="row" spacing={2}>
               <Button fullWidth size="large" color="inherit" variant="outlined">
                 <Iconify icon="eva:google-fill" color="#DF3E30" width={22} height={22} />
               </Button>
@@ -90,13 +90,13 @@ export default function LoginPage() {
               <Button fullWidth size="large" color="inherit" variant="outlined">
                 <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={22} height={22} />
               </Button>
-            </Stack>
-
+            </Stack> */}
+{/* 
             <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 OR
               </Typography>
-            </Divider>
+            </Divider> */}
 
             <LoginForm />
           </StyledContent>
