@@ -54,6 +54,7 @@ exports.logIn = async (req, res) => {
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
     // res.json(existingUser);
+    // User.updateOne(existingUser)
     const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
     // localStorage.setItem(token,token)
     console.log("token",token);

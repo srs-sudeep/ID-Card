@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
         const user = await User.findById(verified.id);
         // req.user = verified.id;
         if (!user) return res.status(404).json({ msg: 'User not found' });
-
+        user.updateOne();
         // Include the entire user object in the response
         res.json({ user });
         next();
