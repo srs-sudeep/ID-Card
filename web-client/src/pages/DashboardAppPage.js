@@ -31,6 +31,9 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const [user, setUser] = useState(null); // State to store user info
   const [email, setEmail]= useState('');
+  const [messName, setMessName]= useState('');
+  const [addOn, setAddOn]= useState('');
+  const [basic, setBasic]= useState('');
   useEffect(() => {
     async function fetchData() {
       try {
@@ -49,6 +52,9 @@ export default function DashboardAppPage() {
           // If the response is successful, you can access the protected user data here
           const { user } = response.data;
           setEmail(user.displayName);
+          setMessName(user.messName);
+          setAddOn(user.addOn);
+          setBasic(user.basic);
           // console.log(user);
           setUser(user);
         // }
@@ -81,7 +87,7 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Mess" total={"Shree Sai"} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Mess" total={messName} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
@@ -182,7 +188,7 @@ export default function DashboardAppPage() {
             />
           </Grid> */}
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
               title="Today's Menu"
               list={[...Array(5)].map((_, index) => ({
@@ -211,7 +217,7 @@ export default function DashboardAppPage() {
                 time: faker.date.past(),
               }))}
             />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite

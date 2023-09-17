@@ -28,7 +28,7 @@ const navConfig = [
   },
   {
     title: 'Contact Us',
-    path: '/dashboard/blog',
+    path: '/dashboard/contactUs',
     icon: icon('ic_blog'),
   },
   {
