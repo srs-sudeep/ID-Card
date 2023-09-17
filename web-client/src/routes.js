@@ -25,14 +25,11 @@ export default function Router() {
   },[navigate]);
   const routes = useRoutes([
     {
-      path:'/logout', 
-      element:<LoginPage />,
-    },
-    {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" /> },
+        { path: '', element: <DashboardAppPage /> },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
@@ -46,9 +43,10 @@ export default function Router() {
       element: <LoginPage />,
     },
     {
-      element: <SimpleLayout />,
+      // element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/" />},
+        {path: '', element: <LoginPage/>},
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

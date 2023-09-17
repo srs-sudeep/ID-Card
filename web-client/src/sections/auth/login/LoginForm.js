@@ -24,7 +24,7 @@ export default function LoginForm() {
   },[navigate]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
       // console.log(response.data.token);
@@ -63,6 +63,11 @@ export default function LoginForm() {
             ),
           }}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleSubmit();
+            }
+          }}
         />
       </Stack>
 
