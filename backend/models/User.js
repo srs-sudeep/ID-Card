@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   addOn: {type: Number, default: 10000},
   basic: {type: Number, default: 13000},
   person: {type: String, default:'Student'}
-
+  
 });
 
 module.exports = User = mongoose.model("user", userSchema);
