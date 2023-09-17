@@ -33,11 +33,14 @@ export default function AccountPopover() {
   };
 
   const navigate = useNavigate();
-  const handleClose = async (e) => {
+  const handleOut = async (e) => {
     e.preventDefault();
     localStorage.removeItem("jwtToken");
     navigate('/login', { replace: true });
   };
+  const handleClose = () =>{
+    setOpen(null);
+  }
 
   return (
     <>
@@ -101,7 +104,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={handleOut} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </Popover>

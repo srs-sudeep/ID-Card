@@ -48,7 +48,7 @@ export default function DashboardAppPage() {
 
           // If the response is successful, you can access the protected user data here
           const { user } = response.data;
-          setEmail(user.email??" ");
+          setEmail(user.Name??" ");
           // console.log(user);
           setUser(user);
         }
