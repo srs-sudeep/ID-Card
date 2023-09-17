@@ -23,17 +23,17 @@ const navConfig = [
   },
   {
     title: 'Payment',
-    path: '/404',
+    path: '/dashboard/payment',
     icon: icon('ic_disabled'),
   },
   {
     title: 'Contact Us',
-    path: '/dashboard/blog',
+    path: '/dashboard/contactUs',
     icon: icon('ic_blog'),
   },
   {
-    title: 'Log Out',
-    path: '/login',
+    title: 'Settings',
+    path: '/dashboard/settings',
     icon: icon('ic_lock'),
   },
 ];

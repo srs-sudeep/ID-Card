@@ -3,7 +3,9 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
-import BlogPage from './pages/BlogPage';
+import ContactUs from './pages/ContactUs';
+import Settings from './pages/Settings';
+import Payment from './pages/Payment';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
@@ -26,7 +28,9 @@ export default function Router() {
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'contactUs', element: <ContactUs /> },
+        { path: 'payment', element: <Payment /> },
+        { path: 'settings', element: <Settings /> },
       ],
     },
     {
