@@ -1,4 +1,5 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes, useNavigate,} from 'react-router-dom';
+import { useEffect } from 'react';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
@@ -9,13 +10,20 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
-
+// import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    const token = localStorage.getItem('jwtToken');
+    if(!token){
+      navigate('/login', {replace: true});
+    }
+  },[navigate]);
   const routes = useRoutes([
     {
-      path:'/', 
+      path:'/logout', 
       element:<LoginPage />,
     },
     {
@@ -27,10 +35,11 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        // {path:'payment',element:<}
       ],
     },
     {
-      path: 'login',
+      path: '/login',
       element: <LoginPage />,
     },
     {
