@@ -1,5 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
@@ -21,7 +27,46 @@ import {
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
+  const navigate = useNavigate();
   const theme = useTheme();
+  const [user, setUser] = useState(null); // State to store user info
+  const [email, setEmail]= useState('');
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Get the JWT token from local storage (or wherever you store it)
+        const token = localStorage.getItem("jwtToken");
+        if(!token){
+          navigate('/login', {replace: true});
+        }
+        else{
+          const response = await axios.get("http://localhost:5000/api/auth/verify", {
+            headers: {
+              "x-auth-token": token, // Pass the JWT token in the request header
+            },
+          });
+
+          // If the response is successful, you can access the protected user data here
+          const { user } = response.data;
+          setEmail(user.email??" ");
+          // console.log(user);
+          setUser(user);
+        }
+        // Make a request to the protected API route using Axios
+        
+
+      } catch (error) {
+        // Handle errors, such as token validation failure or network issues
+        console.error(error);
+
+        // If token validation fails or there's an error, navigate the user to the login page
+        navigate('/login', { replace: true });
+      }
+    }
+
+    fetchData();
+  }, [user, navigate]); // Empty dependency array, runs once on mount
+
 
   return (
     <>
@@ -31,7 +76,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Hi, Welcome {email}. 
         </Typography>
 
         <Grid container spacing={3}>
