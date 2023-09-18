@@ -3,8 +3,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
+<<<<<<< HEAD
 const Menu = require('./models/Menu');
 const userInfo = require('./models/Userinfo');
+=======
+>>>>>>> 4d54bc454ad0732faec6656e3348b4d64727909d
 
 const app = express();
 app.use(cors());
@@ -13,7 +16,8 @@ app.use(passport.initialize());
 
 // Import API routes
 const authRoutes = require("./routes/auth");
-const { signUp, logIn } = require("./controllers/auth");
+// const { signUp, logIn } = require("./controllers/auth");
+const menu =require('./routes/menuRoute');
 
 // Connect to MongoDB Atlas
 mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mongodb.net/test?retryWrites=true&w=majority", {
@@ -22,7 +26,7 @@ mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mong
 })
 .then(() => console.log("Connected to MongoDB Atlas"))
 .catch((err) => console.log("Error connecting to MongoDB Atlas:", err));
-
+// console.log(mongoose.);
 
 // const userinfo = new userInfo(
 //   {
@@ -109,9 +113,7 @@ mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mong
 
 // Use API routes
 app.use("/api/auth", authRoutes);
-// app.use("/api/podcasts", podcastRoutes);
-// app.use("/signup", signUp)
-// app.use("/login", logIn)
+app.use("/api/menu", menu)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
