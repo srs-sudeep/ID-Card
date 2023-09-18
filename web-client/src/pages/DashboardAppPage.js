@@ -51,6 +51,8 @@ export default function DashboardAppPage() {
 
           // If the response is successful, you can access the protected user data here
           const { user } = response.data;
+          localStorage.setItem('name',user.displayName);
+          localStorage.setItem('email', user.email);
           setName(user.displayName);
           setMessName(user.messName);
           setAddOn(user.addOn);
