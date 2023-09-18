@@ -10,17 +10,13 @@ import account from '../../../_mock/account';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'Dashboard',
     icon: 'eva:home-fill',
   },
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-  },
+  }
 ];
 
 // ----------------------------------------------------------------------
@@ -41,7 +37,21 @@ export default function AccountPopover() {
   const handleClose = () =>{
     setOpen(null);
   }
-
+  const handleNav = async (e) => {
+    e.preventDefault();
+    navigate('/dashboard/user', { replace: true });
+  };
+  // const handleNavigate = async (prop)=>{
+  //   if(prop === "Dashboard")
+  //   {
+  //     console.log(prop);
+  //     navigate('/dashboard/app')
+  //   }else if(prop === "Profile"){
+  //     navigate('/dashboard/profile')
+  //   }else{
+  //     navigate('/404')
+  //   }
+  // };
   return (
     <>
       <IconButton
@@ -96,7 +106,7 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
+            <MenuItem key={option.label} onClick={handleNav}>
               {option.label}
             </MenuItem>
           ))}
