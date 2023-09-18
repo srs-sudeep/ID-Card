@@ -55,9 +55,9 @@ export default function LoginPage() {
           sx={{
             position: 'fixed',
             top: { xs: 16, sm: 24, md: 40 },
-            left: { xs: 16, sm: 24, md: 230 },
-            width: '100px', // Adjust the width to your desired size
-            height: '100px', // Adjust the height to your desired size
+            left: { xs: 16, sm: 24, md: 40 },
+            // width: '100px', // Adjust the width to your desired size
+            // height: '100px', // Adjust the height to your desired size
           }}
         />
 
