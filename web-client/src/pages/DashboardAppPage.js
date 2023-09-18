@@ -96,19 +96,19 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Mess" total={messName} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Mess" total={messName} icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Up Coming Meal" total={"Snacks"} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Up Coming Meal" total={"Snacks"} color="info" icon={'ant-design:interaction-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remainig Balance" total={"35k"} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Remainig Balance" total={"35k"} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Balance" total={"70k"} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Total Balance" total={"70k"} color="error" icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
@@ -197,7 +197,7 @@ export default function DashboardAppPage() {
             />
           </Grid> */}
 
-          {/* <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
               title="Today's Menu"
               list={[...Array(5)].map((_, index) => ({
@@ -226,7 +226,7 @@ export default function DashboardAppPage() {
                 time: faker.date.past(),
               }))}
             />
-          </Grid> */}
+          </Grid>
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite

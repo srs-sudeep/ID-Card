@@ -9,7 +9,7 @@ router.post("/signup", signUp);
 router.post("/login", logIn);
 router.get("/verify", auth);
 router.get("/validation", tokenValid);
-
+// router.get("/menu",menu);
 
 // router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 // router.get("/google/callback", passport.authenticate("google"), logIn);

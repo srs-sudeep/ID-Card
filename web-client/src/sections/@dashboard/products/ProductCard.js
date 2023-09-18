@@ -42,21 +42,21 @@ export default function ShopProductCard({ product }) {
               textTransform: 'uppercase',
             }}
           >
-            {status}
+            Basic/Add-on
           </Label>
-        )}
-        <StyledProductImg alt={name} src={cover} />
+        )} 
+        <StyledProductImg  alt={name} src={"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80"} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover">
+        {/* <Link color="inherit" underline="hover"> */}
           <Typography variant="subtitle2" noWrap>
-            {name}
+            Food-Item
           </Typography>
-        </Link>
+        {/* </Link> */}
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+          {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -66,10 +66,11 @@ export default function ShopProductCard({ product }) {
                 textDecoration: 'line-through',
               }}
             >
-              {priceSale && fCurrency(priceSale)}
+              {/* {priceSale && fCurrency(priceSale)} */}
             </Typography>
             &nbsp;
-            {fCurrency(price)}
+            {/* {fCurrency(price)} */}
+              Price
           </Typography>
         </Stack>
       </Stack>
