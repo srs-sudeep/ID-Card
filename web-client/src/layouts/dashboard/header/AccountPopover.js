@@ -12,11 +12,13 @@ const MENU_OPTIONS = [
   {
     label: 'Dashboard',
     icon: 'eva:home-fill',
+    reDirect:'',
   },
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-  }
+    reDirect:'profile',
+  },
 ];
 
 // ----------------------------------------------------------------------
@@ -34,24 +36,10 @@ export default function AccountPopover() {
     localStorage.clear();
     navigate('/login', { replace: true });
   };
-  const handleClose = () =>{
+  const handleClose = () => {
     setOpen(null);
-  }
-  const handleNav = async (e) => {
-    e.preventDefault();
-    navigate('/dashboard/user', { replace: true });
   };
-  // const handleNavigate = async (prop)=>{
-  //   if(prop === "Dashboard")
-  //   {
-  //     console.log(prop);
-  //     navigate('/dashboard/app')
-  //   }else if(prop === "Profile"){
-  //     navigate('/dashboard/profile')
-  //   }else{
-  //     navigate('/404')
-  //   }
-  // };
+
   return (
     <>
       <IconButton
@@ -71,7 +59,8 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI0x0ZiBEwwzWeZs35Rw-xEUcUKT6sy2fFGTC2XbG0_yovNtqJxy8cxEPi6zEKg9QdTFU&usqp=CAU"} alt="photoURL" />
+        {/* <Avatar src={account.photoURL} alt="photoURL" /> */}
       </IconButton>
 
       <Popover
@@ -106,7 +95,14 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleNav}>
+            <MenuItem
+              key={option.label}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(null);
+                navigate(`../dashboard/${option.reDirect}`, { replace: true });
+              }}
+            >
               {option.label}
             </MenuItem>
           ))}

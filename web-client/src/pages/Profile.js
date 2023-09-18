@@ -42,7 +42,7 @@ export default function Profile() {
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                 >
                   <MDBCardImage
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI0x0ZiBEwwzWeZs35Rw-xEUcUKT6sy2fFGTC2XbG0_yovNtqJxy8cxEPi6zEKg9QdTFU&usqp=CAU"
                     alt="avatar"
                     className="rounded-circle"
                     style={{ width: '150px' }}
