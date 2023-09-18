@@ -15,12 +15,13 @@ import { LoginForm } from '../sections/auth/login';
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex',
+
   },
 }));
 
 const StyledSection = styled('div')(({ theme }) => ({
   width: '100%',
-  maxWidth: 480,
+  maxWidth: 650,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -54,7 +55,9 @@ export default function LoginPage() {
           sx={{
             position: 'fixed',
             top: { xs: 16, sm: 24, md: 40 },
-            left: { xs: 16, sm: 24, md: 40 },
+            left: { xs: 16, sm: 24, md: 230 },
+            width: '100px', // Adjust the width to your desired size
+            height: '100px', // Adjust the height to your desired size
           }}
         />
 

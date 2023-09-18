@@ -10,11 +10,11 @@ const tokenValid = async (req, res, next) => {
         const currentTimeInSeconds = Math.floor(Date.now() / 1000);
         if (!token)
             return res.status(401).json({ msg: "No authentication token, access denied" });
-        if (decodedToken.exp && decodedToken.exp < currentTimeInSeconds) {
-            // Token has expired
-            console.log('Token has expired.');
-            return res.status(401).json({ msg: 'Your Session expired. Please log in again.' });
-        }
+        // if (decodedToken.exp && decodedToken.exp < currentTimeInSeconds) {
+        //     // Token has expired
+        //     console.log('Token has expired.');
+        //     return res.status(401).json({ msg: 'Your Session expired. Please log in again.' });
+        // }
         const verified = jwt.verify(token, process.env.JWT_SECRET);
         if (!verified) {
             localStorage.clear();

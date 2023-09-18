@@ -28,13 +28,16 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' },
 ];
-export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+export const FILTER_GENDER_OPTIONS = ['Veg', 'Non-Veg'];
+export const FILTER_CATEGORY_OPTIONS = ['Breakfast', 'Lunch', 'Snacks', 'Dinner'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
-  { value: 'below', label: 'Below $25' },
-  { value: 'between', label: 'Between $25 - $75' },
-  { value: 'above', label: 'Above $75' },
+  { value: '10', label: '₹10' },
+  { value: '15', label: '₹15' },
+  { value: '20', label: '₹20' },
+  { value: '25', label: '₹25' },
+  { value: '35', label: '₹35' },
+  { value: '95', label: '₹95' },
 ];
 export const FILTER_COLOR_OPTIONS = [
   '#00AB55',
@@ -85,7 +88,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
           <Stack spacing={3} sx={{ p: 3 }}>
             <div>
               <Typography variant="subtitle1" gutterBottom>
-                Gender
+                Category
               </Typography>
               <FormGroup>
                 {FILTER_GENDER_OPTIONS.map((item) => (
@@ -96,7 +99,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
 
             <div>
               <Typography variant="subtitle1" gutterBottom>
-                Category
+                Type
               </Typography>
               <RadioGroup>
                 {FILTER_CATEGORY_OPTIONS.map((item) => (
@@ -105,7 +108,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
               </RadioGroup>
             </div>
 
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Colors
               </Typography>
@@ -116,7 +119,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                 onChangeColor={(color) => [].includes(color)}
                 sx={{ maxWidth: 38 * 4 }}
               />
-            </div>
+            </div> */}
 
             <div>
               <Typography variant="subtitle1" gutterBottom>
@@ -129,7 +132,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
               </RadioGroup>
             </div>
 
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Rating
               </Typography>
@@ -158,11 +161,23 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                   />
                 ))}
               </RadioGroup>
-            </div>
+            </div> */}
           </Stack>
         </Scrollbar>
-
+        
+        
         <Box sx={{ p: 3 }}>
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            color="inherit"
+            variant="outlined"
+            style={{marginBottom :"10px"}}
+            startIcon={<Iconify icon="ic:round-clear-all" />}
+          >
+            Apply
+          </Button>
           <Button
             fullWidth
             size="large"
@@ -174,6 +189,7 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
             Clear All
           </Button>
         </Box>
+
       </Drawer>
     </>
   );
