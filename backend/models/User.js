@@ -16,15 +16,14 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 5 },
-  displayName: { type: String },
   userId: { type: String },
-  accountBal : { type: Number },
-  messName: { type: String,},
-  imgPath: {type: String},
-  addOn: {type: Number,},
-  basic: {type: Number, },
   person: {type: String,}
-  
+  // displayName: { type: String },
+  // accountBal : { type: Number },
+  // messName: { type: String,},
+  // imgPath: {type: String},
+  // addOn: {type: Number,},
+  // basic: {type: Number, },
 });
 
 module.exports = User = mongoose.model("user", userSchema);
