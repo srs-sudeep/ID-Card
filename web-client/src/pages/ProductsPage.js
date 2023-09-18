@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 // @mui
 import { Container, Stack, Typography } from '@mui/material';
 // components
@@ -19,6 +20,19 @@ export default function ProductsPage() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
+
+  useEffect(() =>{
+    async function MenuList(){
+      try{
+        const response = await axios.get('http://localhost:5000/api/menu/list');
+        console.log(response.data);
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+    MenuList();
+  })
 
   return (
     <>

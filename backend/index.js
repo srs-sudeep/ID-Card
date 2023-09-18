@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
@@ -12,15 +11,10 @@ app.use(passport.initialize());
 
 // Import API routes
 const authRoutes = require("./routes/auth");
+const menuData = require("./routes/menuData");
 const { signUp, logIn } = require("./controllers/auth");
 
-// Connect to MongoDB Atlas
-mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mongodb.net/test?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("Connected to MongoDB Atlas"))
-.catch((err) => console.log("Error connecting to MongoDB Atlas:", err));
+
 
 
 // const menuData = new Menu({
@@ -68,6 +62,7 @@ mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mong
 
 // Use API routes
 app.use("/api/auth", authRoutes);
+app.use("/api/menu", menuData);
 // app.use("/api/podcasts", podcastRoutes);
 // app.use("/signup", signUp)
 // app.use("/login", logIn)
