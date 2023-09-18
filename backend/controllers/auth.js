@@ -54,9 +54,9 @@ exports.logIn = async (req, res) => {
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
     // Set the expiration time (in seconds from the current time)
-    const expirationTimeInSeconds = 300; // 5 min
-    const expirationTime = Math.floor(Date.now() / 1000) + expirationTimeInSeconds;
-    const token = jwt.sign({ id: existingUser._id, exp:expirationTime }, process.env.JWT_SECRET);
+    // const expirationTimeInSeconds = 300; // 5 min
+    // const expirationTime = Math.floor(Date.now() / 1000) + expirationTimeInSeconds;
+    const token = jwt.sign({ id: existingUser._id}, process.env.JWT_SECRET);
 
     res.json({
       token,
