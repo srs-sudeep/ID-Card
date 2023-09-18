@@ -1,6 +1,6 @@
 /* eslint-disable*/
 const router = require("express").Router();
-const passport = require("passport");
+// const passport = require("passport");
 const { signUp, logIn, logOut } = require("../controllers/auth");
 const auth = require("../middleware/auth");
 const tokenValid = require("../middleware/tokenValid");
