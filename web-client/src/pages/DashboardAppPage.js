@@ -30,7 +30,7 @@ export default function DashboardAppPage() {
   const navigate = useNavigate();
   const theme = useTheme();
   const [user, setUser] = useState(null); // State to store user info
-  const [email, setEmail]= useState('');
+  const [name, setName]= useState('');
   const [messName, setMessName]= useState('');
   const [addOn, setAddOn]= useState('');
   const [basic, setBasic]= useState('');
@@ -39,9 +39,9 @@ export default function DashboardAppPage() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
-        // if(!token){
-        //   navigate('/login', {replace: true});
-        // }
+        if(!token){
+          navigate('/login', {replace: true});
+        }
         // else{
           const response = await axios.get("http://localhost:5000/api/auth/verify", {
             headers: {
@@ -51,7 +51,7 @@ export default function DashboardAppPage() {
 
           // If the response is successful, you can access the protected user data here
           const { user } = response.data;
-          setEmail(user.displayName);
+          setName(user.displayName);
           setMessName(user.messName);
           setAddOn(user.addOn);
           setBasic(user.basic);
@@ -63,9 +63,16 @@ export default function DashboardAppPage() {
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
-        console.error(error);
-
-        // If token validation fails or there's an error, navigate the user to the login page
+        localStorage.clear();
+        if (error.response && error.response.data && error.response.data.msg) {
+          const errorMessage = error.response.data.msg;
+          // Display the error message to the user (e.g., using an alert or on the UI)
+          alert(errorMessage);
+        } else {
+          // Handle unexpected errors
+          console.error(error);
+          // If token validation fails or there's an error, navigate the user to the login page
+        }
         navigate('/login', { replace: true });
       }
     }
@@ -82,7 +89,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome {email}. 
+          Hi, Welcome {name}. 
         </Typography>
 
         <Grid container spacing={3}>

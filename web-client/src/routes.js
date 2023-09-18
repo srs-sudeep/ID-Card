@@ -1,4 +1,5 @@
-import { Navigate, useRoutes, useNavigate,} from 'react-router-dom';
+import axios from 'axios';
+import { Navigate, useRoutes, useNavigate, } from 'react-router-dom';
 import { useEffect } from 'react';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -17,12 +18,36 @@ import DashboardAppPage from './pages/DashboardAppPage';
 
 export default function Router() {
   const navigate = useNavigate();
-  useEffect(()=>{
+  useEffect(() => {
     const token = localStorage.getItem('jwtToken');
-    if(!token){
-      navigate('/login', {replace: true});
+    if (!token) {
+      navigate('/login', { replace: true });
     }
-  },[navigate]);
+    async function validation() {
+      try {
+        const response = await axios.get("http://localhost:5000/api/auth/validation", {
+          headers: {
+            "x-auth-token": token, // Pass the JWT token in the request header
+          },
+        });
+        // if(!response.status==200)
+        // navigate('/login', { replace: true });
+
+      }
+      catch(error){
+        if (error.response && error.response.data && error.response.data.msg) {
+          const errorMessage = error.response.data.msg;
+          // Display the error message to the user (e.g., using an alert or on the UI)
+          alert(errorMessage);
+        } else {
+          // Handle unexpected errors
+          console.error(error);
+          // If token validation fails or there's an error, navigate the user to the login page
+        }
+        navigate('/login', { replace: true });
+      }
+    }
+  }, [navigate]);
   const routes = useRoutes([
     {
       path: '/dashboard',
@@ -45,8 +70,8 @@ export default function Router() {
     {
       // element: <SimpleLayout />,
       children: [
-        { element: <Navigate to="/" />},
-        {path: '', element: <LoginPage/>},
+        { element: <Navigate to="/" /> },
+        { path: '', element: <LoginPage /> },
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

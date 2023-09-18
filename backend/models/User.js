@@ -19,11 +19,11 @@ const userSchema = new mongoose.Schema({
   displayName: { type: String },
   userId: { type: String },
   accountBal : { type: Number },
-  messName: { type: String, default:'Galav'},
+  messName: { type: String,},
   imgPath: {type: String},
-  addOn: {type: Number, default: 10000},
-  basic: {type: Number, default: 13000},
-  person: {type: String, default:'Student'}
+  addOn: {type: Number,},
+  basic: {type: Number, },
+  person: {type: String,}
   
 });
 

@@ -35,7 +35,7 @@ export default function AccountPopover() {
   const navigate = useNavigate();
   const handleOut = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("jwtToken");
+    localStorage.clear();
     navigate('/login', { replace: true });
   };
   const handleClose = () =>{
