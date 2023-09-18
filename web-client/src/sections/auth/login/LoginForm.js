@@ -18,10 +18,14 @@ export default function LoginForm() {
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken')
-  if(token){
-    navigate('/dashboard/app',{replace:true});
-  }
-  },[navigate]);
+    if (token) {
+      navigate('/dashboard/app', { replace: true });
+    }
+    else {
+      navigate('/login', { replace: true });
+
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -32,21 +36,21 @@ export default function LoginForm() {
       navigate('/dashboard/app', { replace: true });
     } catch (error) {
       // Handle error response here
-  if (error.response && error.response.data && error.response.data.msg) {
-    const errorMessage = error.response.data.msg;
-    // Display the error message to the user (e.g., using an alert or on the UI)
-    alert(errorMessage);
-  } else {
-    // Handle unexpected errors
-    console.error(error);
-  }
+      if (error.response && error.response.data && error.response.data.msg) {
+        const errorMessage = error.response.data.msg;
+        // Display the error message to the user (e.g., using an alert or on the UI)
+        alert(errorMessage);
+      } else {
+        // Handle unexpected errors
+        console.error(error);
+      }
     }
   };
-  
+
   return (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" required onChange={(e) => setEmail(e.target.value)}/>
+        <TextField name="email" label="Email address" required onChange={(e) => setEmail(e.target.value)} />
 
         <TextField
           name="password"
