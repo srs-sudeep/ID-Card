@@ -36,6 +36,7 @@ export default function AccountPopover() {
   const handleOut = async (e) => {
     e.preventDefault();
     localStorage.clear();
+    sessionStorage.clear();
     navigate('/login', { replace: true });
   };
   const handleClose = () =>{

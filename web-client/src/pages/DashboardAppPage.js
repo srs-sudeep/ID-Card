@@ -29,39 +29,38 @@ import {
 export default function DashboardAppPage() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const [user, setUser] = useState(null); // State to store user info
-  const [name, setName]= useState('');
-  const [messName, setMessName]= useState('');
-  const [addOn, setAddOn]= useState('');
-  const [basic, setBasic]= useState('');
+  const [userId, setUser] = useState(null); // State to store user info
+  const [name, setName] = useState('');
+  const [messName, setMessName] = useState('');
+  const [addOn, setAddOn] = useState('');
+  const [basic, setBasic] = useState('');
   useEffect(() => {
     async function fetchData() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
-        if(!token){
-          navigate('/login', {replace: true});
+        if (!token) {
+          navigate('/login', { replace: true });
         }
         // else{
-          const response = await axios.get("http://localhost:5000/api/auth/verify", {
-            headers: {
-              "x-auth-token": token, // Pass the JWT token in the request header
-            },
-          });
+        const response = await axios.get("http://localhost:5000/api/auth/verify", {
+          headers: {
+            "x-auth-token": token, // Pass the JWT token in the request header
+          },
+        });
 
-          // If the response is successful, you can access the protected user data here
-          const { user } = response.data;
-          localStorage.setItem('name',user.displayName);
-          localStorage.setItem('email', user.email);
-          setName(user.displayName);
-          setMessName(user.messName);
-          setAddOn(user.addOn);
-          setBasic(user.basic);
-          // console.log(user);
-          setUser(user);
+        // If the response is successful, you can access the protected user data here
+        const user = response.data.userInfo;
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('mess', user.mess);
+        setName(user.name);
+        setMessName(user.mess);
+        setAddOn(user.remaining_amount);
+        setBasic(user.total_amount);
+        // setUser(user);
         // }
         // Make a request to the protected API route using Axios
-        
+
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
@@ -80,7 +79,7 @@ export default function DashboardAppPage() {
     }
 
     fetchData();
-  }, [user, navigate]); // Empty dependency array, runs once on mount
+  }, [navigate]); // Empty dependency array, runs once on mount
 
 
   return (
@@ -91,7 +90,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome {name}. 
+          Hi, Welcome {name}.
         </Typography>
 
         <Grid container spacing={3}>
@@ -197,7 +196,7 @@ export default function DashboardAppPage() {
             />
           </Grid> */}
 
-          
+
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite

@@ -3,11 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
-<<<<<<< HEAD
-const Menu = require('./models/Menu');
-const userInfo = require('./models/Userinfo');
-=======
->>>>>>> 4d54bc454ad0732faec6656e3348b4d64727909d
+// const Menu = require('./models/Menu');
+// const userInfo = require('./models/Userinfo');
 
 const app = express();
 app.use(cors());
@@ -74,29 +71,29 @@ mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mong
 //     {
 //       type: 'Breakfast',
 //       items: [
-//         { name: 'Scrambled Eggs', price: 5.99 },
-//         { name: 'Toast', price: 2.99 },
+//         { name: 'Scrambled Eggs', price: 5.99, type: 'NonVeg', category: 'AddOn'},
+//         { name: 'Toast', price: 2.99, type: 'Veg', category: 'Basic' },
 //       ],
 //     },
 //     {
 //       type: 'Lunch',
 //       itmes: [
-//         {name: 'Rice', price: 20},
-//         {name: 'Dal', price: 15},
+//         {name: 'Rice', price: 20, type: 'Veg', category: 'Basic'},
+//         {name: 'Dal', price: 15, type: 'Veg', category: 'Basic'},
 //       ]
 //     },
 //     {
 //       type: 'Snacks',
 //       items: [
-//         {name: 'Tea', price: 7},
-//         {name: 'Maggie', price: 15}
+//         {name: 'Tea', price: 7, type: 'Veg', category: 'AddOn'},
+//         {name: 'Maggie', price: 15, type: 'Veg', category: 'AddOn'}
 //       ]
 //     },
 //     {
 //       type: 'Dinner',
 //       items: [
-//         {name: 'Roti', price: 15},
-//         {name: 'Matar Paneer', price: 30}
+//         {name: 'Roti', price: 15, type: 'Veg', category: 'Basic'},
+//         {name: 'Matar Paneer', price: 30, type: 'Veg', category: 'AddOn'}
 //       ]
 //     }
 //   ],
