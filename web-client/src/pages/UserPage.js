@@ -77,19 +77,26 @@ function applySortFilter(array, comparator, query) {
 
 export default function UserPage() {
   const [txn, setTxn]= useState('');
+  const [firstVisitH, setFirstVisitH] = useState(true);
     useEffect(()=>{
       const id = localStorage.getItem('id');
       async function txnData(){
         try{
         const res = await axios.post('http://localhost:5000/api/txn/history',{id});
-        setTxn(res.data.json())
+        setTxn(res.data);
+        console.log(res.data);
         }
         catch(error){
           console.log("Error fetching transaction");
           console.log(error);
         }
       }
+      const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
+    if (!hasVisitedBeforeH) {
       txnData();
+      setFirstVisitH(false);
+      sessionStorage.setItem('hasVisitedPageH', 'true');
+    }
     },[]);
 
 

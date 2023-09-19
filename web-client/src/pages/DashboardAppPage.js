@@ -32,8 +32,8 @@ export default function DashboardAppPage() {
   const [userId, setUser] = useState(null); // State to store user info
   const [name, setName] = useState('');
   const [messName, setMessName] = useState('');
-  const [addOn, setAddOn] = useState('');
-  const [basic, setBasic] = useState('');
+  const [remainingAmount, setRemain] = useState('');
+  const [totalAmount, setTotal] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -64,8 +64,8 @@ export default function DashboardAppPage() {
         localStorage.setItem('id', user.id);
         setName(user.name);
         setMessName(user.mess);
-        setAddOn(user.remaining_amount);
-        setBasic(user.total_amount);
+        setRemain(user.remaining_amount);
+        setTotal(user.total_amount);
         // setUser(user);
         // }
         // Make a request to the protected API route using Axios
@@ -89,7 +89,16 @@ export default function DashboardAppPage() {
 
     fetchData();
   }, [navigate]); // Empty dependency array, runs once on mount
-
+  let meal = '';
+  const currentHour = new Date().getHours();
+  if (currentHour >= 10 && currentHour < 15)
+    meal = 'Lunch';
+  else if(currentHour >= 15 && currentHour < 18)
+  meal = 'Snacks';
+  else if(currentHour >= 18 && currentHour < 22)
+    meal = 'Dinner';
+  else 
+    meal = 'Breakfast';
 
   return (
     <>
@@ -108,15 +117,15 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Up Coming Meal" total={"Snacks"} color="info" icon={'ant-design:interaction-twotone'} />
+            <AppWidgetSummary title="Up Coming Meal" total={meal} color="info" icon={'ant-design:interaction-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remainig Balance" total={"35k"} color="warning" icon={'ant-design:money-collect-twotone'} />
+            <AppWidgetSummary title="Remainig Balance" total={remainingAmount} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Balance" total={"70k"} color="error" icon={'ant-design:bank-twotone'} />
+            <AppWidgetSummary title="Total Balance" total={totalAmount} color="error" icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
