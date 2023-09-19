@@ -90,16 +90,17 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
+
         <Typography variant="h3" sx={{ mb: 5 }}>
-          Hi! Vendor, Welcome.
+          Hi, Welcome {name}.
         </Typography>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome {name}.
+          Today's Menu
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Mess" total="" icon={'ant-design:home-filled'} />
+            <AppWidgetSummary title="Breakfast" total="Dosa" icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
