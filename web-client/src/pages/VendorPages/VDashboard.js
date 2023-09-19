@@ -111,7 +111,7 @@ export default function VDashboard() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Quick Glance"
+              title="Add-On Graph"
               subheader="Previous 7 Days"
               chartLabels={[
                 '01/01/2003',
@@ -132,13 +132,7 @@ export default function VDashboard() {
                   type: 'area',
                   fill: 'gradient',
                   data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Basic',
-                  type: 'line',
-                  fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
+                }
               ]}
             />
           </Grid>
@@ -147,18 +141,15 @@ export default function VDashboard() {
             <AppCurrentVisits
               title="Dinning Chart"
               chartData={[
-                { label: 'Basic Consumed', value: 4344 },
-                { label: 'Basic Wasted', value: 5435 },
-                { label: 'Basic Left', value: 1443 },
-                { label: 'Add-On Consumed', value: 4443 },
-                { label: 'Add-On Left', value: 4443 },
+                // { label: 'Basic Consumed', value: 4344 },
+                { label: 'Had Food', value: 5435 },
+                { label: 'Left to have Food', value: 1443 },
+                // { label: 'Add-On Consumed', value: 4443 },
+                // { label: 'Add-On Left', value: 4443 },
               ]}
               chartColors={[
-                theme.palette.primary.main,
                 theme.palette.info.main,
-                theme.palette.warning.main,
-                theme.palette.error.main,
-                theme.palette.action.main,
+                theme.palette.warning.main
               ]}
             />
           </Grid>
