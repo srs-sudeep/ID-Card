@@ -60,25 +60,7 @@ export default function Profile() {
                 <MDBCardBody style={{ minHeight: '267px' }}>
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Full Name</MDBCardText>
-                    </MDBCol>
-                    <MDBCol sm="9">
-                      <MDBCardText className="text-muted">Sudeep Rajan Sahoo</MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                  <hr />
-                  <MDBRow>
-                    <MDBCol sm="3">
-                      <MDBCardText>Email</MDBCardText>
-                    </MDBCol>
-                    <MDBCol sm="9">
-                      <MDBCardText className="text-muted">sudeepranjan@iitbhilai.ac.in</MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                  <hr />
-                  <MDBRow>
-                    <MDBCol sm="3">
-                      <MDBCardText>Mess</MDBCardText>
+                      <MDBCardText>Mess Name</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">Kumar</MDBCardText>
@@ -87,12 +69,30 @@ export default function Profile() {
                   <hr />
                   <MDBRow>
                     <MDBCol sm="3">
+                      <MDBCardText>Mess-Coordinator1</MDBCardText>
+                    </MDBCol>
+                    <MDBCol sm="9">
+                      <MDBCardText className="text-muted">Sudeep Ranjan Sahoo</MDBCardText>
+                    </MDBCol>
+                  </MDBRow>
+                  <hr />
+                  <MDBRow>
+                    <MDBCol sm="3">
+                      <MDBCardText>Mess-Coordiantor2</MDBCardText>
+                    </MDBCol>
+                    <MDBCol sm="9">
+                      <MDBCardText className="text-muted">Sudeep Ranjan Sahoo</MDBCardText>
+                    </MDBCol>
+                  </MDBRow>
+                  {/* <hr /> */}
+                  {/* <MDBRow>
+                    <MDBCol sm="3">
                       <MDBCardText>ID</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">Error 404</MDBCardText>
                     </MDBCol>
-                  </MDBRow>
+                  </MDBRow> */}
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>

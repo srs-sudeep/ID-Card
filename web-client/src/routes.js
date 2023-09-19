@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 import VendorDashboardLayout from './layouts/vendor';
+import AdminDashboardLayout from './layouts/admin';
 //
 import ContactUs from './pages/ContactUs';
 import Profile from './pages/Profile';
@@ -89,7 +90,7 @@ export default function Router() {
     },
     {
       path: '/admin/dashboard',
-      element: <DashboardLayout />,
+      element: <AdminDashboardLayout />,
       children: [
         { element: <Navigate to="/admin/dashboard" /> },
         { path: '', element: <AdminDashboard /> },
