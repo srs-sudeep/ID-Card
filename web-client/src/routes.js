@@ -15,6 +15,8 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import VDashboard from './pages/VendorPages/VDashboard';
 import VProfile from './pages/VendorPages/VProfile';
+import AdminDashboard from './pages/AdminPages/AdminDashboard';
+import AdminProfile from './pages/AdminPages/AdminProfile';
 // import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
@@ -77,16 +79,16 @@ export default function Router() {
       children: [
         { element: <Navigate to="/vendor/dashboard" /> },
         { path: '', element: <VDashboard /> },
-        { path: 'profile', element: <Profile /> },
+        { path: 'profile', element: <VProfile /> },
       ],
     },
     {
-      path: '/vendor/dashboard',
+      path: '/admin/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/vendor/dashboard" /> },
-        { path: '', element: <VDashboard /> },
-        { path: 'profile', element: <VProfile /> },
+        { element: <Navigate to="/admin/dashboard" /> },
+        { path: '', element: <AdminDashboard /> },
+        { path: 'profile', element: <AdminProfile /> },
       ],
     },
     {
