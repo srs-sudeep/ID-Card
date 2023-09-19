@@ -53,6 +53,8 @@ export default function DashboardAppPage() {
         const user = response.data.userInfo;
         localStorage.setItem('email', user.email);
         localStorage.setItem('mess', user.mess);
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('id', user.id);
         setName(user.name);
         setMessName(user.mess);
         setAddOn(user.remaining_amount);

@@ -26,7 +26,6 @@ const USER_ID = 'D6DKJjcrvzaH6b4fU';
 // ----------------------------------------------------------------------
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -59,6 +58,10 @@ function a11yProps(index) {
 // ----------------------------------------------------------------------
 
 export default function ContactUs() {
+  const id = localStorage.getItem('id');
+  const email = localStorage.getItem('email');
+  const name = localStorage.getItem('name');
+  // console.log(id, email, name);
   const handleOnSubmit = (e) => {
     e.preventDefault();
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, USER_ID).then(
@@ -211,6 +214,8 @@ export default function ContactUs() {
                   required
                   icon="mail"
                   iconPosition="left"
+                  inputProps={{readOnly:true}}
+                  defaultValue={email}
                 />
                 <TextField
                   fullWidth
@@ -223,6 +228,8 @@ export default function ContactUs() {
                   required
                   icon="user circle"
                   iconPosition="left"
+                  inputProps={{readOnly:true}}
+                  defaultValue={name}
                 />
                 <TextField
                   margin="normal"
@@ -234,7 +241,9 @@ export default function ContactUs() {
                   placeholder="ID Number"
                   required
                   icon="user circle"
-                  iconPosition="left"
+                  iconPosition="left"     
+                  inputProps={{readOnly:true}}
+                  defaultValue={id}             
                 />
                 <TextField
                   fullWidth
