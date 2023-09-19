@@ -3,11 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
-<<<<<<< HEAD
 const Menu = require('./models/Menu');
 const userInfo = require('./models/Userinfo');
-=======
->>>>>>> 4d54bc454ad0732faec6656e3348b4d64727909d
 
 const app = express();
 app.use(cors());
