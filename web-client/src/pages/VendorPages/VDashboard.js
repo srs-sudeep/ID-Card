@@ -24,7 +24,7 @@ import {
 
 // ----------------------------------------------------------------------
 
-export default function DashboardAppPage() {
+export default function VDashboard() {
   const navigate = useNavigate();
   const theme = useTheme();
   const [userId, setUser] = useState(null); // State to store user info

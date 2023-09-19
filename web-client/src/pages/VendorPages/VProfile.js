@@ -20,7 +20,7 @@ import {
   MDBListGroupItem,
 } from 'mdb-react-ui-kit';
 
-export default function Profile() {
+export default function VProfile() {
   const navigate = useNavigate();
   const handleOut = async (e) => {
     e.preventDefault();

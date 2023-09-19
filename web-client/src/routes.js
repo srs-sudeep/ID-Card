@@ -82,7 +82,7 @@ export default function Router() {
     },
     
     {
-      path: '/vendor',
+      path: '/vendor/',
       element: <VendorDashboardLayout />,
       children: [
         { element: <Navigate to="/vendor" /> },
