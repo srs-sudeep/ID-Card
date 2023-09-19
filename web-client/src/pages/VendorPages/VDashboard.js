@@ -29,9 +29,7 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const [userId, setUser] = useState(null); // State to store user info
   const [name, setName] = useState('');
-  // const [messName, setMessName] = useState('');
-  // const [addOn, setAddOn] = useState('');
-  // const [basic, setBasic] = useState('');
+ 
   useEffect(() => {
     async function fetchData() {
       try {
@@ -53,19 +51,15 @@ export default function DashboardAppPage() {
         if(person !== 'Vendor')
           navigate('/login', { replace: true });
         localStorage.setItem('email', user.email);
+        localStorage.setItem('name', user.name);
         // localStorage.setItem('mess', user.mess);
         setName(user.name);
-        // setMessName(user.mess);
-        // setAddOn(user.remaining_amount);
-        // setBasic(user.total_amount);
-        // setUser(user);
-        // }
-        // Make a request to the protected API route using Axios
 
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
         localStorage.clear();
+        sessionStorage.clear();
         if (error.response && error.response.data && error.response.data.msg) {
           const errorMessage = error.response.data.msg;
           // Display the error message to the user (e.g., using an alert or on the UI)

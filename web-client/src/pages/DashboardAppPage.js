@@ -54,7 +54,6 @@ export default function DashboardAppPage() {
 
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
-        console.log(user);
         if(person !== 'Student')
           navigate('/login', { replace: true });
 

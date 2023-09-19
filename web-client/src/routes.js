@@ -70,8 +70,8 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" /> },
-        { path: '', element: <DashboardAppPage /> },
+        { path: '', element: <Navigate to="/dashboard/app" /> },
+        // { path: '', element: <DashboardAppPage /> },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
@@ -85,8 +85,8 @@ export default function Router() {
       path: '/vendor',
       element: <VendorDashboardLayout />,
       children: [
-        { element: <Navigate to="/vendor" /> },
-        { path: '', element: <VDashboard /> },
+        { path: '', element: <Navigate to="/vendor/dashboard" /> },
+        // { path: '', element: <VDashboard /> },
         { path: 'dashboard', element: <VDashboard /> },
         { path: 'liveService', element: <VLiveService /> },
         { path: 'history', element: <VHistory /> },
@@ -98,8 +98,8 @@ export default function Router() {
       path: '/admin',
       element: <AdminDashboardLayout />,
       children: [
-        { element: <Navigate to="/admin/dashboard" /> },
-        { path: '', element: <AdminDashboard /> },
+        { path: '', element: <Navigate to="/admin/dashboard" /> },
+        { path: 'dashboard', element: <AdminDashboard /> },
         { path: 'profile', element: <AdminProfile /> },
       ],
     },

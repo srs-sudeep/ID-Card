@@ -24,6 +24,9 @@ export default function LoginForm() {
         navigate('/dashboard/app', { replace: true });
       else if(person === 'Vendor')
       navigate('vendor/dashboard/', { replace: true });
+      else{
+        navigate('/admin/dashboard/', { replace: true });
+      }
     }
     else {
       navigate('/login', { replace: true });
@@ -42,6 +45,8 @@ export default function LoginForm() {
         navigate('/dashboard/app', { replace: true });
       else if(response.data.person === 'Vendor')
         navigate('/vendor/dashboard', { replace: true });
+      else
+        navigate('/admin/dashboard', { replace: true });
 
     } catch (error) {
       // Handle error response here

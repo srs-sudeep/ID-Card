@@ -37,32 +37,31 @@ export default function DashboardAppPage() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
+        const person = localStorage.getItem("person");
         if (!token) {
           navigate('/login', { replace: true });
         }
         // else{
         const response = await axios.get("http://localhost:5000/api/auth/verify", {
           headers: {
-            "x-auth-token": token, // Pass the JWT token in the request header
+            "x-auth-token": token,
+            "person": person // Pass the JWT token in the request header
           },
         });
 
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
+        if(person !== 'Admin')
+          navigate('/login', { replace: true });
         localStorage.setItem('email', user.email);
-        localStorage.setItem('mess', user.mess);
+        localStorage.setItem('name', user.name);
         setName(user.name);
-        setMessName(user.mess);
-        setAddOn(user.remaining_amount);
-        setBasic(user.total_amount);
-        // setUser(user);
-        // }
-        // Make a request to the protected API route using Axios
 
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
         localStorage.clear();
+        sessionStorage.clear();
         if (error.response && error.response.data && error.response.data.msg) {
           const errorMessage = error.response.data.msg;
           // Display the error message to the user (e.g., using an alert or on the UI)
@@ -88,7 +87,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Welcome Admin.
+          Welcome {name}
         </Typography>
 
         <Grid container spacing={3}>
