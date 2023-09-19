@@ -34,6 +34,7 @@ export default function DashboardAppPage() {
   const [messName, setMessName] = useState('');
   const [addOn, setAddOn] = useState('');
   const [basic, setBasic] = useState('');
+
   useEffect(() => {
     async function fetchData() {
       try {

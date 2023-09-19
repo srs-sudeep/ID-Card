@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { fCurrency } from '../../../utils/formatNumber';
 // components
 import Label from '../../../components/label';
-import { ColorPreview } from '../../../components/color-utils';
+import { ColorPreview ,  ColorSinglePicker} from '../../../components/color-utils';
 
 // ----------------------------------------------------------------------
 
@@ -24,16 +24,20 @@ ShopProductCard.propTypes = {
   product: PropTypes.object,
 };
 
-export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
-
+export default function ShopProductCard({ name, price, category, type, time }) {
+  // const { names, cover, prices, colors, status, priceSale } = product;
+  console.log(category);
+  const col = type === "Veg" ?  ["green"] :["red"] ;
   return (
-    <Card>
+    <Card  sx={{ minWidth: 275 ,marginBottom:10}}>
+      {/* <Typography variant="subtitle2" noWrap>
+            {name}
+          </Typography> */}
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
+        {/* {status && ( */}
           <Label
             variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
+            color={category === "Basic" ? "info" : "error"}
             sx={{
               zIndex: 9,
               top: 16,
@@ -42,21 +46,25 @@ export default function ShopProductCard({ product }) {
               textTransform: 'uppercase',
             }}
           >
-            Basic/Add-on
+            {category}
           </Label>
-        )} 
-        <StyledProductImg  alt={name} src={"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80"} />
+        {/* )} */}
+        <StyledProductImg alt={name} src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80" />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        {/* <Link color="inherit" underline="hover"> */}
+        <Link color="inherit" underline="hover">
           <Typography variant="subtitle2" noWrap>
-            Food-Item
+            {name}
           </Typography>
-        {/* </Link> */}
+        </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {/* <ColorPreview colors={colors} /> */}
+          <ColorPreview colors={col} />
+          {/* <ColorSinglePicker color={"red"}/> */}
+          <Typography variant="subtitle1">
+            {time}
+          </Typography>
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -66,11 +74,10 @@ export default function ShopProductCard({ product }) {
                 textDecoration: 'line-through',
               }}
             >
-              {/* {priceSale && fCurrency(priceSale)} */}
+              {/* {price && fCurrency(price)} */}
             </Typography>
             &nbsp;
-            {/* {fCurrency(price)} */}
-              Price
+            {fCurrency(price)}
           </Typography>
         </Stack>
       </Stack>
