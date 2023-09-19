@@ -13,6 +13,8 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
+import VDashboard from './pages/VendorPages/VDashboard';
+import VProfile from './pages/VendorPages/VProfile';
 // import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
@@ -52,6 +54,10 @@ export default function Router() {
   }, [navigate]);
   const routes = useRoutes([
     {
+      path: '/login',
+      element: <LoginPage />,
+    },
+    {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
@@ -66,8 +72,22 @@ export default function Router() {
       ],
     },
     {
-      path: '/login',
-      element: <LoginPage />,
+      path: '/vendor/dashboard',
+      element: <DashboardLayout />,
+      children: [
+        { element: <Navigate to="/vendor/dashboard" /> },
+        { path: '', element: <VDashboard /> },
+        { path: 'profile', element: <Profile /> },
+      ],
+    },
+    {
+      path: '/vendor/dashboard',
+      element: <DashboardLayout />,
+      children: [
+        { element: <Navigate to="/vendor/dashboard" /> },
+        { path: '', element: <VDashboard /> },
+        { path: 'profile', element: <VProfile /> },
+      ],
     },
     {
       // element: <SimpleLayout />,
