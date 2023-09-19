@@ -4,7 +4,7 @@ const userInfo = require('../models/Userinfo');
 const list = async(req,res)=>{
     try{
         const stud = await userInfo.find({mess: 'Galav Mess'});
-        console.log(stud);
+        // console.log(stud);
         return res.json(stud);
     }
     catch(error){

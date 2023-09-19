@@ -30,17 +30,19 @@ import Scrollbar from '../../components/scrollbar';
 // sections
 import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 // mock
-import USERLIST from '../../_mock/user';
+// import USERLIST from '../../_mock/user';
 
 // ----------------------------------------------------------------------
 
+
 const TABLE_HEAD = [
-  { id: 'name', label: 'Date', alignRight: false },
-  { id: 'company', label: 'Breakfast', alignRight: false },
-  { id: 'role', label: 'Lunch', alignRight: false },
-  { id: 'isVerified', label: 'Snacks', alignRight: false },
-  { id: 'status', label: 'Dinner', alignRight: false },
-  { id: 'total', label : 'Total', alignRight: false }
+  { id: 'date', label: 'Date', alignRight: false },
+  { id: 'to', label: 'To', alignRight: false },
+  { id: 'from', label: 'From', alignRight: false },
+  { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'type', label: 'Type', alignRight: false },
+  { id: 'mode', label : 'Mode', alignRight: false },
+  { id: 'ref', label : 'Reference', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -74,7 +76,33 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function VHistory() {
+export default function UserPage() {
+  const [txn, setTxn]= useState([]);
+  const [firstVisitH, setFirstVisitH] = useState(true);
+    useEffect(()=>{
+      const id = localStorage.getItem('id');
+      async function txnData(){
+        try{
+        const res = await axios.post('http://localhost:5000/api/txn/history',{id});
+        // console.log(res.data);
+        setTxn(res.data);
+        localStorage.setItem('txn',res.data);
+        }
+        catch(error){
+          console.log("Error fetching transaction");
+          console.log(error);
+        }
+      }
+      const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
+    if (!hasVisitedBeforeH) {
+      txnData();
+      setFirstVisitH(false);
+      sessionStorage.setItem('hasVisitedPageH', 'true');
+    }
+    },[]);
+  // console.log(USERLIST)
+
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -102,10 +130,19 @@ export default function VHistory() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+  const users = txn.map((num, index) => ({
+    accountFrom: num.account_from,
+    accountTo: num.account_to,
+    amount: num.amount,
+    trnsType: num.trns_type,
+    trnsMode: num.trns_mode,
+    trnsDate: num.trns_date,
+    trnsRef: num.trns_reference,
+  }));
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = users.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -141,25 +178,19 @@ export default function VHistory() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(users, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && !!filterName;
+ 
+    // console.log(txn[0]);
+    // txn.map((numb, index) => (
+    //   console.log(numb.account_from);
+    //   // return  numb ;
+    // ));
 
-  useEffect(()=>{
-    async function fetchList(){
-      try{
-        const res = await axios.post('http://localhost:5000/api/menu/students');
-        console.log(res.data);
-      }
-      catch(error){
-        console.log(error);
-      }
-    }
-    fetchList();
-  },[]);
-
+   
   return (
     <>
       <Helmet>
@@ -186,40 +217,43 @@ export default function VHistory() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={users.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
+                    const { id, trnsDate, accountFrom, trnsType, accountTo, trnsMode, amount, trnsRef } = row;
+                    const selectedUser = selected.indexOf(trnsDate) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} /> */}
+                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, trnsDate)} /> */}
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {trnsDate}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{company}</TableCell>
+                        <TableCell align="left">{accountTo}</TableCell>
 
-                        <TableCell align="left">{role}</TableCell>
+                        <TableCell align="left">{accountFrom}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{amount}</TableCell>
 
                         <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
+                          <Label>{sentenceCase(trnsType)}</Label>
                         </TableCell>
+                        <TableCell align="center">{trnsMode}</TableCell>
+                        <TableCell align="center">{trnsRef}</TableCell>
+                        {/* <TableCell align="center">{trnsRef}</TableCell> */}
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
@@ -266,7 +300,7 @@ export default function VHistory() {
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={USERLIST.length}
+            count={users.length}
             // count={"10"}
             rowsPerPage={rowsPerPage}
             page={page}
