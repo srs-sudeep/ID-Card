@@ -12,30 +12,30 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Live Service',
+    title: 'Student Details',
     path: '/vendorr/dashboard/liveService',
     icon: icon('ic_cart'),
   },
   {
-    title: 'History',
+    title: 'Mess Details',
     path: '/vendorr/dashboard/history',
     icon: icon('ic_user'),
-  },
-  {
-    title: 'Student List',
-    path: '/vendorr/dashboard/studentList',
-    icon: icon('ic_blog'),
-  },
+  }
+  // {
+  //   title: 'Student List',
+  //   path: '/vendorr/dashboard/studentList',
+  //   icon: icon('ic_blog'),
+  // },
   // {
   //   title: 'Contact Us',
   //   path: '/dashboard/contactUs',
   //   icon: icon('ic_blog'),
   // },
-  {
-    title: 'Profile',
-    path: '/vendor/dashboard/profile',
-    icon: icon('ic_lock'),
-  },
+  // {
+  //   title: 'Profile',
+  //   path: '/vendor/dashboard/profile',
+  //   icon: icon('ic_lock'),
+  // },
 ];
 
 export default navConfig;

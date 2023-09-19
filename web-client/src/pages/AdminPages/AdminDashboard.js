@@ -83,12 +83,12 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Vendor Dashboard | IIT Bhilai Dining Page </title>
+        <title> Admin Dashboard | IIT Bhilai Dining Page </title>
       </Helmet>
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome Vendor {name}.
+          Welcome Admin.
         </Typography>
 
         <Grid container spacing={3}>
