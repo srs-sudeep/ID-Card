@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Navigate, useRoutes, useNavigate, } from 'react-router-dom';
+import { Navigate, useRoutes, useNavigate, useLocation} from 'react-router-dom';
 import { useEffect } from 'react';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -29,9 +29,13 @@ import AdminProfile from './pages/AdminPages/AdminProfile';
 
 export default function Router() {
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
+    const person = localStorage.getItem('person');
     if (!token) {
+      localStorage.clear();
+      sessionStorage.clear();
       navigate('/login', { replace: true });
     }
     async function validation() {
@@ -43,6 +47,12 @@ export default function Router() {
         });
         // if(!response.status==200)
         // navigate('/login', { replace: true });
+        if(person === 'Student' && (location.pathname.startsWith('/vendor') || location.pathname.startsWith('/admin')))
+          window.location.pathname = '/dashboard'
+        if(person === 'Vendor' && (location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/admin')))
+          window.location.pathname = '/vendor'
+        if(person === 'Admin' && (location.pathname.startsWith('/vendor') || location.pathname.startsWith('/dashboard')))
+          window.location.pathname = '/admin'
 
       }
       catch(error){
@@ -70,8 +80,8 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" /> },
-        { path: '', element: <DashboardAppPage /> },
+        { path: '', element: <Navigate to="/dashboard/app" /> },
+        // { path: '', element: <DashboardAppPage /> },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
@@ -85,8 +95,8 @@ export default function Router() {
       path: '/vendor/',
       element: <VendorDashboardLayout />,
       children: [
-        { element: <Navigate to="/vendor" /> },
-        { path: '', element: <VDashboard /> },
+        { path: '', element: <Navigate to="/vendor/dashboard" /> },
+        // { path: '', element: <VDashboard /> },
         { path: 'dashboard', element: <VDashboard /> },
         { path: 'liveService', element: <VLiveService /> },
         { path: 'history', element: <VHistory /> },
@@ -98,8 +108,8 @@ export default function Router() {
       path: '/admin',
       element: <AdminDashboardLayout />,
       children: [
-        { element: <Navigate to="/admin/dashboard" /> },
-        { path: '', element: <AdminDashboard /> },
+        { path: '', element: <Navigate to="/admin/dashboard" /> },
+        { path: 'dashboard', element: <AdminDashboard /> },
         { path: 'profile', element: <AdminProfile /> },
       ],
     },

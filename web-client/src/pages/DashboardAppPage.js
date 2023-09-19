@@ -34,6 +34,7 @@ export default function DashboardAppPage() {
   const [messName, setMessName] = useState('');
   const [addOn, setAddOn] = useState('');
   const [basic, setBasic] = useState('');
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -54,7 +55,6 @@ export default function DashboardAppPage() {
 
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
-        console.log(user);
         if(person !== 'Student')
           navigate('/login', { replace: true });
 

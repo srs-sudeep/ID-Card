@@ -6,7 +6,7 @@ async function userData(Id, person) {
         let data = null;
         if (person === 'Student')
             data = await userInfo.findOne({ id: Id });
-        else if (person === 'Vendor')
+        else if (person === 'Vendor' || person === 'Admin')
             data = await vendor.findOne({ id: Id });
 
            return data;

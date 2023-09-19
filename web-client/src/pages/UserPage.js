@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 // @mui
 import {
   Card,
@@ -75,6 +76,23 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function UserPage() {
+  const [txn, setTxn]= useState('');
+    useEffect(()=>{
+      const id = localStorage.getItem('id');
+      async function txnData(){
+        try{
+        const res = await axios.post('http://localhost:5000/api/txn/history',{id});
+        setTxn(res.data.json())
+        }
+        catch(error){
+          console.log("Error fetching transaction");
+          console.log(error);
+        }
+      }
+      txnData();
+    },[]);
+
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
