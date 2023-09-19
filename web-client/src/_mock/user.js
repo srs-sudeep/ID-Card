@@ -3,7 +3,7 @@ import { sample } from 'lodash';
 import account from './account';
 // ----------------------------------------------------------------------
 // console.log(account);
-const users1 =;
+const users1 ="";
 console.log(users1);
 const users = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),

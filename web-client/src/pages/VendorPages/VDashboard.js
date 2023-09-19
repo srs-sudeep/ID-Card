@@ -94,25 +94,26 @@ export default function VDashboard() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Breakfast" total="Dosa" icon={'ant-design:home-filled'} />
+            <AppWidgetSummary title="Dosa" total="Breakfast" sx={{display:'none'}} icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Lunch" total={"Sambar ;)"} color="info" icon={'ant-design:interaction-twotone'} />
+            <AppWidgetSummary title="Sambar ;)" total={"Lunch"} color="info" sx={{display:'none'}} icon={'ant-design:interaction-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Snacks" total={"Maggie"} color="warning" icon={'ant-design:money-collect-twotone'} />
+            <AppWidgetSummary title="Maggie" total={"Snacks"} color="warning" sx={{display:'none'}} icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Dinner" total={"Biryani"} color="error" icon={'ant-design:bank-twotone'} />
+            <AppWidgetSummary title="Biryani" total={"Dinner"} color="error" sx={{display:'none'}} icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
+              style={{width:'150%'}}
               title="Add-On Graph"
-              subheader="Previous 7 Days"
+              subheader="Previous 9 Days"
               chartLabels={[
                 '01/01/2003',
                 '02/01/2003',
@@ -137,9 +138,9 @@ export default function VDashboard() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Dinning Chart"
+              title="Today's Dinning Chart"
               chartData={[
                 // { label: 'Basic Consumed', value: 4344 },
                 { label: 'Had Food', value: 5435 },
@@ -152,7 +153,7 @@ export default function VDashboard() {
                 theme.palette.warning.main
               ]}
             />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates

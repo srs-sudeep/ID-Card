@@ -35,10 +35,10 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
   });
 
   return (
-    <Card {...other}>
+    <Card {...other} sx={{ width:'100%'}}>
       <CardHeader title={title} subheader={subheader} />
 
-      <Box sx={{ p: 3, pb: 1 }} dir="ltr">
+      <Box sx={{ p: 3, pb: 1}} dir="ltr">
         <ReactApexChart type="line" series={chartData} options={chartOptions} height={364} />
       </Box>
     </Card>

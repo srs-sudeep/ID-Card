@@ -35,6 +35,18 @@ export default function DashboardAppPage() {
   const [remainingAmount, setRemain] = useState('');
   const [totalAmount, setTotal] = useState('');
 
+  function formatNumber(num) {
+    if (num >= 1000 && num < 1000000) {
+      return `${(num / 1000)}k`;
+    } 
+    if (num >= 1000000) {
+      return `${(num / 1000000)}M`;
+    }
+    return num.toString();
+  }
+  // const formattedRemainingAmount = formatNumber(remainingAmount);
+  const formattedTotalAmount = formatNumber(totalAmount);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -100,6 +112,7 @@ export default function DashboardAppPage() {
   else 
     meal = 'Breakfast';
 
+    
   return (
     <>
       <Helmet>
@@ -125,7 +138,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Balance" total={totalAmount} color="error" icon={'ant-design:bank-twotone'} />
+            <AppWidgetSummary title="Total Balance" total={formattedTotalAmount} color="error" icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

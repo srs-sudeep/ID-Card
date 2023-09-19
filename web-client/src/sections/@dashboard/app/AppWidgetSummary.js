@@ -39,7 +39,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
         textAlign: 'center',
         color: (theme) => theme.palette[color].darker,
         bgcolor: (theme) => theme.palette[color].lighter,
-        ...sx,
+        
       }}
       {...other}
     >
@@ -51,6 +51,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
               theme.palette[color].dark,
               0.24
             )} 100%)`,
+            ...sx,
         }}
       >
         <Iconify icon={icon} width={24} height={24} />

@@ -119,7 +119,7 @@ export default function ContactUs() {
               }}
             >
               <Typography variant="h3" align="center" mt={2} mb={2}>
-                Mess-Coordinator Details
+                Mess-Committee Details
               </Typography>
 
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

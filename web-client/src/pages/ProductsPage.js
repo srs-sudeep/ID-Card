@@ -5,7 +5,13 @@ import axios from 'axios';
 import { Container, Stack, Typography, Grid } from '@mui/material';
 // import {  } from '@mui/material';
 // components
-import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar, ProductCard } from '../sections/@dashboard/products';
+import {
+  ProductSort,
+  ProductList,
+  ProductCartWidget,
+  ProductFilterSidebar,
+  ProductCard,
+} from '../sections/@dashboard/products';
 // mock
 import PRODUCTS from '../_mock/products';
 // import ShopProductCard from '../sections';
@@ -31,7 +37,7 @@ export default function ProductsPage() {
         const mess = localStorage.getItem('mess');
         const response = await axios.get('http://localhost:5000/api/menu/list', {
           headers: {
-            "messName": mess,
+            messName: mess,
           },
         });
         // console.log("response", response);
@@ -39,16 +45,13 @@ export default function ProductsPage() {
         // localStorage.setItem('menu', data);
         // console.log(data[0].meals[0].type);
         setMenu(data);
-
-
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
       }
     }
     // const hasVisitedBefore = sessionStorage.getItem('hasVisitedPage');
     // if (!hasVisitedBefore){
-      menuList();
+    menuList();
     //   setFirstVisit(false);
     //   sessionStorage.setItem('hasVisitedPage', 'true');
     // }
@@ -66,9 +69,7 @@ export default function ProductsPage() {
     //     });
     //   });
     // });
-
   }, []);
-
 
   // menu = localStorage.getItem('menu');
   // console.log(menu);
@@ -79,7 +80,6 @@ export default function ProductsPage() {
   // console.log(menu[0].meals[0]);
   return (
     <>
-
       <Helmet>
         <title>Products | IIT Bhilai Dinning System</title>
       </Helmet>
@@ -103,31 +103,25 @@ export default function ProductsPage() {
         {menu.map((day, index) => (
           <div key={index}>
             <ul>
-              <Typography variant="h1">
-                {day.name}
-              </Typography>
+              <Typography variant="h1">{day.name}</Typography>
               {day.meals.map((meal, mealIndex) => (
-
                 <div key={mealIndex}>
-                  <Grid container spacing={4}> {/* Adjust spacing if needed */}
+                  <div style={{display:'flex', flexWrap:'wrap', gap: '30px'}}>
                     {meal.items.map((item, itemIndex) => (
-                      <Grid key={itemIndex} item xs={12} sm={4} md={4}>
-                        <ProductCard
-                          name={item.name}
-                          price={item.price}
-                          category={item.category}
-                          type={item.type}
-                          time={meal.type}
-                        />
-                      </Grid>
+                      <ProductCard
+                        name={item.name}
+                        price={item.price}
+                        category={item.category}
+                        type={item.type}
+                        time={meal.type}
+                      />
                     ))}
-                  </Grid>
+                  </div>
                 </div>
               ))}
             </ul>
           </div>
-        ))
-        }
+        ))}
         {/* </Grid> */}
 
         {/* <ProductCartWidget /> */}

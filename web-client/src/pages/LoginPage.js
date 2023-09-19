@@ -66,7 +66,9 @@ export default function LoginPage() {
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Welcome to IIT Bhilai Mess System 
             </Typography>
-            <img src="/assets/illustrations/illustration_login.png" alt="login" />
+            <div style={{marginTop:'-80px', padding:'50px'}}>
+            <img src="/assets/images/IMG_3687.jpg" alt="login" />
+            </div>
           </StyledSection>
         )}
 
