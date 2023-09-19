@@ -5,6 +5,7 @@ const passport = require("passport");
 require("dotenv").config();
 // const Menu = require('./models/M~enu');
 // const userInfo = require('./models/Userinfo');
+const txn_data = require('./models/CardTransection');
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(passport.initialize());
 const authRoutes = require("./routes/auth");
 // const { signUp, logIn } = require("./controllers/auth");
 const menu = require("./routes/menuRoute");
+const txn = require("./routes/txn");
 
 // Connect to MongoDB Atlas
 mongoose
@@ -102,6 +104,16 @@ mongoose
 //   ],
 // });
 
+// const menuData = new txn_data({
+//   account_to: "12241170",
+//   account_from: "IIT BHILAI",
+//   amount: "25",
+//   trns_type: "Card",
+//   trns_date: "2023-09-11T12:01:00.000+00:00",
+//   trns_mode: "online",
+//   trns_reference: "IITBH06",
+//   remark: ""
+// })
 // Save the data to the database
 // menuData.save()
 //   .then(() => {
@@ -114,6 +126,7 @@ mongoose
 // Use API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/menu", menu);
+app.use("/api/txn", txn);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
