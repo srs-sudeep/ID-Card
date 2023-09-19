@@ -24,7 +24,8 @@ import VStudentList from './pages/VendorPages/VStudentList';
 import VProfile from './pages/VendorPages/VProfile';
 
 import AdminDashboard from './pages/AdminPages/AdminDashboard';
-import AdminProfile from './pages/AdminPages/AdminProfile';
+import AdminStudentDetails from './pages/AdminPages/AdminStudentDetails';
+import AdminMessDetails from './pages/AdminPages/AdminMessDetails';
 // import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
@@ -112,7 +113,8 @@ export default function Router() {
       children: [
         { path: '', element: <Navigate to="/admin/dashboard" /> },
         { path: 'dashboard', element: <AdminDashboard /> },
-        { path: 'profile', element: <AdminProfile /> },
+        { path: 'studentDetails', element: <AdminStudentDetails /> },
+        { path: 'messDetails', element: <AdminMessDetails /> },
       ],
     },
     {

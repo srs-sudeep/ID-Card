@@ -12,13 +12,8 @@ const MENU_OPTIONS = [
   {
     label: 'Dashboard',
     icon: 'eva:home-fill',
-    reDirect:'',
-  },
-  {
-    label: 'Profile',
-    icon: 'eva:person-fill',
-    reDirect:'profile',
-  },
+    reDirect:'dashboard',
+  }
 ];
 
 // ----------------------------------------------------------------------
@@ -101,7 +96,7 @@ export default function AccountPopover() {
               onClick={(e) => {
                 e.preventDefault();
                 setOpen(null);
-                navigate(`../dashboard/${option.reDirect}`, { replace: true });
+                navigate(`../admin/${option.reDirect}`, { replace: true });
               }}
             >
               {option.label}
