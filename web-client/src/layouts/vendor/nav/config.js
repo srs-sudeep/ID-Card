@@ -13,27 +13,27 @@ const navConfig = [
   },
   {
     title: 'Live Service',
-    path: '/vendorr/dashboard/liveService',
+    path: '/vendor/liveService',
     icon: icon('ic_cart'),
   },
   {
     title: 'History',
-    path: '/vendorr/dashboard/history',
+    path: '/vendor/history',
     icon: icon('ic_user'),
   },
   {
     title: 'Student List',
-    path: '/vendorr/dashboard/studentList',
+    path: '/vendor/studentList',
     icon: icon('ic_blog'),
   },
   // {
-  //   title: 'Contact Us',
+  //   title: '',
   //   path: '/dashboard/contactUs',
   //   icon: icon('ic_blog'),
   // },
   {
     title: 'Profile',
-    path: '/vendor/dashboard/profile',
+    path: '/vendor/profile',
     icon: icon('ic_lock'),
   },
 ];

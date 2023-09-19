@@ -13,12 +13,12 @@ const navConfig = [
   },
   {
     title: 'Student Details',
-    path: '/vendorr/dashboard/liveService',
+    path: '/vendor/liveService',
     icon: icon('ic_cart'),
   },
   {
     title: 'Mess Details',
-    path: '/vendorr/dashboard/history',
+    path: '/vendor/history',
     icon: icon('ic_user'),
   }
   // {

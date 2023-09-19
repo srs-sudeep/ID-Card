@@ -87,25 +87,28 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
+        <Typography variant="h3" sx={{ mb: 5 }}>
+          Hi! Vendor, Welcome.
+        </Typography>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome Vendor {name}.
+          Today's Menu
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Mess" total={messName} icon={'ant-design:home-filled'} />
+            <AppWidgetSummary title="Breakfast" total={"Dosa"} icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Up Coming Meal" total={"Snacks"} color="info" icon={'ant-design:interaction-twotone'} />
+            <AppWidgetSummary title="Lunch" total={"Sambar ;)"} color="info" icon={'ant-design:interaction-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remainig Balance" total={"35k"} color="warning" icon={'ant-design:money-collect-twotone'} />
+            <AppWidgetSummary title="Snacks" total={"Maggie"} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Balance" total={"70k"} color="error" icon={'ant-design:bank-twotone'} />
+            <AppWidgetSummary title="Dinner" total={"Biryani"} color="error" icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

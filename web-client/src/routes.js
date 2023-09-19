@@ -17,6 +17,9 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 
 import VDashboard from './pages/VendorPages/VDashboard';
+import VHistory from './pages/VendorPages/VHistory';
+import VLiveService from './pages/VendorPages/VLiveService';
+import VStudentList from './pages/VendorPages/VStudentList';
 import VProfile from './pages/VendorPages/VProfile';
 
 import AdminDashboard from './pages/AdminPages/AdminDashboard';
@@ -78,16 +81,20 @@ export default function Router() {
       ],
     },
     {
-      path: '/vendor/dashboard',
+      path: '/vendor',
       element: <VendorDashboardLayout />,
       children: [
         { element: <Navigate to="/vendor/dashboard" /> },
         { path: '', element: <VDashboard /> },
+        { path: 'dashboard', element: <VDashboard /> },
+        { path: 'liveService', element: <VLiveService /> },
+        { path: 'history', element: <VHistory /> },
+        { path: 'studentList', element: <VStudentList /> },
         { path: 'profile', element: <VProfile /> },
       ],
     },
     {
-      path: '/admin/dashboard',
+      path: '/admin',
       element: <AdminDashboardLayout />,
       children: [
         { element: <Navigate to="/admin/dashboard" /> },
