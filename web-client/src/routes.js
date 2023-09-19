@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
+import VendorDashboardLayout from './layouts/vendor';
 //
 import ContactUs from './pages/ContactUs';
 import Profile from './pages/Profile';
@@ -13,8 +14,10 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
+
 import VDashboard from './pages/VendorPages/VDashboard';
 import VProfile from './pages/VendorPages/VProfile';
+
 import AdminDashboard from './pages/AdminPages/AdminDashboard';
 import AdminProfile from './pages/AdminPages/AdminProfile';
 // import { useNavigate } from 'react-router-dom';
@@ -75,7 +78,7 @@ export default function Router() {
     },
     {
       path: '/vendor/dashboard',
-      element: <DashboardLayout />,
+      element: <VendorDashboardLayout />,
       children: [
         { element: <Navigate to="/vendor/dashboard" /> },
         { path: '', element: <VDashboard /> },
