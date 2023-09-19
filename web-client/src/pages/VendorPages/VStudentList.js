@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 // @mui
 import {
   Card,
@@ -145,6 +146,19 @@ export default function VHistory() {
   const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && !!filterName;
+
+  useEffect(()=>{
+    async function fetchList(){
+      try{
+        const res = await axios.post('http://localhost:5000/api/menu/students');
+        console.log(res.data);
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+    fetchList();
+  },[]);
 
   return (
     <>
