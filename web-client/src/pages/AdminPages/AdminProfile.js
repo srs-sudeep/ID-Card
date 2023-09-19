@@ -25,13 +25,8 @@ export default function Profile() {
   const handleOut = async (e) => {
     e.preventDefault();
     localStorage.clear();
-    sessionStorage.clear();
     navigate('/login', { replace: true });
   };
-  const name = localStorage.getItem('name');
-  const email = localStorage.getItem('email');
-  const id = localStorage.getItem('id');
-  const mess = localStorage.getItem('mess');
   return (
     <>
       <Helmet>
@@ -68,7 +63,7 @@ export default function Profile() {
                       <MDBCardText>Full Name</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{name}</MDBCardText>
+                      <MDBCardText className="text-muted">Sudeep Rajan Sahoo</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
@@ -77,7 +72,7 @@ export default function Profile() {
                       <MDBCardText>Email</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{email}</MDBCardText>
+                      <MDBCardText className="text-muted">sudeepranjan@iitbhilai.ac.in</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
@@ -86,7 +81,7 @@ export default function Profile() {
                       <MDBCardText>Mess</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{mess}</MDBCardText>
+                      <MDBCardText className="text-muted">Kumar</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
@@ -95,7 +90,7 @@ export default function Profile() {
                       <MDBCardText>ID</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{id}</MDBCardText>
+                      <MDBCardText className="text-muted">Error 404</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>

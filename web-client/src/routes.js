@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
+import VendorDashboardLayout from './layouts/vendor';
+import AdminDashboardLayout from './layouts/admin';
 //
 import ContactUs from './pages/ContactUs';
 import Profile from './pages/Profile';
@@ -13,6 +15,15 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
+
+import VDashboard from './pages/VendorPages/VDashboard';
+import VHistory from './pages/VendorPages/VHistory';
+import VLiveService from './pages/VendorPages/VLiveService';
+import VStudentList from './pages/VendorPages/VStudentList';
+import VProfile from './pages/VendorPages/VProfile';
+
+import AdminDashboard from './pages/AdminPages/AdminDashboard';
+import AdminProfile from './pages/AdminPages/AdminProfile';
 // import { useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
@@ -52,11 +63,15 @@ export default function Router() {
   }, [navigate]);
   const routes = useRoutes([
     {
+      path: '/login',
+      element: <LoginPage />,
+    },
+    {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" /> },
-        { path: '', element: <DashboardAppPage /> },
+        { path: '', element: <Navigate to="/dashboard/app" /> },
+        // { path: '', element: <DashboardAppPage /> },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
@@ -65,15 +80,35 @@ export default function Router() {
         { path: 'profile', element: <Profile /> },
       ],
     },
+    
     {
-      path: '/login',
-      element: <LoginPage />,
+      path: '/vendor',
+      element: <VendorDashboardLayout />,
+      children: [
+        { path: '', element: <Navigate to="/vendor/dashboard" /> },
+        // { path: '', element: <VDashboard /> },
+        { path: 'dashboard', element: <VDashboard /> },
+        { path: 'liveService', element: <VLiveService /> },
+        { path: 'history', element: <VHistory /> },
+        { path: 'studentList', element: <VStudentList /> },
+        { path: 'profile', element: <VProfile /> },
+      ],
+    },
+    {
+      path: '/admin',
+      element: <AdminDashboardLayout />,
+      children: [
+        { path: '', element: <Navigate to="/admin/dashboard" /> },
+        { path: 'dashboard', element: <AdminDashboard /> },
+        { path: 'profile', element: <AdminProfile /> },
+      ],
     },
     {
       // element: <SimpleLayout />,
       children: [
         { element: <Navigate to="/" /> },
         { path: '', element: <LoginPage /> },
+        {path: '/login',element: <LoginPage />},
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

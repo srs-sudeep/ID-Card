@@ -57,12 +57,10 @@ exports.logIn = async (req, res) => {
     const expirationTimeInSeconds = 1800; // 5 min
     const expirationTime = Math.floor(Date.now() / 1000) + expirationTimeInSeconds;
     const token = jwt.sign({ id: existingUser._id, exp: expirationTime}, process.env.JWT_SECRET);
-
+    const person = existingUser.person;
     res.json({
       token,
-      user: {
-        id: existingUser._id,
-      },
+      person
     });
   } catch (err) {
     console.log('there is error in catch block');

@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-// components
-import Iconify from '../components/iconify';
+
 // sections
 import {
   AppTasks,
@@ -22,7 +20,7 @@ import {
   AppWidgetSummary,
   AppCurrentSubject,
   AppConversionRates,
-} from '../sections/@dashboard/app';
+} from '../../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
@@ -34,14 +32,12 @@ export default function DashboardAppPage() {
   const [messName, setMessName] = useState('');
   const [addOn, setAddOn] = useState('');
   const [basic, setBasic] = useState('');
-
   useEffect(() => {
     async function fetchData() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
         const person = localStorage.getItem("person");
-        // console.log('token', token,'person', person);
         if (!token) {
           navigate('/login', { replace: true });
         }
@@ -55,25 +51,17 @@ export default function DashboardAppPage() {
 
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
-        if(person !== 'Student')
+        if(person !== 'Admin')
           navigate('/login', { replace: true });
-
         localStorage.setItem('email', user.email);
-        localStorage.setItem('mess', user.mess);
         localStorage.setItem('name', user.name);
-        localStorage.setItem('id', user.id);
         setName(user.name);
-        setMessName(user.mess);
-        setAddOn(user.remaining_amount);
-        setBasic(user.total_amount);
-        // setUser(user);
-        // }
-        // Make a request to the protected API route using Axios
 
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
         localStorage.clear();
+        sessionStorage.clear();
         if (error.response && error.response.data && error.response.data.msg) {
           const errorMessage = error.response.data.msg;
           // Display the error message to the user (e.g., using an alert or on the UI)
@@ -94,12 +82,12 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | IIT Bhilai Dining Page </title>
+        <title> Admin Dashboard | IIT Bhilai Dining Page </title>
       </Helmet>
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome {name}.
+          Welcome {name}
         </Typography>
 
         <Grid container spacing={3}>

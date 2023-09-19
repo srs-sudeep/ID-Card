@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-// components
-import Iconify from '../components/iconify';
+
 // sections
 import {
   AppTasks,
@@ -22,7 +20,7 @@ import {
   AppWidgetSummary,
   AppCurrentSubject,
   AppConversionRates,
-} from '../sections/@dashboard/app';
+} from '../../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
@@ -31,49 +29,37 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const [userId, setUser] = useState(null); // State to store user info
   const [name, setName] = useState('');
-  const [messName, setMessName] = useState('');
-  const [addOn, setAddOn] = useState('');
-  const [basic, setBasic] = useState('');
-
+ 
   useEffect(() => {
     async function fetchData() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
         const person = localStorage.getItem("person");
-        // console.log('token', token,'person', person);
         if (!token) {
           navigate('/login', { replace: true });
         }
         // else{
         const response = await axios.get("http://localhost:5000/api/auth/verify", {
           headers: {
-            "x-auth-token": token,
-            "person": person // Pass the JWT token in the request header
+            "x-auth-token": token, 
+            "person": person// Pass the JWT token in the request header
           },
         });
-
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
-        if(person !== 'Student')
+        if(person !== 'Vendor')
           navigate('/login', { replace: true });
-
         localStorage.setItem('email', user.email);
-        localStorage.setItem('mess', user.mess);
         localStorage.setItem('name', user.name);
-        localStorage.setItem('id', user.id);
+        // localStorage.setItem('mess', user.mess);
         setName(user.name);
-        setMessName(user.mess);
-        setAddOn(user.remaining_amount);
-        setBasic(user.total_amount);
-        // setUser(user);
-        // }
-        // Make a request to the protected API route using Axios
 
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
         localStorage.clear();
+        sessionStorage.clear();
         if (error.response && error.response.data && error.response.data.msg) {
           const errorMessage = error.response.data.msg;
           // Display the error message to the user (e.g., using an alert or on the UI)
@@ -94,29 +80,33 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | IIT Bhilai Dining Page </title>
+        <title> Vendor Dashboard | IIT Bhilai Dining Page </title>
       </Helmet>
 
       <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
+
+        <Typography variant="h3" sx={{ mb: 5 }}>
           Hi, Welcome {name}.
+        </Typography>
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Today's Menu
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Mess" total={messName} icon={'ant-design:home-filled'} />
+            <AppWidgetSummary title="Breakfast" total="Dosa" icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Up Coming Meal" total={"Snacks"} color="info" icon={'ant-design:interaction-twotone'} />
+            <AppWidgetSummary title="Lunch" total={"Sambar ;)"} color="info" icon={'ant-design:interaction-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remainig Balance" total={"35k"} color="warning" icon={'ant-design:money-collect-twotone'} />
+            <AppWidgetSummary title="Snacks" total={"Maggie"} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Balance" total={"70k"} color="error" icon={'ant-design:bank-twotone'} />
+            <AppWidgetSummary title="Dinner" total={"Biryani"} color="error" icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
