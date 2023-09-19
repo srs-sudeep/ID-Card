@@ -101,7 +101,7 @@ export default function AccountPopover() {
               onClick={(e) => {
                 e.preventDefault();
                 setOpen(null);
-                navigate(`../dashboard/${option.reDirect}`, { replace: true });
+                navigate(`../vendor/${option.reDirect}`, { replace: true });
               }}
             >
               {option.label}

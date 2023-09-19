@@ -26,7 +26,7 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ name, price, category, type, time }) {
   // const { names, cover, prices, colors, status, priceSale } = product;
-  console.log(category);
+  // console.log(category);
   const col = type === "Veg" ?  ["green"] :["red"] ;
   return (
     <Card  sx={{ minWidth: 275 ,marginBottom:10}}>

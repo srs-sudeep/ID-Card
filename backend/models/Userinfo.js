@@ -6,7 +6,7 @@ const userinfoSchema = new mongoose.Schema({
     email : {type : String, required : true , default : "nishant@gmail.com"},
     mess : {type : String, default :"Galav"},
     remaining_amount :{type : Number, default : 1000},
-    total_amout : {type : Number , default : 20000}
+    total_amount : {type : Number , default : 20000}
 });
 
 // userinfoSchema.save()

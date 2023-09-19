@@ -78,6 +78,7 @@ function applySortFilter(array, comparator, query) {
 
 export default function UserPage() {
   const [txn, setTxn]= useState('');
+  const [firstVisitH, setFirstVisitH] = useState(true);
     useEffect(()=>{
       const id = localStorage.getItem('id');
       async function txnData(){
@@ -91,7 +92,12 @@ export default function UserPage() {
           console.log(error);
         }
       }
+      const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
+    if (!hasVisitedBeforeH) {
       txnData();
+      setFirstVisitH(false);
+      sessionStorage.setItem('hasVisitedPageH', 'true');
+    }
     },[]);
   // console.log(USERLIST)
 

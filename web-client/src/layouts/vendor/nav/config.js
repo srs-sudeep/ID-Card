@@ -26,11 +26,11 @@ const navConfig = [
     path: '/vendor/studentList',
     icon: icon('ic_blog'),
   },
-  // {
-  //   title: '',
-  //   path: '/dashboard/contactUs',
-  //   icon: icon('ic_blog'),
-  // },
+  {
+    title: 'Menu',
+    path: '/vendor/menu',
+    icon: icon('ic_cart'),
+  },
   {
     title: 'Profile',
     path: '/vendor/profile',
