@@ -17,8 +17,9 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 
 import VDashboard from './pages/VendorPages/VDashboard';
-import VHistory from './pages/VendorPages/VHistory';
 import VLiveService from './pages/VendorPages/VLiveService';
+import VHistory from './pages/VendorPages/VHistory';
+import VMenu from './pages/VendorPages/VMenu';
 import VStudentList from './pages/VendorPages/VStudentList';
 import VProfile from './pages/VendorPages/VProfile';
 
@@ -100,6 +101,7 @@ export default function Router() {
         { path: 'dashboard', element: <VDashboard /> },
         { path: 'liveService', element: <VLiveService /> },
         { path: 'history', element: <VHistory /> },
+        { path: 'menu', element: <VMenu /> },
         { path: 'studentList', element: <VStudentList /> },
         { path: 'profile', element: <VProfile /> },
       ],
