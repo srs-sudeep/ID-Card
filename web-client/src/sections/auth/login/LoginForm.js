@@ -17,9 +17,13 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
+    const token = localStorage.getItem('jwtToken');
+    const person = localStorage.getItem('person');
     if (token) {
-      navigate('/dashboard/app', { replace: true });
+      if(person === 'Student')
+        navigate('/dashboard/app', { replace: true });
+      else if(person === 'Vendor')
+      navigate('vendor/dashboard/', { replace: true });
     }
     else {
       navigate('/login', { replace: true });
@@ -31,9 +35,14 @@ export default function LoginForm() {
     // e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
-      // console.log(response.data.token);
+      // console.log(response.data.person);
       localStorage.setItem("jwtToken", response.data.token);
-      navigate('/dashboard/app', { replace: true });
+      localStorage.setItem("person", response.data.person);
+      if(response.data.person === 'Student')
+        navigate('/dashboard/app', { replace: true });
+      else if(response.data.person === 'Vendor')
+        navigate('/vendor/dashboard', { replace: true });
+
     } catch (error) {
       // Handle error response here
       if (error.response && error.response.data && error.response.data.msg) {

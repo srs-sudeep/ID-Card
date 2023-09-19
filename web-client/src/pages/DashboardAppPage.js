@@ -39,18 +39,25 @@ export default function DashboardAppPage() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
+        const person = localStorage.getItem("person");
+        // console.log('token', token,'person', person);
         if (!token) {
           navigate('/login', { replace: true });
         }
         // else{
         const response = await axios.get("http://localhost:5000/api/auth/verify", {
           headers: {
-            "x-auth-token": token, // Pass the JWT token in the request header
+            "x-auth-token": token,
+            "person": person // Pass the JWT token in the request header
           },
         });
 
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
+        console.log(user);
+        if(person !== 'Student')
+          navigate('/login', { replace: true });
+
         localStorage.setItem('email', user.email);
         localStorage.setItem('mess', user.mess);
         localStorage.setItem('name', user.name);

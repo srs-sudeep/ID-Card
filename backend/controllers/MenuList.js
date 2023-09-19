@@ -57,7 +57,7 @@ const menuList = async (req, res) => {
     else if (mess == 'Kumar Mess')
       menuData = await kumarMenu.find({}).exec();
     else
-      menuData = await saiMenu.d({}).exec();
+      menuData = await saiMenu.find({}).exec();
 
     return res.json(menuData);
 
