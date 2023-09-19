@@ -36,12 +36,13 @@ import Accordian from "../components/Accordian";
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Date', alignRight: false },
-  { id: 'company', label: 'Breakfast', alignRight: false },
-  { id: 'role', label: 'Lunch', alignRight: false },
-  { id: 'isVerified', label: 'Snacks', alignRight: false },
-  { id: 'status', label: 'Dinner', alignRight: false },
-  { id: 'total', label : 'Total', alignRight: false }
+  { id: 'to', label: 'To', alignRight: false },
+  { id: 'from', label: 'From', alignRight: false },
+  { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'type', label: 'Type', alignRight: false },
+  { id: 'date', label: 'Date', alignRight: false },
+  { id: 'mode', label : 'Mode', alignRight: false },
+  { id: 'ref', label : 'Reference', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -84,7 +85,7 @@ export default function UserPage() {
         try{
         const res = await axios.post('http://localhost:5000/api/txn/history',{id});
         setTxn(res.data);
-        console.log(res.data);
+        localStorage.setItem('txn',res.data);
         }
         catch(error){
           console.log("Error fetching transaction");
@@ -98,6 +99,7 @@ export default function UserPage() {
       sessionStorage.setItem('hasVisitedPageH', 'true');
     }
     },[]);
+  // console.log(USERLIST)
 
 
   const [open, setOpen] = useState(null);
@@ -171,6 +173,14 @@ export default function UserPage() {
   const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && !!filterName;
+ 
+    // console.log(txn[0]);
+    // txn.map((numb, index) => (
+    //   console.log(numb.account_from);
+    //   // return  numb ;
+    // ));
+
+  
 
   return (
     <>
