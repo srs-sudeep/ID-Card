@@ -92,7 +92,7 @@ export default function Router() {
     },
     
     {
-      path: '/vendor',
+      path: '/vendor/',
       element: <VendorDashboardLayout />,
       children: [
         { path: '', element: <Navigate to="/vendor/dashboard" /> },
