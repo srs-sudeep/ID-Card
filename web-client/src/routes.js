@@ -6,7 +6,7 @@ import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
 //
 import ContactUs from './pages/ContactUs';
-import Settings from './pages/Settings';
+import Profile from './pages/Profile';
 import Payment from './pages/Payment';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
@@ -47,6 +47,8 @@ export default function Router() {
         navigate('/login', { replace: true });
       }
     }
+    if(!window.location.pathname === '/login')
+      validation();
   }, [navigate]);
   const routes = useRoutes([
     {
@@ -60,7 +62,7 @@ export default function Router() {
         { path: 'products', element: <ProductsPage /> },
         { path: 'contactUs', element: <ContactUs /> },
         { path: 'payment', element: <Payment /> },
-        { path: 'settings', element: <Settings /> },
+        { path: 'profile', element: <Profile /> },
       ],
     },
     {

@@ -20,11 +20,16 @@ export default function ProductsPage() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
-
+  const [firstVisit, setFirstVisit] = useState(true);
   useEffect(() => {
     async function menuList(){
       try {
-        const response = await axios.get('http://localhost:5000/api/menu/list');
+        const mess = localStorage.getItem('mess');
+        const response = await axios.get('http://localhost:5000/api/menu/list',{
+          headers: {
+            "messName": mess,
+          },
+        });
         // console.log("response", response);
         const data = await response.data;
         localStorage.setItem('menu', data);
@@ -35,8 +40,14 @@ export default function ProductsPage() {
         console.log(error);
       }
     }
-    menuList();
-  });
+    const hasVisitedBefore = sessionStorage.getItem('hasVisitedPage');
+    if (!hasVisitedBefore){
+      menuList();
+      setFirstVisit(false);
+      sessionStorage.setItem('hasVisitedPage', 'true');
+    }
+
+  },[]);
 
   return (
     <>

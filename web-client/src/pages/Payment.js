@@ -20,7 +20,7 @@
 
 //   return (
 //     <>
-      
+
 //     <Helmet>
 //         <title> Payment | IIT Bhilai Dining Page </title>
 //     </Helmet>
@@ -55,6 +55,7 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
+import { Helmet } from 'react-helmet-async';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -67,6 +68,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+
 
 function Copyright() {
   return (
@@ -107,6 +109,9 @@ export default function Payment() {
 
   return (
     <>
+      <Helmet>
+        <title> Payment Page | IIT Bhilai Dinning System </title>
+      </Helmet>
       <CssBaseline />
       <AppBar
         position="absolute"
@@ -141,9 +146,8 @@ export default function Payment() {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Your order number is #2001539. We have emailed your order confirmation, and will send you an update when
+                your order has shipped.
               </Typography>
             </>
           ) : (
@@ -156,11 +160,7 @@ export default function Payment() {
                   </Button>
                 )}
 
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
+                <Button variant="contained" onClick={handleNext} sx={{ mt: 3, ml: 1 }}>
                   {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                 </Button>
               </Box>

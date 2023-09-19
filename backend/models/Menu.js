@@ -17,6 +17,11 @@ const daySchema = new mongoose.Schema({
   meals: [mealSchema],
 });
 
-const Menu = mongoose.model('Menu', daySchema);
+const galavMenu = mongoose.model('Menu', daySchema,'Galav Mess');
+const kumarMenu = mongoose.model('Menu', daySchema,'Kumar Mess');
+const saiMenu = mongoose.model('Menu', daySchema,'Sri Sai Mess');
 
-module.exports = Menu;
+module.exports.galavMenu = galavMenu;
+module.exports.kumarMenu = kumarMenu;
+module.exports.saiMenu = saiMenu;
+

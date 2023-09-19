@@ -1,5 +1,5 @@
 // const mongoose = require('../index');
-const Menu = require('../models/Menu');
+const { galavMenu, kumarMenu, saiMenu } = require('../models/Menu');
 
 // const menuData = new Menu({
 
@@ -44,20 +44,27 @@ const Menu = require('../models/Menu');
 //   .catch((err) => {
 //     console.error('Error saving menu data:', err);
 //   })
-  // .finally(() => {
-  //   mongoose.disconnect(); // Close the database connection
-  // });
+// .finally(() => {
+//   mongoose.disconnect(); // Close the database connection
+// });
 
 const menuList = async (req, res) => {
-  try{
-    await Menu.find({})
-    .then((menuData) => {
-      return res.json(menuData);
-    })
+  const mess = req.header("messName");
+  try {
+    let menuData = null;
+    if (mess == 'Galav Mess')
+      menuData = await galavMenu.find({}).exec();
+    else if (mess == 'Kumar Mess')
+      menuData = await kumarMenu.find({}).exec();
+    else
+      menuData = await saiMenu.d({}).exec();
+
+    return res.json(menuData);
+
   }
-  catch(error){
+  catch (error) {
     console.log(error);
-    return res.status(500).json({msg:'menu error'});
+    return res.status(500).json({ msg: 'menu error' });
   }
 }
 

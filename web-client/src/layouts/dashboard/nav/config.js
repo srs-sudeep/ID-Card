@@ -32,8 +32,8 @@ const navConfig = [
     icon: icon('ic_blog'),
   },
   {
-    title: 'Settings',
-    path: '/dashboard/settings',
+    title: 'Profile',
+    path: '/dashboard/profile',
     icon: icon('ic_lock'),
   },
 ];

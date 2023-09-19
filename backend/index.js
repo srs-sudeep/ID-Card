@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
-const Menu = require('./models/Menu');
-const userInfo = require('./models/Userinfo');
+// const Menu = require('./models/Menu');
+// const userInfo = require('./models/Userinfo');
+
 
 const app = express();
 app.use(cors());
@@ -14,29 +15,33 @@ app.use(passport.initialize());
 // Import API routes
 const authRoutes = require("./routes/auth");
 // const { signUp, logIn } = require("./controllers/auth");
-const menu =require('./routes/menuRoute');
+const menu = require("./routes/menuRoute");
 
 // Connect to MongoDB Atlas
-mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mongodb.net/test?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("Connected to MongoDB Atlas"))
-.catch((err) => console.log("Error connecting to MongoDB Atlas:", err));
+mongoose
+  .connect(
+    "mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mongodb.net/test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch((err) => console.log("Error connecting to MongoDB Atlas:", err));
 // console.log(mongoose.);
 
 // const userinfo = new userInfo(
 //   {
 //   id : "12241180",
-//   name :"Nishant", 
+//   name :"Nishant",
 //   email : "nishant@gmail.com",
 //   mess : "Galav",
 //   remaining_amount : 10000,
 //   total_amout : 20000
-// }
+// },
 //  {
 //    id : "12241190",
-//    name :"Nishchay", 
+//    name :"Nishchay",
 //    email : "nishchay@gmail.com",
 //    mess : "Shree sai",
 //    remaining_amount : 1000,
@@ -64,36 +69,35 @@ mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mong
 // mongoose.model("userinfo", userinfoSchema);
 // mongoose.save();
 
-
 // const menuData = new Menu({
 //   name: 'Monday',
 //   meals: [
 //     {
 //       type: 'Breakfast',
 //       items: [
-//         { name: 'Scrambled Eggs', price: 5.99 },
-//         { name: 'Toast', price: 2.99 },
+//         { name: 'Scrambled Eggs', price: 5.99, type: 'NonVeg', category: 'AddOn'},
+//         { name: 'Toast', price: 2.99, type: 'Veg', category: 'Basic' },
 //       ],
 //     },
 //     {
 //       type: 'Lunch',
 //       itmes: [
-//         {name: 'Rice', price: 20},
-//         {name: 'Dal', price: 15},
+//         {name: 'Rice', price: 20, type: 'Veg', category: 'Basic'},
+//         {name: 'Dal', price: 15, type: 'Veg', category: 'Basic'},
 //       ]
 //     },
 //     {
 //       type: 'Snacks',
 //       items: [
-//         {name: 'Tea', price: 7},
-//         {name: 'Maggie', price: 15}
+//         {name: 'Tea', price: 7, type: 'Veg', category: 'AddOn'},
+//         {name: 'Maggie', price: 15, type: 'Veg', category: 'AddOn'}
 //       ]
 //     },
 //     {
 //       type: 'Dinner',
 //       items: [
-//         {name: 'Roti', price: 15},
-//         {name: 'Matar Paneer', price: 30}
+//         {name: 'Roti', price: 15, type: 'Veg', category: 'Basic'},
+//         {name: 'Matar Paneer', price: 30, type: 'Veg', category: 'AddOn'}
 //       ]
 //     }
 //   ],
@@ -110,7 +114,7 @@ mongoose.connect("mongodb+srv://nishchayr:Ou0W2oqa7q0J6YQ9@cluster0.vxa7fey.mong
 
 // Use API routes
 app.use("/api/auth", authRoutes);
-app.use("/api/menu", menu)
+app.use("/api/menu", menu);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

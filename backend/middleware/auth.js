@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require('jsonwebtoken');
 const jwt_decode = require('jwt-decode');
+const userData = require('../controllers/userData');
 
 
 const auth = async (req, res, next) => {
@@ -18,14 +19,14 @@ const auth = async (req, res, next) => {
         const verified = jwt.verify(token, process.env.JWT_SECRET);
         if (!verified) {
             localStorage.clear();
+            sessionStorage.clear();
             return res.status(401).json({ msg: "Token verification failed, authorization denied" });
         }
         const user = await User.findById(verified.id);
         // req.user = verified.id;
         if (!user) return res.status(404).json({ msg: 'User not found' });
-        User.updateOne({ user });
-        // Include the entire user object in the response
-        res.json({ user });
+        const userInfo = await userData(String(user.userId));
+        res.json({ userInfo });
         next();
     } catch (err) {
         // console.log(err);
