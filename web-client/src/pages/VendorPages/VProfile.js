@@ -25,8 +25,10 @@ export default function Profile() {
   const handleOut = async (e) => {
     e.preventDefault();
     localStorage.clear();
+    sessionStorage.clear();
     navigate('/login', { replace: true });
   };
+  const name = localStorage.getItem('name');
   return (
     <>
       <Helmet>
@@ -63,7 +65,7 @@ export default function Profile() {
                       <MDBCardText>Mess Name</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">Kumar</MDBCardText>
+                      <MDBCardText className="text-muted">{name}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
