@@ -80,11 +80,13 @@ export default function Router() {
         { path: 'profile', element: <Profile /> },
       ],
     },
+    
     {
+      path: '/vendor',
       path: '/vendor',
       element: <VendorDashboardLayout />,
       children: [
-        { element: <Navigate to="/vendor/dashboard" /> },
+        { element: <Navigate to="/vendor" /> },
         { path: '', element: <VDashboard /> },
         { path: 'dashboard', element: <VDashboard /> },
         { path: 'liveService', element: <VLiveService /> },
@@ -107,6 +109,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/" /> },
         { path: '', element: <LoginPage /> },
+        {path: '/login',element: <LoginPage />},
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

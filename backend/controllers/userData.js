@@ -1,13 +1,17 @@
 const userInfo = require('../models/Userinfo');
+const vendor = require('../models/vendors');
 
+async function userData(Id, person) {
+    try {
+        let data = null;
+        if (person === 'Student')
+            data = await userInfo.findOne({ id: Id });
+        else if (person === 'Vendor')
+            data = await vendor.findOne({ id: Id });
 
-async function userData(Id){
-    try{
-       const user = await userInfo.findOne({id: Id});
-    //    console.log('hi',user);
-       return user;
+           return data;
     }
-    catch(error){
+    catch (error) {
         return error;
     }
 }

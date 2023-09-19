@@ -29,32 +29,35 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const [userId, setUser] = useState(null); // State to store user info
   const [name, setName] = useState('');
-  const [messName, setMessName] = useState('');
-  const [addOn, setAddOn] = useState('');
-  const [basic, setBasic] = useState('');
+  // const [messName, setMessName] = useState('');
+  // const [addOn, setAddOn] = useState('');
+  // const [basic, setBasic] = useState('');
   useEffect(() => {
     async function fetchData() {
       try {
         // Get the JWT token from local storage (or wherever you store it)
         const token = localStorage.getItem("jwtToken");
+        const person = localStorage.getItem("person");
         if (!token) {
           navigate('/login', { replace: true });
         }
         // else{
         const response = await axios.get("http://localhost:5000/api/auth/verify", {
           headers: {
-            "x-auth-token": token, // Pass the JWT token in the request header
+            "x-auth-token": token, 
+            "person": person// Pass the JWT token in the request header
           },
         });
-
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
+        if(person !== 'Vendor')
+          navigate('/login', { replace: true });
         localStorage.setItem('email', user.email);
-        localStorage.setItem('mess', user.mess);
+        // localStorage.setItem('mess', user.mess);
         setName(user.name);
-        setMessName(user.mess);
-        setAddOn(user.remaining_amount);
-        setBasic(user.total_amount);
+        // setMessName(user.mess);
+        // setAddOn(user.remaining_amount);
+        // setBasic(user.total_amount);
         // setUser(user);
         // }
         // Make a request to the protected API route using Axios
@@ -91,12 +94,12 @@ export default function DashboardAppPage() {
           Hi! Vendor, Welcome.
         </Typography>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Today's Menu
+          Hi, Welcome {name}.
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Breakfast" total={"Dosa"} icon={'ant-design:home-filled'} />
+            <AppWidgetSummary title="Mess" total="" icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
