@@ -24,14 +24,11 @@ function getCurrentDay() {
   return daysOfWeek[currentDayIndex];
 }
 export default function ProductsPage() {
-
-
-  const [day , setday] = useState(getCurrentDay());
+  const [day, setday] = useState(getCurrentDay());
   const [openFilter, setOpenFilter] = useState(false);
   const [menu, setMenu] = useState([]);
   const [todaymenu, updtmenu] = useState([]);
   const [firstVisit, setFirstVisit] = useState(true);
-
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -59,11 +56,11 @@ export default function ProductsPage() {
     }
 
     // console.log(menu);
-    
+
     // const hasVisitedBefore = sessionStorage.getItem('hasVisitedPage');
     // if (!hasVisitedBefore){
     menuList();
-    
+
     //   setFirstVisit(false);
     //   sessionStorage.setItem('hasVisitedPage', 'true');
     // }
@@ -74,7 +71,7 @@ export default function ProductsPage() {
     //   // Iterate through the meals array for each document
     //   day.meals.forEach((meal) => {
     //     console.log(`Meal Type: ${meal.type}`);
-    
+
     //     // Iterate through the items array for each meal
     menu.forEach((d, index) => {
       // console.log(d);
@@ -92,16 +89,13 @@ export default function ProductsPage() {
     // });
   }, []);
 
-  
   // menu.forEach((d) => {
   //   if (d.name === day) {
   //     updtmenu(d.meals);
   //   }
   // });
 
-  
   useEffect(() => {
-    
     // console.log('hwllo');
     menu.forEach((d, index) => {
       // console.log(d);
@@ -114,10 +108,7 @@ export default function ProductsPage() {
     });
   }, [day]);
 
-
   console.log(todaymenu);
-  
-  
 
   // menu = localStorage.getItem('menu');
   // console.log(menu);
@@ -153,41 +144,40 @@ export default function ProductsPage() {
         {/* {menu.map((day, index) => (
           <div key={index}>
             <ul> */}
-              <Typography variant="h3" style={{color:'#2b2c30'}}>{day}</Typography>
-              {/* {todaymenu.map((meal, mealIndex) => ( */}
-                {/* <div key={mealIndex}> */}
-                  {todaymenu.map((item, itemIndex) => (
+        <Typography variant="h3" style={{ color: '#2b2c30' }}>
+          {day}
+        </Typography>
+        {/* {todaymenu.map((meal, mealIndex) => ( */}
+        {/* <div key={mealIndex}> */}
+        {todaymenu.map((item, itemIndex) => (
+          <>
+            <Typography
+              variant="h4"
+              my={'20px'}
+              style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+            >
+              {/* {meal.type}{' '} */}
+            </Typography>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+              <h1>{item.type}</h1>
+              {/* <br/> */}
 
-                  <Typography
-                    variant="h4"
-                    my={'20px'}
-                    style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
-                  >
-                    {meal.type}{' '}
-                  </Typography>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
-                    <h1>{item.type}</h1>
-                     {/* <br/> */}
-                      
-                                        
-                   { item.items.map((i, index) => (
-                      <ProductCard
-                        key={index}
-                        name={i.name}
-                        price={i.price}
-                        category={i.category}
-                        type={i.type}
-                        time={item.type}
-                      />
-                    ))}
-                  </div>
-                  <hr />
-                  ))}
-
-                {/* </div>
-              ))}  */}
-            {/* </ul> */}
-          {/* </div> */}
+              {item.items.map((i, index) => (
+                <ProductCard
+                  key={index}
+                  name={i.name}
+                  price={i.price}
+                  category={i.category}
+                  type={i.type}
+                  time={item.type}
+                />
+              ))}
+            </div>
+            <hr />
+          </>
+        ))}
+        {/* </ul> */}
+        {/* </div> */}
         {/* ))} */}
         {/* </Grid> */}
 
