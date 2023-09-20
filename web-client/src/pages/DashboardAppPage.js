@@ -39,16 +39,16 @@ export default function DashboardAppPage() {
   const [menu, setMenu] = useState([]);
   const [todaymenu, updtmenu] = useState([]);
 
-  function formatNumber(num) {
-    if (num >= 1000 && num < 1000000) {
-      return `${(num / 1000)}k`;
-    }
-    if (num >= 1000000) {
-      return `${(num / 1000000)}M`;
-    }
-    return num.toString();
-  }
-  const formattedTotalAmount = formatNumber(totalAmount);
+  // function formatNumber(num) {
+  //   if (num >= 1000 && num < 1000000) {
+  //     return `${(num / 1000)}k`;
+  //   }
+  //   if (num >= 1000000) {
+  //     return `${(num / 1000000)}M`;
+  //   }
+  //   return num.toString();
+  // }
+  // const formattedTotalAmount = formatNumber(totalAmount);
 
   // async function menuList() {
   //   try {
@@ -170,11 +170,22 @@ export default function DashboardAppPage() {
       sumsByDate[trnsDate] = parseFloat(item.amount); // Initialize the sum for the date
     }
   });
-  
+  const basicConsumed = (txn.reduce((count, item) => (item.amount === '0' ? count + 1 : count), 0))*48;
+  function countDays() {
+    // Define the start date (August 2nd)
+    const startDate = new Date('2023-08-02');    
+    // Get the current date
+    const currentDate = new Date();    
+    // Calculate the time difference in milliseconds
+    const timeDifference = currentDate - startDate;
+    // Calculate the number of days by dividing milliseconds by (1000ms * 60s * 60min * 24h)
+    const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    return numberOfDays;
+  }
+  const basicTotal = countDays()*96;
   // Convert the sumsByDate object into an array of objects with date and sum
   const sumsArray = Object.keys(sumsByDate).map(date => sumsByDate[date]);
   const amtSum = txn.reduce((sum, item) => sum + parseFloat(item.amount), 0);
-  console.log(amtSum);
   return (
     <>
       <Helmet>
@@ -196,16 +207,16 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remainig Balance" total={totalAmount-amtSum} color="warning" icon={'ant-design:money-collect-twotone'} />
+            <AppWidgetSummary title="Remaining Add On" total={totalAmount-amtSum} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Balance" total={formattedTotalAmount} color="error" icon={'ant-design:bank-twotone'} />
+            <AppWidgetSummary title="Total Add On" total={totalAmount} color="error" icon={'ant-design:bank-twotone'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Add On"
+              title="Daily Add On"
               subheader="Last 7 Days"
               chartData={[
                 // {
@@ -229,8 +240,8 @@ export default function DashboardAppPage() {
             <AppCurrentVisits
               title="Dinning Chart"
               chartData={[
-                { label: 'Basic Consumed', value: 4344 },
-                { label: 'Basic Wasted', value: 5435 },
+                { label: 'Basic Consumed', value: basicConsumed },
+                { label: 'Basic Wasted', value: basicTotal-basicConsumed },
                 { label: 'Add-On Consumed', value: amtSum },
                 { label: 'Add-On Left', value: totalAmount-amtSum },
               ]}
