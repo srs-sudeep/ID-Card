@@ -4,7 +4,8 @@ import Button from '@mui/material/Button';
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
+import axios from 'axios';
 import {
   Card,
   Table,
@@ -34,12 +35,13 @@ import USERLIST from '../../_mock/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Date', alignRight: false },
-  { id: 'company', label: 'Breakfast', alignRight: false },
-  { id: 'role', label: 'Lunch', alignRight: false },
-  { id: 'isVerified', label: 'Snacks', alignRight: false },
-  { id: 'status', label: 'Dinner', alignRight: false },
-  { id: 'total', label: 'Total', alignRight: false },
+  { id: 'date', label: 'Date', alignRight: false },
+  { id: 'to', label: 'To', alignRight: false },
+  { id: 'from', label: 'From', alignRight: false },
+  { id: 'amount', label: 'Amount', alignRight: false },
+  { id: 'type', label: 'Type', alignRight: false },
+  { id: 'mode', label: 'Mode', alignRight: false },
+  { id: 'ref', label: 'Reference', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -67,12 +69,56 @@ function applySortFilter(array, comparator, query) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
+
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    query = query.toLowerCase(); // Convert query to lowercase for case-insensitive search
+    return stabilizedThis.filter(([user]) => {
+      return Object.values(user).some((value) => {
+        if (typeof value === 'string') {
+          // If the value is a string, check if it contains the query
+          return value.toLowerCase().includes(query);
+        } 
+        else if (typeof value === 'number') {
+          // If the value is a number, convert it to a string and check
+          return value.toString().includes(query);
+        }
+        // For other data types, skip the filter
+        return false;
+      });
+    }).map(([user]) => user);
   }
-  return stabilizedThis.map((el) => el[0]);
+
+  return stabilizedThis.map(([el]) => el);
 }
-export default function AdminStudentDetails() {
+
+
+export default function UserPage() {
+  const [txn, setTxn] = useState([]);
+  const [firstVisitH, setFirstVisitH] = useState(true);
+  useEffect(() => {
+    const id = localStorage.getItem('id');
+    async function txnData() {
+      try {
+        const res = await axios.post('http://localhost:5000/api/txn/history', { id });
+        // console.log(res.data);
+        setTxn(res.data);
+        localStorage.setItem('txn', res.data);
+      }
+      catch (error) {
+        console.log("Error fetching transaction");
+        console.log(error);
+      }
+    }
+    const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
+    // if (!hasVisitedBeforeH) {
+    txnData();
+    // setFirstVisitH(false);
+    // sessionStorage.setItem('hasVisitedPageH', 'true');
+    // }
+  }, []);
+  // console.log(USERLIST)
+
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -100,10 +146,19 @@ export default function AdminStudentDetails() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
+  // console.log(txn);
+  const users = txn.map((num, index) => ({
+    accountFrom: num.account_from,
+    accountTo: num.account_to,
+    amount: num.amount,
+    trnsType: num.trns_type,
+    trnsMode: num.trns_mode,
+    trnsDate: String(num.trns_date),
+    trnsRef: num.trns_reference,
+  }));
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = users.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -139,30 +194,37 @@ export default function AdminStudentDetails() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(users, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  // console.log(txn[0]);
+  // txn.map((numb, index) => (
+  //   console.log(numb.account_from);
+  //   // return  numb ;
+  // ));
+
+
+
   return (
     <>
+      <Helmet>
+        <title> History Page | IIT Bhilai Dinning System </title>
+      </Helmet>
+
       <Container>
+        {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" gutterBottom>
+            User
+          </Typography>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            New User
+          </Button>
+        </Stack> */}
+
         <Card>
-          <Stack direction="row" mt='30px' mx={'30px'} style={{display:'flex', justifyContent:'space-between'}}>
-            <Typography style={{}}  variant="h3" gutterBottom>
-              Student List
-            </Typography>
-
-            <Button
-              href="#"
-              style={{ width: '25%', height: '50px', margin: '0px 0%', fontSize: '15px' }}
-              variant="outlined"
-            >
-              Register New Student
-            </Button>
-          </Stack>
-
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
@@ -172,40 +234,43 @@ export default function AdminStudentDetails() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={users.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
+                    const { id, trnsDate, accountFrom, trnsType, accountTo, trnsMode, amount, trnsRef } = row;
+                    const selectedUser = selected.indexOf(trnsDate) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} /> */}
+                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, trnsDate)} /> */}
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {trnsDate}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{company}</TableCell>
+                        <TableCell align="left">{accountTo}</TableCell>
 
-                        <TableCell align="left">{role}</TableCell>
+                        <TableCell align="left">{accountFrom}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{amount}</TableCell>
 
                         <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
+                          <Label>{sentenceCase(trnsType)}</Label>
                         </TableCell>
+                        <TableCell align="center">{trnsMode}</TableCell>
+                        <TableCell align="center">{trnsRef}</TableCell>
+                        {/* <TableCell align="center">{trnsRef}</TableCell> */}
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
@@ -252,7 +317,7 @@ export default function AdminStudentDetails() {
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={USERLIST.length}
+            count={users.length}
             // count={"10"}
             rowsPerPage={rowsPerPage}
             page={page}
@@ -261,6 +326,36 @@ export default function AdminStudentDetails() {
           />
         </Card>
       </Container>
+
+      {/* <Popover
+        open={Boolean(open)}
+        anchorEl={open}
+        onClose={handleCloseMenu}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        PaperProps={{
+          sx: {
+            p: 1,
+            width: 140,
+            '& .MuiMenuItem-root': {
+              px: 1,
+              typography: 'body2',
+              borderRadius: 0.75,
+            },
+          },
+        }}
+      >
+        <MenuItem>
+          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+          Edit
+        </MenuItem>
+
+        <MenuItem sx={{ color: 'error.main' }}>
+          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+          Delete
+        </MenuItem>
+      </Popover> */}
+
     </>
   );
 }
