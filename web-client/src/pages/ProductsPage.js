@@ -61,21 +61,21 @@ export default function ProductsPage() {
   return (
     <>
       <Helmet>
-        <title>Products | IIT Bhilai Dinning System</title>
+        <title>Menu Page | IIT Bhilai Dinning System</title>
       </Helmet>
 
       <Container>
-        <Typography variant="h2" sx={{ mb: 5 }}>
+        <Typography variant="h1" sx={{ mb: 0 }}>
           Menu
         </Typography>
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
+            {/* <ProductFilterSidebar
               openFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
-            />
+            /> */}
             <ProductSort setDay={setday} />
           </Stack>
         </Stack>
@@ -83,7 +83,7 @@ export default function ProductsPage() {
         {/* {menu.map((day, index) => (
           <div key={index}>
             <ul> */}
-        <Typography variant="h3" style={{ color: '#2b2c30' }}>
+        <Typography variant="h2" style={{ color: '#2b2c30' }}>
           {day}
         </Typography>
         {/* {todaymenu.map((meal, mealIndex) => ( */}

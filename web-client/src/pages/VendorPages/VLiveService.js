@@ -194,7 +194,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> History Page | IIT Bhilai Dinning System </title>
+        <title> Live Service Page | IIT Bhilai Dinning System </title>
       </Helmet>
 
       <Container>
