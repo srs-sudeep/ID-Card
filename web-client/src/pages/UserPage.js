@@ -79,7 +79,7 @@ function applySortFilter(array, comparator, query) {
           // If the value is a string, check if it contains the query
           return value.toLowerCase().includes(query);
         } 
-        else if (typeof value === 'number') {
+        if (typeof value === 'number') {
           // If the value is a number, convert it to a string and check
           return value.toString().includes(query);
         }
@@ -88,10 +88,10 @@ function applySortFilter(array, comparator, query) {
       });
     }).map(([user]) => user);
   }
-
+  
   return stabilizedThis.map(([el]) => el);
+  
 }
-
 
 export default function UserPage() {
   const [txn, setTxn] = useState([]);
@@ -244,6 +244,21 @@ export default function UserPage() {
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, trnsDate, accountFrom, trnsType, accountTo, trnsMode, amount, trnsRef } = row;
                     const selectedUser = selected.indexOf(trnsDate) !== -1;
+                    const date = new Date(trnsDate);
+
+                    // Define options for formatting the date
+                    const options = {
+                      year: 'numeric',
+                      month: 'short', // Use 'short' for abbreviated month name
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true // Use 12-hour format with AM/PM
+                    };
+
+                    // Format the date using the options
+                    const formattedDate = date.toLocaleString('en-US', options);
+
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
@@ -255,7 +270,7 @@ export default function UserPage() {
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {trnsDate}
+                              {formattedDate}
                             </Typography>
                           </Stack>
                         </TableCell>
