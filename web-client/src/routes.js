@@ -72,7 +72,7 @@ export default function Router() {
     }
     if(!window.location.pathname === '/login')
       validation();
-  }, [navigate]);
+  }, [navigate, location.pathname]);
   const routes = useRoutes([
     {
       path: '/login',
