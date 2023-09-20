@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
-// const Menu = require('./models/M~enu');
+// const {galavMenu} = require('./models/Menu');
 // const userInfo = require('./models/Userinfo');
 const txn_data = require('./models/CardTransection');
 
@@ -70,38 +70,47 @@ mongoose
 // mongoose.model("userinfo", userinfoSchema);
 // mongoose.save();
 
-// const menuData = new Menu({
-//   name: 'Monday',
+// const menuData = new galavMenu({
+
+  
+//   name: 'Sunday',
 //   meals: [
 //     {
 //       type: 'Breakfast',
 //       items: [
-//         { name: 'Scrambled Eggs', price: 5.99, type: 'NonVeg', category: 'AddOn'},
-//         { name: 'Toast', price: 2.99, type: 'Veg', category: 'Basic' },
+//         { name: 'Pancakes', price: 6.99, type: 'Veg', category: 'AddOn' },
+//         { name: 'Sausage Links', price: 5.99, type: 'NonVeg', category: 'AddOn' },
+//         { name: 'Fruit Salad', price: 4.99, type: 'Veg', category: 'Basic' },
 //       ],
 //     },
 //     {
 //       type: 'Lunch',
-//       itmes: [
-//         {name: 'Rice', price: 20, type: 'Veg', category: 'Basic'},
-//         {name: 'Dal', price: 15, type: 'Veg', category: 'Basic'},
-//       ]
+//       items: [
+//         { name: 'Beef Stew', price: 12.99, type: 'NonVeg', category: 'Basic' },
+//         { name: 'Vegetable Soup', price: 10.99, type: 'Veg', category: 'Basic' },
+//         { name: 'Garlic Bread', price: 3.99, type: 'Veg', category: 'AddOn' },
+//         { name: 'Iced Tea', price: 3.99, type: 'Veg', category: 'Basic' },
+//       ],
 //     },
 //     {
 //       type: 'Snacks',
 //       items: [
-//         {name: 'Tea', price: 7, type: 'Veg', category: 'AddOn'},
-//         {name: 'Maggie', price: 15, type: 'Veg', category: 'AddOn'}
-//       ]
+//         { name: 'Nachos', price: 4.99, type: 'Veg', category: 'AddOn' },
+//         { name: 'Chicken Wings', price: 8.99, type: 'NonVeg', category: 'Basic' },
+//         { name: 'Cucumber Salad', price: 4.99, type: 'Veg', category: 'Basic' },
+//       ],
 //     },
 //     {
 //       type: 'Dinner',
 //       items: [
-//         {name: 'Roti', price: 15, type: 'Veg', category: 'Basic'},
-//         {name: 'Matar Paneer', price: 30, type: 'Veg', category: 'AddOn'}
-//       ]
+//         { name: 'Grilled Salmon', price: 14.99, type: 'NonVeg', category: 'Basic' },
+//         { name: 'Vegetable Stir-Fry', price: 11.99, type: 'Veg', category: 'Basic' },
+//         { name: 'Mashed Potatoes', price: 4.99, type: 'Veg', category: 'AddOn' },
+//         { name: 'Chocolate Cake', price: 6.99, type: 'Veg', category: 'AddOn' },
+//       ],
 //     }
-//   ],
+//   ]
+
 // });
 
 // const menuData = new txn_data({

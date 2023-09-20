@@ -52,8 +52,6 @@ export default function ProductsPage() {
         });
         // console.log("response", response);
         const data = response.data;
-        // localStorage.setItem('menu', data);
-        // console.log(data[0].meals[0].type);
         setMenu(data);
       } catch (error) {
         console.log(error);

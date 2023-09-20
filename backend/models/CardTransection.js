@@ -6,8 +6,10 @@ const transactionSchema = new mongoose.Schema({
     amount : {type : String, required : true},
     trns_type :{type : String , required : true},
     trns_date : {type : Date , required : true},
-    trns_mode : {type : String ,  required : true},
+    food_type : {type : String ,  required : true},
+    trns_at : {type: String, required :true},
     trns_reference : { type : String , required :true , unique : true},
+    category : {type : String, required :true},
     remark : { type : String}
 });
 

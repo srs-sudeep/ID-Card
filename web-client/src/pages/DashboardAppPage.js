@@ -65,7 +65,6 @@ export default function DashboardAppPage() {
           },
         });
 
-        // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
         if(person !== 'Student')
           navigate('/login', { replace: true });
@@ -78,9 +77,7 @@ export default function DashboardAppPage() {
         setMessName(user.mess);
         setRemain(user.remaining_amount);
         setTotal(user.total_amount);
-        // setUser(user);
-        // }
-        // Make a request to the protected API route using Axios
+        
 
 
       } catch (error) {
