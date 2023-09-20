@@ -181,7 +181,6 @@ export default function DashboardAppPage() {
               chartData={[
                 { label: 'Basic Consumed', value: 4344 },
                 { label: 'Basic Wasted', value: 5435 },
-                { label: 'Basic Left', value: 1443 },
                 { label: 'Add-On Consumed', value: 4443 },
                 { label: 'Add-On Left', value: 4443 },
               ]}

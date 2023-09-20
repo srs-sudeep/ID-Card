@@ -85,7 +85,7 @@ export default function ProductsPage() {
       </Helmet>
 
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
+        <Typography variant="h2" sx={{ mb: 5 }}>
           Menu
         </Typography>
 
@@ -103,10 +103,17 @@ export default function ProductsPage() {
         {menu.map((day, index) => (
           <div key={index}>
             <ul>
-              <Typography variant="h1">{day.name}</Typography>
+              <Typography variant="h3" style={{color:'#2b2c30'}}>{day.name}</Typography>
               {day.meals.map((meal, mealIndex) => (
                 <div key={mealIndex}>
-                  <div style={{display:'flex', flexWrap:'wrap', gap: '30px'}}>
+                  <Typography
+                    variant="h4"
+                    my={'20px'}
+                    style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+                  >
+                    {meal.type}{' '}
+                  </Typography>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
                     {meal.items.map((item, itemIndex) => (
                       <ProductCard
                         name={item.name}
@@ -117,6 +124,7 @@ export default function ProductsPage() {
                       />
                     ))}
                   </div>
+                  <hr />
                 </div>
               ))}
             </ul>
