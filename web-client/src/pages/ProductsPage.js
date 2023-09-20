@@ -42,8 +42,6 @@ export default function ProductsPage() {
         });
         // console.log("response", response);
         const data = response.data;
-        // localStorage.setItem('menu', data);
-        // console.log(data[0].meals[0].type);
         setMenu(data);
       } catch (error) {
         console.log(error);
@@ -56,28 +54,9 @@ export default function ProductsPage() {
     //   sessionStorage.setItem('hasVisitedPage', 'true');
     // }
 
-    // menu.forEach((day) => {
-    //   console.log(`Day Name: ${day.name}`);
-
-    //   // Iterate through the meals array for each document
-    //   day.meals.forEach((meal) => {
-    //     console.log(`Meal Type: ${meal.type}`);
-
-    //     // Iterate through the items array for each meal
-    //     meal.items.forEach((item) => {
-    //       console.log(`Item Name: ${item.name}, Price: ${item.price}`);
-    //     });
-    //   });
-    // });
   }, []);
 
-  // menu = localStorage.getItem('menu');
-  // console.log(menu);
-
-  // const meals = menu[0].meals;
-
-  // const menudata = menu[0].meals
-  // console.log(menu[0].meals[0]);
+ 
   return (
     <>
       <Helmet>

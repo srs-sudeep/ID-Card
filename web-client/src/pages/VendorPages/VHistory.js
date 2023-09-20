@@ -39,9 +39,9 @@ const TABLE_HEAD = [
   { id: 'to', label: 'To', alignRight: false },
   { id: 'from', label: 'From', alignRight: false },
   { id: 'amount', label: 'Amount', alignRight: false },
-  { id: 'type', label: 'Type', alignRight: false },
-  { id: 'mode', label : 'Mode', alignRight: false },
-  { id: 'ref', label : 'Reference', alignRight: false }
+  { id: 'type', label: 'Basic/AddOn', alignRight: false },
+  { id: 'mode', label: 'Mode', alignRight: false },
+  { id: 'ref', label: 'Reference', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -77,7 +77,7 @@ function applySortFilter(array, comparator, query) {
         if (typeof value === 'string') {
           // If the value is a string, check if it contains the query
           return value.toLowerCase().includes(query);
-        } 
+        }
         else if (typeof value === 'number') {
           // If the value is a number, convert it to a string and check
           return value.toString().includes(query);
@@ -93,29 +93,29 @@ function applySortFilter(array, comparator, query) {
 
 
 export default function UserPage() {
-  const [txn, setTxn]= useState([]);
+  const [txn, setTxn] = useState([]);
   const [firstVisitH, setFirstVisitH] = useState(true);
-    useEffect(()=>{
-      const id = localStorage.getItem('id');
-      async function txnData(){
-        try{
-        const res = await axios.post('http://localhost:5000/api/txn/history',{id});
+  useEffect(() => {
+    const name = localStorage.getItem('name');
+    async function txnData() {
+      try {
+        const res = await axios.post('http://localhost:5000/api/txn/details', { name });
         // console.log(res.data);
         setTxn(res.data);
-        localStorage.setItem('txn',res.data);
-        }
-        catch(error){
-          console.log("Error fetching transaction");
-          console.log(error);
-        }
+        localStorage.setItem('txn', res.data);
       }
-      const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
-    if (!hasVisitedBeforeH) {
-      txnData();
-      setFirstVisitH(false);
-      sessionStorage.setItem('hasVisitedPageH', 'true');
+      catch (error) {
+        console.log("Error fetching transaction");
+        console.log(error);
+      }
     }
-    },[]);
+    // const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
+    // if (!hasVisitedBeforeH) {
+    txnData();
+    // setFirstVisitH(false);
+    // sessionStorage.setItem('hasVisitedPageH', 'true');
+    // }
+  }, []);
   // console.log(USERLIST)
 
 
@@ -151,7 +151,7 @@ export default function UserPage() {
     accountTo: num.account_to,
     amount: num.amount,
     trnsType: num.trns_type,
-    trnsMode: num.trns_mode,
+    foodMode: num.food_type,
     trnsDate: num.trns_date,
     trnsRef: num.trns_reference,
   }));
@@ -198,14 +198,14 @@ export default function UserPage() {
   const filteredUsers = applySortFilter(users, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && !!filterName;
- 
-    // console.log(txn[0]);
-    // txn.map((numb, index) => (
-    //   console.log(numb.account_from);
-    //   // return  numb ;
-    // ));
 
-    
+  // console.log(txn[0]);
+  // txn.map((numb, index) => (
+  //   console.log(numb.account_from);
+  //   // return  numb ;
+  // ));
+
+
 
   return (
     <>
@@ -240,7 +240,7 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, trnsDate, accountFrom, trnsType, accountTo, trnsMode, amount, trnsRef } = row;
+                    const { id, trnsDate, accountFrom, trnsType, accountTo, foodMode, amount, trnsRef } = row;
                     const selectedUser = selected.indexOf(trnsDate) !== -1;
 
                     return (
@@ -267,7 +267,7 @@ export default function UserPage() {
                         <TableCell align="left">
                           <Label>{sentenceCase(trnsType)}</Label>
                         </TableCell>
-                        <TableCell align="center">{trnsMode}</TableCell>
+                        <TableCell align="center">{foodMode}</TableCell>
                         <TableCell align="center">{trnsRef}</TableCell>
                         {/* <TableCell align="center">{trnsRef}</TableCell> */}
 
@@ -354,7 +354,7 @@ export default function UserPage() {
           Delete
         </MenuItem>
       </Popover> */}
-      
+
     </>
   );
 }
