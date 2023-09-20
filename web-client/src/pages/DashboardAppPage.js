@@ -12,6 +12,7 @@ import { Grid, Container, Typography } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
 // sections
+import trnxList from '../utils/trnxHistory';
 import {
   AppTasks,
   AppNewsUpdate,
@@ -24,12 +25,13 @@ import {
   AppConversionRates,
 } from '../sections/@dashboard/app';
 
+
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const [userId, setUser] = useState(null); // State to store user info
+  const [txn, setTxn] = useState([]); // State to store user info
   const [name, setName] = useState('');
   const [messName, setMessName] = useState('');
   const [remainingAmount, setRemain] = useState('');
@@ -38,7 +40,7 @@ export default function DashboardAppPage() {
   function formatNumber(num) {
     if (num >= 1000 && num < 1000000) {
       return `${(num / 1000)}k`;
-    } 
+    }
     if (num >= 1000000) {
       return `${(num / 1000000)}M`;
     }
@@ -66,7 +68,7 @@ export default function DashboardAppPage() {
         });
 
         const user = response.data.userInfo;
-        if(person !== 'Student')
+        if (person !== 'Student')
           navigate('/login', { replace: true });
 
         localStorage.setItem('email', user.email);
@@ -77,7 +79,10 @@ export default function DashboardAppPage() {
         setMessName(user.mess);
         setRemain(user.remaining_amount);
         setTotal(user.total_amount);
-        
+        const trxnHis = await trnxList(user.id);
+        setTxn(trxnHis);
+        console.log(trxnHis);
+
 
 
       } catch (error) {
@@ -102,14 +107,36 @@ export default function DashboardAppPage() {
   const currentHour = new Date().getHours();
   if (currentHour >= 10 && currentHour < 15)
     meal = 'Lunch';
-  else if(currentHour >= 15 && currentHour < 18)
-  meal = 'Snacks';
-  else if(currentHour >= 18 && currentHour < 22)
+  else if (currentHour >= 15 && currentHour < 18)
+    meal = 'Snacks';
+  else if (currentHour >= 18 && currentHour < 22)
     meal = 'Dinner';
-  else 
+  else
     meal = 'Breakfast';
 
-    
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const isoSevenDaysAgo = sevenDaysAgo.toISOString().split('T')[0]; // Get only the date part
+  const filteredData = txn.filter(item => {
+    const trnsDate = new Date(item.trns_date).toISOString().split('T')[0]; // Get only the date part
+    return trnsDate >= isoSevenDaysAgo && trnsDate <= new Date().toISOString().split('T')[0]; // Get only the date part
+  });
+  const sumsByDate = {};
+
+  filteredData.forEach(item => {
+    const trnsDate = new Date(item.trns_date).toISOString().split('T')[0]; // Get only the date part
+  
+    if (Object.prototype.hasOwnProperty.call(sumsByDate, trnsDate)) {
+      sumsByDate[trnsDate] += parseFloat(item.amount); // Add the amount to the existing sum for the date
+    } else {
+      sumsByDate[trnsDate] = parseFloat(item.amount); // Initialize the sum for the date
+    }
+  });
+  
+  // Convert the sumsByDate object into an array of objects with date and sum
+  const sumsArray = Object.keys(sumsByDate).map(date => sumsByDate[date]);
+  const amtSum = txn.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+  console.log(amtSum);
   return (
     <>
       <Helmet>
@@ -131,7 +158,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remainig Balance" total={remainingAmount} color="warning" icon={'ant-design:money-collect-twotone'} />
+            <AppWidgetSummary title="Remainig Balance" total={totalAmount-amtSum} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
@@ -140,37 +167,25 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Quick Glance"
-              subheader="Previous 7 Days"
-              chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
-              ]}
+              title="Add On"
+              subheader="Last 7 Days"
               chartData={[
+                // {
+                //   name: '',
+                //   type: 'area',
+                //   fill: 'gradient',
+                //   data: [],
+                // },
                 {
                   name: 'Add-On',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Basic',
-                  type: 'line',
+                  type: 'bar', // Change type to 'bar' for histogram
                   fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  data: sumsArray, // Replace with your histogram data
                 },
               ]}
             />
           </Grid>
+
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
@@ -178,8 +193,8 @@ export default function DashboardAppPage() {
               chartData={[
                 { label: 'Basic Consumed', value: 4344 },
                 { label: 'Basic Wasted', value: 5435 },
-                { label: 'Add-On Consumed', value: 4443 },
-                { label: 'Add-On Left', value: 4443 },
+                { label: 'Add-On Consumed', value: amtSum },
+                { label: 'Add-On Left', value: totalAmount-amtSum },
               ]}
               chartColors={[
                 theme.palette.primary.main,
@@ -190,6 +205,7 @@ export default function DashboardAppPage() {
               ]}
             />
           </Grid>
+
 
           {/* <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
