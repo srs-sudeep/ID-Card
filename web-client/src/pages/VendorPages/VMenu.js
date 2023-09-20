@@ -1,20 +1,31 @@
 import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// @mui
 import { Container, Stack, Typography, Grid } from '@mui/material';
-// import {  } from '@mui/material';
-// components
-import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar, ProductCard } from '../../sections/@dashboard/products';
+import {
+  ProductSort,
+  ProductList,
+  ProductCartWidget,
+  ProductFilterSidebar,
+  ProductCard,
+} from '../../sections/@dashboard/products';
+import PRODUCTS from '../../_mock/products';
 
-// import ShopProductCard from '../sections';
-
-// ----------------------------------------------------------------------
-
+function getCurrentDay() {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDate = new Date();
+  const currentDayIndex = currentDate.getDay(); 
+  return daysOfWeek[currentDayIndex];
+}
 export default function ProductsPage() {
-  // let menu = null;
+
+
+  const [day , setday] = useState(getCurrentDay());
   const [openFilter, setOpenFilter] = useState(false);
   const [menu, setMenu] = useState([]);
+  const [todaymenu, updtmenu] = useState([]);
+  const [firstVisit, setFirstVisit] = useState(true);
+
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -23,62 +34,38 @@ export default function ProductsPage() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
-  const [firstVisit, setFirstVisit] = useState(true);
-  useEffect(() => {
-    async function menuList() {
-      try {
-        const mess = localStorage.getItem('mess');
-        const response = await axios.get('http://localhost:5000/api/menu/list', {
-          headers: {
-            "messName": mess,
-          },
-        });
-        // console.log("response", response);
-        const data = response.data;
-        // localStorage.setItem('menu', data);
-        // console.log(data[0].meals[0].type);
-        setMenu(data);
 
+  async function menuList() {
+    try {
+      const mess = localStorage.getItem('name');
+      const response = await axios.get('http://localhost:5000/api/menu/list', {
+        headers: {
+          messName: mess,
+        },
+      });
+      const data = response.data;
+      console.log(data);
 
-      }
-      catch (error) {
-        console.log(error);
-      }
+      setMenu(data);
+    } catch (error) {
+      console.log(error);
     }
-    // const hasVisitedBefore = sessionStorage.getItem('hasVisitedPage');
-    // if (!hasVisitedBefore){
-      menuList();
-    //   setFirstVisit(false);
-    //   sessionStorage.setItem('hasVisitedPage', 'true');
-    // }
-
-    // menu.forEach((day) => {
-    //   console.log(`Day Name: ${day.name}`);
-
-    //   // Iterate through the meals array for each document
-    //   day.meals.forEach((meal) => {
-    //     console.log(`Meal Type: ${meal.type}`);
-
-    //     // Iterate through the items array for each meal
-    //     meal.items.forEach((item) => {
-    //       console.log(`Item Name: ${item.name}, Price: ${item.price}`);
-    //     });
-    //   });
-    // });
-
+  }
+  console.log(menu);
+  useEffect(() => {
+    menuList();
   }, []);
 
+  useEffect(()=>{
+      menu.forEach((d, index) => {
+      if (d.name === day) {
+        updtmenu(d.meals);
+      }
+    });
+  },[menu, day])
 
-  // menu = localStorage.getItem('menu');
-  // console.log(menu);
-
-  // const meals = menu[0].meals;
-
-  // const menudata = menu[0].meals
-  // console.log(menu[0].meals[0]);
   return (
     <>
-
       <Helmet>
         <title>Products | IIT Bhilai Dinning System</title>
       </Helmet>
@@ -95,41 +82,26 @@ export default function ProductsPage() {
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
             />
-            <ProductSort />
+            <ProductSort setDay={setday} />
           </Stack>
         </Stack>
-        {/* <Grid container spacing={2}> */}
-        {menu.map((day, index) => (
-          <div key={index}>
-            <ul>
-              <Typography variant="h1">
-                {day.name}
-              </Typography>
-              {day.meals.map((meal, mealIndex) => (
+              <Typography variant="h1">{day}</Typography>
+                  {todaymenu.map((item, itemIndex) => (
 
-                <div key={mealIndex}>
-                  <Grid container spacing={4}> {/* Adjust spacing if needed */}
-                    {meal.items.map((item, itemIndex) => (
-                      <Grid key={itemIndex} item xs={12} sm={4} md={4}>
-                        <ProductCard
-                          name={item.name}
-                          price={item.price}
-                          category={item.category}
-                          type={item.type}
-                          time={meal.type}
-                        />
-                      </Grid>
+                    <div style={{display:'flex', flexWrap:'wrap', gap: '30px'}}>
+                    <h1>{item.type}</h1>
+                   { item.items.map((i, index) => (
+                      <ProductCard
+                        key={index}
+                        name={i.name}
+                        price={i.price}
+                        category={i.category}
+                        type={i.type}
+                        time={item.type}
+                      />
                     ))}
-                  </Grid>
-                </div>
-              ))}
-            </ul>
-          </div>
-        ))
-        }
-        {/* </Grid> */}
-
-        {/* <ProductCartWidget /> */}
+                  </div>
+                  ))}
       </Container>
     </>
   );
