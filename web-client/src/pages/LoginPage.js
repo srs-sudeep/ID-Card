@@ -15,7 +15,6 @@ import { LoginForm } from '../sections/auth/login';
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex',
-
   },
 }));
 
@@ -40,12 +39,11 @@ const StyledContent = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
 export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
 
   return (
-    <>
+    <div>
       <Helmet>
         <title> Login | IIT Bhilai Dining System </title>
       </Helmet>
@@ -62,17 +60,34 @@ export default function LoginPage() {
         />
 
         {mdUp && (
-          <StyledSection>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Welcome to IIT Bhilai Mess System 
-            </Typography>
-            <div style={{marginTop:'-80px', padding:'50px'}}>
-            <img src="/assets/images/IMG_3687.jpg" alt="login" />
+          <StyledSection
+            style={{
+              backgroundImage: `url('/assets/images/IMG_3687.jpg')`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: 'fixed',
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                height: '100vh',
+                display:'flex',
+                flexDirection:'column',
+                alignItems:'center'
+              }}
+            >
+              <Typography variant="h3" sx={{ px: 5, mt: 12, mb: 3, color: 'white', textAlign: 'center' }}>
+                Welcome to IIT Bhilai Mess System
+              </Typography>
+              <div style={{ marginTop: '-60px', padding: '50px' }}>
+                <img src="/assets/images/IMG_3687.jpg" alt="login" style={{ borderRadius: '5%', height: '260px' }} />
+              </div>
             </div>
           </StyledSection>
         )}
 
-        <Container maxWidth="sm">
+        <Container maxWidth="100%">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
               Sign in to Pakadarpanalaya
@@ -96,7 +111,7 @@ export default function LoginPage() {
                 <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={22} height={22} />
               </Button>
             </Stack> */}
-{/* 
+            {/* 
             <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 OR
@@ -107,6 +122,6 @@ export default function LoginPage() {
           </StyledContent>
         </Container>
       </StyledRoot>
-    </>
+    </div>
   );
 }

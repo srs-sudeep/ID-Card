@@ -18,14 +18,11 @@ function getCurrentDay() {
   return daysOfWeek[currentDayIndex];
 }
 export default function ProductsPage() {
-
-
-  const [day , setday] = useState(getCurrentDay());
+  const [day, setday] = useState(getCurrentDay());
   const [openFilter, setOpenFilter] = useState(false);
   const [menu, setMenu] = useState([]);
   const [todaymenu, updtmenu] = useState([]);
   const [firstVisit, setFirstVisit] = useState(true);
-
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -68,7 +65,7 @@ export default function ProductsPage() {
       </Helmet>
 
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
+        <Typography variant="h2" sx={{ mb: 5 }}>
           Menu
         </Typography>
 
@@ -82,23 +79,48 @@ export default function ProductsPage() {
             <ProductSort setDay={setday} />
           </Stack>
         </Stack>
-              <Typography variant="h1">{day}</Typography>
-                  {todaymenu.map((item, itemIndex) => (
+        {/* <Grid container spacing={2}> */}
+        {/* {menu.map((day, index) => (
+          <div key={index}>
+            <ul> */}
+        <Typography variant="h3" style={{ color: '#2b2c30' }}>
+          {day}
+        </Typography>
+        {/* {todaymenu.map((meal, mealIndex) => ( */}
+        {/* <div key={mealIndex}> */}
+        {todaymenu.map((item, itemIndex) => (
+          <>
+            <Typography
+              variant="h4"
+              my={'20px'}
+              style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+            >
+             {item.type}
+            </Typography>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+            
+              {/* <br/> */}
 
-                    <div style={{display:'flex', flexWrap:'wrap', gap: '30px'}}>
-                    <h1>{item.type}</h1>
-                   { item.items.map((i, index) => (
-                      <ProductCard
-                        key={index}
-                        name={i.name}
-                        price={i.price}
-                        category={i.category}
-                        type={i.type}
-                        time={item.type}
-                      />
-                    ))}
-                  </div>
-                  ))}
+              {item.items.map((i, index) => (
+                <ProductCard
+                  key={index}
+                  name={i.name}
+                  price={i.price}
+                  category={i.category}
+                  type={i.type}
+                  time={item.type}
+                />
+              ))}
+            </div>
+            <hr />
+          </>
+        ))}
+        {/* </ul> */}
+        {/* </div> */}
+        {/* ))} */}
+        {/* </Grid> */}
+
+        {/* <ProductCartWidget /> */}
       </Container>
     </>
   );
