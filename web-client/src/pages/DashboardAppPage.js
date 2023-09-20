@@ -3,13 +3,8 @@ import { faker } from '@faker-js/faker';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
-
-// @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-// components
 import Iconify from '../components/iconify';
 // sections
 import trnxList from '../utils/trnxHistory';
@@ -25,8 +20,12 @@ import {
   AppConversionRates,
 } from '../sections/@dashboard/app';
 
-
-// ----------------------------------------------------------------------
+function getCurrentDay() {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDate = new Date();
+  const currentDayIndex = currentDate.getDay();
+  return daysOfWeek[currentDayIndex];
+}
 
 export default function DashboardAppPage() {
   const navigate = useNavigate();
@@ -36,6 +35,9 @@ export default function DashboardAppPage() {
   const [messName, setMessName] = useState('');
   const [remainingAmount, setRemain] = useState('');
   const [totalAmount, setTotal] = useState('');
+  const [day, setday] = useState(getCurrentDay());
+  const [menu, setMenu] = useState([]);
+  const [todaymenu, updtmenu] = useState([]);
 
   function formatNumber(num) {
     if (num >= 1000 && num < 1000000) {
@@ -46,8 +48,29 @@ export default function DashboardAppPage() {
     }
     return num.toString();
   }
-  // const formattedRemainingAmount = formatNumber(remainingAmount);
   const formattedTotalAmount = formatNumber(totalAmount);
+
+  // async function menuList() {
+  //   try {
+  //     const mess = localStorage.getItem('mess');
+
+  //     setMenu(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // console.log(menu);
+  // useEffect(() => {
+  //   menuList();
+  // }, []);
+
+  useEffect(() => {
+    menu.forEach((d, index) => {
+      if (d.name === day) {
+        updtmenu(d.meals);
+      }
+    });
+  }, [menu])
 
   useEffect(() => {
     async function fetchData() {
@@ -84,6 +107,15 @@ export default function DashboardAppPage() {
         console.log(trxnHis);
 
 
+        const menu = await axios.get('http://localhost:5000/api/menu/list', {
+          headers: {
+            messName: user.mess,
+          },
+        });
+        setMenu(menu.data);
+        console.log(menu);
+
+
 
       } catch (error) {
         // Handle errors, such as token validation failure or network issues
@@ -113,6 +145,12 @@ export default function DashboardAppPage() {
     meal = 'Dinner';
   else
     meal = 'Breakfast';
+  const transformedData = todaymenu.map((menu, index) => ({
+    id: menu._id, // Assuming _id is available in your database data
+    title: menu.type, // Set title to the 'type' field in your schema
+    description: menu.items.map((item) => item.name).join(', '), // Join all item names as the description
+    image: `/assets/images/covers/cover_${index + 1}.avif`,
+  }));
 
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -203,6 +241,40 @@ export default function DashboardAppPage() {
                 theme.palette.error.main,
                 theme.palette.action.main,
               ]}
+              sx={{ height: '100%' }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={8}>
+            {/* <AppNewsUpdate
+              title="Today's Menu"
+              list={[...Array(5)].map((_, index) => ({
+                id: faker.datatype.uuid(),
+                title: faker.name.jobTitle(),
+                description: faker.name.jobTitle(),
+                image: `/assets/images/covers/cover_${index + 1}.jpg`,
+                postedAt: faker.date.recent(),
+              }))}
+            /> */}
+            <AppNewsUpdate title="Today's Menu" list={transformedData} />
+          </Grid>
+
+
+          <Grid item xs={12} md={6} lg={4}>
+            <AppOrderTimeline
+              title="Meal Timeline"
+              list={[...Array(4)].map((_, index) => ({
+                id: faker.datatype.uuid(),
+                title: [
+                  '1983, orders, $4220',
+                  '12 Invoices have been paid',
+                  'Order #37745 from September',
+                  'New order placed #XF-2356',
+                  'New order placed #XF-2346',
+                ][index],
+                type: `order${index + 1}`,
+                time: faker.date.past(),
+              }))}
             />
           </Grid>
 

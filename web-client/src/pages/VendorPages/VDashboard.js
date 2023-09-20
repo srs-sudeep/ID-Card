@@ -112,32 +112,114 @@ export default function VDashboard() {
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
               style={{width:'150%'}}
-              title="Add-On Graph"
-              subheader="Previous 9 Days"
+              title="Breakfast Stats"
+              subheader="Previous 7 Days"
               chartLabels={[
                 '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
+                '01/02/2003',
+                '01/03/2003',
+                '01/04/2003',
+                '01/05/2003',
+                '01/06/2003',
+                '01/07/2003',
               ]}
               chartData={[
                 {
-                  name: 'Add-On',
+                  name: 'Basic',
                   type: 'area',
                   fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                  data: [44, 55, 41, 67, 22, 43, 21],
+                }
+              ]}
+            />
+          </Grid>
+          
+          <Grid item xs={12} md={6} lg={8}>
+            <AppWebsiteVisits
+              style={{width:'150%'}}
+              title="Lunch Stats"
+              subheader="Previous 7 Days"
+              chartLabels={[
+                '01/01/2003',
+                '01/02/2003',
+                '01/03/2003',
+                '01/04/2003',
+                '01/05/2003',
+                '01/06/2003',
+                '01/07/2003',
+              ]}
+              chartData={[
+                {
+                  name: 'Basic',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: [44, 55, 41, 67, 22, 43, 21],
+                },
+                {
+                  name: 'Add-On',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [44,  41, 55,  43, 21,20,67],
+                },
+              ]}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={8}>
+            <AppWebsiteVisits
+              style={{width:'150%'}}
+              title="Snacks Stats"
+              subheader="Previous 7 Days"
+              chartLabels={[
+                '01/01/2003',
+                '01/02/2003',
+                '01/03/2003',
+                '01/04/2003',
+                '01/05/2003',
+                '01/06/2003',
+                '01/07/2003',
+              ]}
+              chartData={[
+                {
+                  name: 'Basic',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: [44, 55, 41, 67, 22, 43, 21],
                 }
               ]}
             />
           </Grid>
 
+          <Grid item xs={12} md={6} lg={8}>
+            <AppWebsiteVisits
+              style={{width:'150%'}}
+              title=" Dinner Stats"
+              subheader="Previous 7 Days"
+              chartLabels={[
+                '01/01/2003',
+                '01/02/2003',
+                '01/03/2003',
+                '01/04/2003',
+                '01/05/2003',
+                '01/06/2003',
+                '01/07/2003',
+              ]}
+              chartData={[
+                {
+                  name: 'Basic',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: [44, 55, 41, 67, 22, 43, 21],
+                },
+                {
+                  name: 'Add-On',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [44,  41, 55,  43, 21,22,67],
+                },
+              ]}
+            />
+          </Grid>
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
               title="Today's Dinning Chart"

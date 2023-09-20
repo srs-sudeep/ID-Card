@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 import React, { useState, useEffect } from 'react';
-import emailjs from 'emailjs-com';
 import axios from 'axios';
 // @mui
 import { Grid, Button, Container, Stack, Typography, TextField, Box } from '@mui/material';
@@ -61,16 +60,24 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+
+function getCurrentDay() {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDate = new Date();
+  const currentDayIndex = currentDate.getDay(); // Returns a number (0 for Sunday, 1 for Monday, etc.)
+  return daysOfWeek[currentDayIndex];
+}
 // ----------------------------------------------------------------------
 
 export default function AdminMessDetails() {
   const [value, setValue] = React.useState(0);
-
+  const [day, setday] = useState(getCurrentDay());
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const [openFilter, setOpenFilter] = useState(false);
   const [menu, setMenu] = useState([]);
+  const [todaymenu, updtmenu] = useState([]);
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -99,12 +106,32 @@ export default function AdminMessDetails() {
       }
     }
     menuList();
+    menu.forEach((d, index) => {
+      // console.log(d);
+      // console.log(day);
+      // console.log(d.name);
+      if (d.name === day) {
+        updtmenu(d.meals);
+        console.log('asdfadsf');
+      }
+    });
   }, []);
-
+  useEffect(() => {
+    // console.log('hwllo');
+    menu.forEach((d, index) => {
+      // console.log(d);
+      // console.log(day);
+      // console.log(d.name);
+      if (d.name === day) {
+        updtmenu(d.meals);
+        console.log('asdfadsf');
+      }
+    });
+  }, [day]);
   return (
     <>
       <Helmet>
-        <title> Contact Page | IIT Bhilai Dinning System </title>
+        <title> Mess Details | IIT Bhilai Dinning System </title>
       </Helmet>
 
       <Container>
@@ -155,10 +182,9 @@ export default function AdminMessDetails() {
               </Typography>
               {/* <Container> */}
               <hr />
-              <Typography variant="h3" align="center" mt={5} mb={2}>
+              <Typography variant="h2" sx={{ mb: 5 }}>
                 Menu
               </Typography>
-              {/* <hr /> */}
 
               <Stack
                 direction="row"
@@ -173,34 +199,43 @@ export default function AdminMessDetails() {
                     onOpenFilter={handleOpenFilter}
                     onCloseFilter={handleCloseFilter}
                   />
-                  <ProductSort />
+                  <ProductSort setDay={setday} />
                 </Stack>
               </Stack>
-              {menu.map((day, index) => (
-                <div key={index}>
-                  <ul>
-                    <Typography variant="h4">{day.name}</Typography>
-                    {day.meals.map((meal, mealIndex) => (
-                      <div key={mealIndex}>
-                        <Grid container spacing={'70px'}>
-                          {' '}
-                          {/* Adjust spacing if needed */}
-                          {meal.items.map((item, itemIndex) => (
-                            <Grid key={itemIndex} item xs={12} sm={4} md={4}>
-                              <ProductCard
-                                name={item.name}
-                                price={item.price}
-                                category={item.category}
-                                type={item.type}
-                                time={meal.type}
-                              />
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </div>
+              {/* <Grid container spacing={2}> */}
+              {/* {menu.map((day, index) => (
+          <div key={index}>
+            <ul> */}
+              <Typography variant="h3" style={{ color: '#2b2c30' }}>
+                {day}
+              </Typography>
+              {/* {todaymenu.map((meal, mealIndex) => ( */}
+              {/* <div key={mealIndex}> */}
+              {todaymenu.map((item, itemIndex) => (
+                <>
+                  <Typography
+                    variant="h4"
+                    my={'20px'}
+                    style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+                  >
+                    {item.type}
+                  </Typography>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+                    {/* <br/> */}
+
+                    {item.items.map((i, index) => (
+                      <ProductCard
+                        key={index}
+                        name={i.name}
+                        price={i.price}
+                        category={i.category}
+                        type={i.type}
+                        time={item.type}
+                      />
                     ))}
-                  </ul>
-                </div>
+                  </div>
+                  <hr />
+                </>
               ))}
               {/* </Container> */}
             </CustomTabPanel>
@@ -223,10 +258,9 @@ export default function AdminMessDetails() {
                 +91-92345 67845
               </Typography>
               <hr />
-              <Typography variant="h3" align="center" mt={5} mb={2}>
+              <Typography variant="h2" sx={{ mb: 5 }}>
                 Menu
               </Typography>
-              {/* <hr /> */}
 
               <Stack
                 direction="row"
@@ -241,34 +275,43 @@ export default function AdminMessDetails() {
                     onOpenFilter={handleOpenFilter}
                     onCloseFilter={handleCloseFilter}
                   />
-                  <ProductSort />
+                  <ProductSort setDay={setday} />
                 </Stack>
               </Stack>
-              {menu.map((day, index) => (
-                <div key={index}>
-                  <ul>
-                    <Typography variant="h4">{day.name}</Typography>
-                    {day.meals.map((meal, mealIndex) => (
-                      <div key={mealIndex}>
-                        <Grid container spacing={'70px'}>
-                          {' '}
-                          {/* Adjust spacing if needed */}
-                          {meal.items.map((item, itemIndex) => (
-                            <Grid key={itemIndex} item xs={12} sm={4} md={4}>
-                              <ProductCard
-                                name={item.name}
-                                price={item.price}
-                                category={item.category}
-                                type={item.type}
-                                time={meal.type}
-                              />
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </div>
+              {/* <Grid container spacing={2}> */}
+              {/* {menu.map((day, index) => (
+          <div key={index}>
+            <ul> */}
+              <Typography variant="h3" style={{ color: '#2b2c30' }}>
+                {day}
+              </Typography>
+              {/* {todaymenu.map((meal, mealIndex) => ( */}
+              {/* <div key={mealIndex}> */}
+              {todaymenu.map((item, itemIndex) => (
+                <>
+                  <Typography
+                    variant="h4"
+                    my={'20px'}
+                    style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+                  >
+                    {item.type}
+                  </Typography>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+                    {/* <br/> */}
+
+                    {item.items.map((i, index) => (
+                      <ProductCard
+                        key={index}
+                        name={i.name}
+                        price={i.price}
+                        category={i.category}
+                        type={i.type}
+                        time={item.type}
+                      />
                     ))}
-                  </ul>
-                </div>
+                  </div>
+                  <hr />
+                </>
               ))}
             </CustomTabPanel>
             {/* -------------------------------------------------------------------------------------------- */}
@@ -291,10 +334,9 @@ export default function AdminMessDetails() {
                 +91-92345 67845
               </Typography>
               <hr />
-              <Typography variant="h3" align="center" mt={5} mb={2}>
+              <Typography variant="h2" sx={{ mb: 5 }}>
                 Menu
               </Typography>
-              {/* <hr /> */}
 
               <Stack
                 direction="row"
@@ -309,34 +351,43 @@ export default function AdminMessDetails() {
                     onOpenFilter={handleOpenFilter}
                     onCloseFilter={handleCloseFilter}
                   />
-                  <ProductSort />
+                  <ProductSort setDay={setday} />
                 </Stack>
               </Stack>
-              {menu.map((day, index) => (
-                <div key={index}>
-                  <ul>
-                    <Typography variant="h4">{day.name}</Typography>
-                    {day.meals.map((meal, mealIndex) => (
-                      <div key={mealIndex}>
-                        <Grid container spacing={'90px'}>
-                          {' '}
-                          {/* Adjust spacing if needed */}
-                          {meal.items.map((item, itemIndex) => (
-                            <Grid key={itemIndex} item xs={12} sm={4} md={4}>
-                              <ProductCard
-                                name={item.name}
-                                price={item.price}
-                                category={item.category}
-                                type={item.type}
-                                time={meal.type}
-                              />
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </div>
+              {/* <Grid container spacing={2}> */}
+              {/* {menu.map((day, index) => (
+          <div key={index}>
+            <ul> */}
+              <Typography variant="h3" style={{ color: '#2b2c30' }}>
+                {day}
+              </Typography>
+              {/* {todaymenu.map((meal, mealIndex) => ( */}
+              {/* <div key={mealIndex}> */}
+              {todaymenu.map((item, itemIndex) => (
+                <>
+                  <Typography
+                    variant="h4"
+                    my={'20px'}
+                    style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+                  >
+                    {item.type}
+                  </Typography>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+                    {/* <br/> */}
+
+                    {item.items.map((i, index) => (
+                      <ProductCard
+                        key={index}
+                        name={i.name}
+                        price={i.price}
+                        category={i.category}
+                        type={i.type}
+                        time={item.type}
+                      />
                     ))}
-                  </ul>
-                </div>
+                  </div>
+                  <hr />
+                </>
               ))}
             </CustomTabPanel>
           </Box>
