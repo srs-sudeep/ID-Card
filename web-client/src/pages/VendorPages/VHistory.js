@@ -77,8 +77,8 @@ function applySortFilter(array, comparator, query) {
         if (typeof value === 'string') {
           // If the value is a string, check if it contains the query
           return value.toLowerCase().includes(query);
-        }
-        else if (typeof value === 'number') {
+        } 
+        if (typeof value === 'number') {
           // If the value is a number, convert it to a string and check
           return value.toString().includes(query);
         }
@@ -87,8 +87,9 @@ function applySortFilter(array, comparator, query) {
       });
     }).map(([user]) => user);
   }
-
+  
   return stabilizedThis.map(([el]) => el);
+  
 }
 
 
