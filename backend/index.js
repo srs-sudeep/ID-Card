@@ -15,7 +15,7 @@ app.use(passport.initialize());
 // Import API routes
 const authRoutes = require("./routes/auth");
 // const { signUp, logIn } = require("./controllers/auth");
-const menu = require("./routes/menuRoute");
+const studMenu = require("./routes/menuRoute");
 const txn = require("./routes/txn");
 
 // Connect to MongoDB Atlas
@@ -134,7 +134,8 @@ mongoose
 
 // Use API routes
 app.use("/api/auth", authRoutes);
-app.use("/api/menu", menu);
+app.use("/api/menu", studMenu);
+app.use("/api/stud", studMenu);
 app.use("/api/txn", txn);
 
 const PORT = process.env.PORT || 5000;

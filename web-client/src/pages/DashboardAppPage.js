@@ -104,7 +104,7 @@ export default function DashboardAppPage() {
         setTotal(user.total_amount);
         const trxnHis = await trnxList(user.id);
         setTxn(trxnHis);
-        console.log(trxnHis);
+        // console.log(trxnHis);
 
 
         const menu = await axios.get('http://localhost:5000/api/menu/list', {
@@ -113,7 +113,7 @@ export default function DashboardAppPage() {
           },
         });
         setMenu(menu.data);
-        console.log(menu);
+        // console.log(menu);
 
 
 
@@ -216,7 +216,7 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Daily Add On"
+              title="Daily Add On Spent"
               subheader="Last 7 Days"
               chartData={[
                 // {
