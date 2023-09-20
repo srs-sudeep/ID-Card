@@ -9,6 +9,7 @@ const transactionSchema = new mongoose.Schema({
     food_type : {type : String ,  required : true},
     trns_at : {type: String, required :true},
     trns_reference : { type : String , required :true , unique : true},
+    category : {type : String, required :true},
     remark : { type : String}
 });
 
