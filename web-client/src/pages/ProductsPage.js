@@ -156,10 +156,10 @@ export default function ProductsPage() {
               my={'20px'}
               style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
             >
-              {/* {meal.type}{' '} */}
+             {item.type}
             </Typography>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
-              <h1>{item.type}</h1>
+            
               {/* <br/> */}
 
               {item.items.map((i, index) => (
