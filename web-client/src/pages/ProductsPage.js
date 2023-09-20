@@ -17,11 +17,21 @@ import PRODUCTS from '../_mock/products';
 // import ShopProductCard from '../sections';
 
 // ----------------------------------------------------------------------
-
+function getCurrentDay() {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDate = new Date();
+  const currentDayIndex = currentDate.getDay(); // Returns a number (0 for Sunday, 1 for Monday, etc.)
+  return daysOfWeek[currentDayIndex];
+}
 export default function ProductsPage() {
-  // let menu = null;
+
+
+  const [day , setday] = useState(getCurrentDay());
   const [openFilter, setOpenFilter] = useState(false);
   const [menu, setMenu] = useState([]);
+  const [todaymenu, updtmenu] = useState([]);
+  const [firstVisit, setFirstVisit] = useState(true);
+
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -30,7 +40,7 @@ export default function ProductsPage() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
-  const [firstVisit, setFirstVisit] = useState(true);
+
   useEffect(() => {
     async function menuList() {
       try {
@@ -47,16 +57,77 @@ export default function ProductsPage() {
         console.log(error);
       }
     }
+
+    // console.log(menu);
+    
     // const hasVisitedBefore = sessionStorage.getItem('hasVisitedPage');
     // if (!hasVisitedBefore){
     menuList();
+    
     //   setFirstVisit(false);
     //   sessionStorage.setItem('hasVisitedPage', 'true');
     // }
 
+    // menu.forEach((day) => {
+    //   console.log(`Day Name: ${day.name}`);
+
+    //   // Iterate through the meals array for each document
+    //   day.meals.forEach((meal) => {
+    //     console.log(`Meal Type: ${meal.type}`);
+    
+    //     // Iterate through the items array for each meal
+    menu.forEach((d, index) => {
+      // console.log(d);
+      // console.log(day);
+      // console.log(d.name);
+      if (d.name === day) {
+        updtmenu(d.meals);
+        console.log('asdfadsf');
+      }
+    });
+    //     meal.items.forEach((item) => {
+    //       console.log(`Item Name: ${item.name}, Price: ${item.price}`);
+    //     });
+    //   });
+    // });
   }, []);
 
- 
+  
+  // menu.forEach((d) => {
+  //   if (d.name === day) {
+  //     updtmenu(d.meals);
+  //   }
+  // });
+
+  
+  useEffect(() => {
+    
+    // console.log('hwllo');
+    menu.forEach((d, index) => {
+      // console.log(d);
+      // console.log(day);
+      // console.log(d.name);
+      if (d.name === day) {
+        updtmenu(d.meals);
+        console.log('asdfadsf');
+      }
+    });
+  }, [day]);
+
+
+  console.log(todaymenu);
+  
+  
+
+  // menu = localStorage.getItem('menu');
+  // console.log(menu);
+
+  // const meals = menu[0].meals;
+
+  console.log(todaymenu);
+
+  // const menudata = menu[0].meals
+  // console.log(menu[0].meals[0]);
   return (
     <>
       <Helmet>
@@ -75,16 +146,18 @@ export default function ProductsPage() {
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
             />
-            <ProductSort />
+            <ProductSort setDay={setday} />
           </Stack>
         </Stack>
         {/* <Grid container spacing={2}> */}
-        {menu.map((day, index) => (
+        {/* {menu.map((day, index) => (
           <div key={index}>
-            <ul>
-              <Typography variant="h3" style={{color:'#2b2c30'}}>{day.name}</Typography>
-              {day.meals.map((meal, mealIndex) => (
-                <div key={mealIndex}>
+            <ul> */}
+              <Typography variant="h3" style={{color:'#2b2c30'}}>{day}</Typography>
+              {/* {todaymenu.map((meal, mealIndex) => ( */}
+                {/* <div key={mealIndex}> */}
+                  {todaymenu.map((item, itemIndex) => (
+
                   <Typography
                     variant="h4"
                     my={'20px'}
@@ -92,23 +165,30 @@ export default function ProductsPage() {
                   >
                     {meal.type}{' '}
                   </Typography>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
-                    {meal.items.map((item, itemIndex) => (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+                    <h1>{item.type}</h1>
+                     {/* <br/> */}
+                      
+                                        
+                   { item.items.map((i, index) => (
                       <ProductCard
-                        name={item.name}
-                        price={item.price}
-                        category={item.category}
-                        type={item.type}
-                        time={meal.type}
+                        key={index}
+                        name={i.name}
+                        price={i.price}
+                        category={i.category}
+                        type={i.type}
+                        time={item.type}
                       />
                     ))}
                   </div>
                   <hr />
-                </div>
-              ))}
-            </ul>
-          </div>
-        ))}
+                  ))}
+
+                {/* </div>
+              ))}  */}
+            {/* </ul> */}
+          {/* </div> */}
+        {/* ))} */}
         {/* </Grid> */}
 
         {/* <ProductCartWidget /> */}
