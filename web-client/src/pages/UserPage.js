@@ -227,9 +227,11 @@ export default function UserPage() {
           </Button>
         </Stack> */}
 
+          <Typography component="h1" variant="h1" mb='40px' align="center">
+           Transaction History
+          </Typography>
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
