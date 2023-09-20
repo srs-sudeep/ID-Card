@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 import {
   MDBCol,
   MDBContainer,
@@ -37,6 +38,9 @@ export default function Profile() {
       <Helmet>
         <title> Profile Page | IIT Bhilai Dinning System </title>
       </Helmet>
+      <Typography component="h1" variant="h1" mt='0px' mb='30px' align='center' color='#333c3c'>
+            Profile
+          </Typography>
       <section style={{ backgroundColor: '' }}>
         <MDBContainer className="py-5">
           <MDBRow>

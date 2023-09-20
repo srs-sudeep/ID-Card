@@ -18,18 +18,18 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const steps = ['Payment details', 'Review your order'];
 
@@ -61,7 +61,7 @@ export default function Payment() {
         <title> Payment Page | IIT Bhilai Dinning System </title>
       </Helmet>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="absolute"
         color="default"
         elevation={0}
@@ -69,19 +69,19 @@ export default function Payment() {
           position: 'relative',
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
-      >
+      > */}
         {/* <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Payment
           </Typography>
         </Toolbar> */}
-      </AppBar>
+      {/* </AppBar> */}
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h1" variant="h4" align="center">
+          <Typography component="h1" variant="h2" align="center">
             Payment
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={activeStep} sx={{ pt: 5, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -115,7 +115,7 @@ export default function Payment() {
             </>
           )}
         </Paper>
-        <Copyright />
+        {/* <Copyright /> */}
       </Container>
     </>
   );

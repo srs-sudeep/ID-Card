@@ -193,8 +193,8 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome {name}.
+        <Typography variant="h2" sx={{ mb: 5 }}>
+          Welcome! {name}
         </Typography>
 
         <Grid container spacing={3}>
