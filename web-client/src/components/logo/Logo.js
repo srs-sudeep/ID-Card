@@ -22,8 +22,8 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
     <Box
       // ref={ref}
       component="img"
-      src="/assets/logo.svg"
-      sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
+      src="/assets/IIT_Bhilai_Mess_Logo.png"
+      sx={{ width: 240, cursor: 'pointer', borderRadius:'6px', ...sx }}
       {...other}
     />
   );

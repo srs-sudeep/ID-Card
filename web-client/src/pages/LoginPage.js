@@ -24,6 +24,7 @@ const StyledSection = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  maxHeight:'100vh',
   // alignItems:'center',
   boxShadow: theme.customShadows.card,
   backgroundColor: theme.palette.background.default,
@@ -36,7 +37,7 @@ const StyledSection = styled('div')(({ theme }) => ({
 const StyledContent = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
-  minHeight: '100vh',
+  maxHeight: '100vh',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
@@ -54,16 +55,6 @@ export default function LoginPage() {
       </Helmet>
 
       <StyledRoot>
-        <Logo
-          sx={{
-            position: 'fixed',
-            top: { xs: 16, sm: 24, md: 40 },
-            left: { xs: 16, sm: 24, md: 40 },
-            // width: '100px', // Adjust the width to your desired size
-            // height: '100px', // Adjust the height to your desired size
-          }}
-        />
-
         {mdUp && (
           <StyledSection>
             <div
@@ -73,21 +64,32 @@ export default function LoginPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent:'center'
+                justifyContent: 'center',
               }}
             >
-              <Typography variant="h3" sx={{ px: 5, mt: 12, mb: 3, color: 'white', textAlign: 'center' }}>
+              <Typography variant="h3" sx={{ px: 5, mt: 6, mb: 0, color: 'white', textAlign: 'center', textShadow: '0px 0px 1px white'}}>
                 Welcome to IIT Bhilai Mess System
               </Typography>
               <div style={{ marginTop: '0px', padding: '50px' }}>
-                <img src="/assets/images/mess.jpg" alt="login" style={{ borderRadius: '5%', height: '260px' }} />
+                <img src="/assets/images/mess.jpg" alt="login" style={{ borderRadius: '5%', height: '320px' }} />
               </div>
             </div>
           </StyledSection>
         )}
 
-        <Container maxWidth="100%">
+        <Container style={{maxWidth:"100%"}}>
           <StyledContent>
+            <Logo
+              sx={
+                {
+                  // position: 'fixed',
+                  margin: '0px auto',
+                  marginBottom:'90px'
+                  // top: { xs: 16, sm: 24, md: 40 },
+                  // left: { xs: 16, sm: 24, md: 40 },
+                }
+              }
+            />
             <Typography variant="h4" gutterBottom>
               Sign in to Pakadarpanalaya
             </Typography>
