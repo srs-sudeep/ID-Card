@@ -24,8 +24,13 @@ const StyledSection = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  // alignItems:'center',
   boxShadow: theme.customShadows.card,
   backgroundColor: theme.palette.background.default,
+  backgroundImage: `url('/assets/images/mess.jpg')`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundAttachment: 'fixed',
 }));
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -60,28 +65,22 @@ export default function LoginPage() {
         />
 
         {mdUp && (
-          <StyledSection
-            style={{
-              backgroundImage: `url('/assets/images/IMG_3687.jpg')`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: 'fixed',
-            }}
-          >
+          <StyledSection>
             <div
               style={{
                 backgroundColor: 'rgba(0,0,0,0.5)',
                 height: '100vh',
-                display:'flex',
-                flexDirection:'column',
-                alignItems:'center'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent:'center'
               }}
             >
               <Typography variant="h3" sx={{ px: 5, mt: 12, mb: 3, color: 'white', textAlign: 'center' }}>
                 Welcome to IIT Bhilai Mess System
               </Typography>
-              <div style={{ marginTop: '-60px', padding: '50px' }}>
-                <img src="/assets/images/IMG_3687.jpg" alt="login" style={{ borderRadius: '5%', height: '260px' }} />
+              <div style={{ marginTop: '0px', padding: '50px' }}>
+                <img src="/assets/images/mess.jpg" alt="login" style={{ borderRadius: '5%', height: '260px' }} />
               </div>
             </div>
           </StyledSection>
