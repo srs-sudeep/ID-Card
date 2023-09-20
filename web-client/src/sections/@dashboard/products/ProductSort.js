@@ -1,10 +1,6 @@
 import { useState } from 'react';
-// @mui
 import { Menu, Button, MenuItem, Typography } from '@mui/material';
-// component
 import Iconify from '../../../components/iconify';
-
-// ----------------------------------------------------------------------
 
 const SORT_BY_OPTIONS = [
   { value: 'Monday', label: 'Monday' },
@@ -16,15 +12,26 @@ const SORT_BY_OPTIONS = [
   { value: 'Sunday', label: 'Sunday' },
 ];
 
-export default function ShopProductSort() {
+function getCurrentDay() {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDate = new Date();
+  const currentDayIndex = currentDate.getDay(); // Returns a number (0 for Sunday, 1 for Monday, etc.)
+  
+  return daysOfWeek[currentDayIndex];
+}
+
+export default function ShopProductSort({setDay}) {
   const [open, setOpen] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(getCurrentDay()); 
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
-  
-  const handleClose = () => {
-    setOpen(null);
+
+  const handleDaySelect = (day) => {
+    setSelectedDay(day);
+    setDay(day);
+    setOpen(null); 
   };
 
   return (
@@ -37,22 +44,22 @@ export default function ShopProductSort() {
       >
         Day:&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
-          Monday
+          {selectedDay}
         </Typography>
       </Button>
       <Menu
         keepMounted
         anchorEl={open}
         open={Boolean(open)}
-        onClose={handleClose}
+        onClose={() => setOpen(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         {SORT_BY_OPTIONS.map((option) => (
           <MenuItem
             key={option.value}
-            selected={option.value === 'newest'}
-            onClick={handleClose}
+            selected={option.value === selectedDay}
+            onClick={() => handleDaySelect(option.value)}
             sx={{ typography: 'body2' }}
           >
             {option.label}
