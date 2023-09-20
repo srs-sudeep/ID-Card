@@ -40,6 +40,7 @@ const TABLE_HEAD = [
   { id: 'from', label: 'From', alignRight: false },
   { id: 'amount', label: 'Amount', alignRight: false },
   { id: 'type', label: 'Basic/AddOn', alignRight: false },
+  { id: 'category', label: 'Category', alignRight: false },
   { id: 'mode', label: 'Mode', alignRight: false },
   { id: 'ref', label: 'Reference', alignRight: false }
 ];
@@ -242,7 +243,7 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, trnsDate, accountFrom, trnsType, accountTo, foodMode, amount, trnsRef } = row;
+                    const { id, trnsDate, accountFrom, trnsType, accountTo, foodMode, amount, trnsRef , category} = row;
                     const selectedUser = selected.indexOf(trnsDate) !== -1;
                     const date = new Date(trnsDate);
 
@@ -282,8 +283,9 @@ export default function UserPage() {
                         <TableCell align="left">{amount}</TableCell>
 
                         <TableCell align="left">
-                          <Label>{sentenceCase(trnsType)}</Label>
+                          <Label>{sentenceCase(foodMode)}</Label>
                         </TableCell>
+                        <TableCell align="center">{category}</TableCell>
                         <TableCell align="center">{foodMode}</TableCell>
                         {/* <TableCell align="center">{category}</TableCell> */}
                         <TableCell align="center">{trnsRef}</TableCell>

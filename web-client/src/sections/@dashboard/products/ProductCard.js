@@ -77,7 +77,7 @@ export default function ShopProductCard({ name, price, category, type, time }) {
               {/* {price && fCurrency(price)} */}
             </Typography>
             &nbsp;
-            {fCurrency(price)}
+            ₹{price}
           </Typography>
         </Stack>
       </Stack>
