@@ -316,10 +316,10 @@ export default function DashboardAppPage() {
                     currentDate.getFullYear() === transactionDate.getFullYear()
                   );
                 })
-                .map((item) => ({
+                .map((item, index) => ({
                   id: item.id,
                   title: item.category, // Set title to the 'category' from timeline
-                  type: item.type,
+                  type: `order${index + 1}`,
                   time: item.time,
                 }))
               }
