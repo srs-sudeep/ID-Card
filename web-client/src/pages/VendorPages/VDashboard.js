@@ -49,7 +49,7 @@ export default function VDashboard() {
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
         if(person !== 'Vendor')
-          navigate('/login', { replace: true });
+          navigate('/loginss', { replace: true });
         localStorage.setItem('email', user.email);
         localStorage.setItem('name', user.name);
         // localStorage.setItem('mess', user.mess);
