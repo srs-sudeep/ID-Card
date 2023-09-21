@@ -36,7 +36,7 @@ export default function AccountPopover() {
     setOpen(null);
   };
   const name = localStorage.getItem('name');
-  console.log(name);
+  // console.log(name);
   const email = localStorage.getItem('email');
   return (
     <>
