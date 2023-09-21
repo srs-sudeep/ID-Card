@@ -247,17 +247,17 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Daily Add On Spent"
+              title="Daily Consumption"
               subheader="Last 7 Days"
               chartData={[
-                // {
-                //   name: '',
-                //   type: 'area',
-                //   fill: 'gradient',
-                //   data: [],
-                // },
                 {
-                  name: 'Add-On',
+                  name: 'Basic Consumed',
+                  type: 'bar',
+                  fill: 'solid',
+                  data: [48, 96 ,0,48, 0, 96, 48],
+                },
+                {
+                  name: 'Add-On Consumed',
                   type: 'bar', // Change type to 'bar' for histogram
                   fill: 'solid',
                   data: sumsArray, // Replace with your histogram data
@@ -271,9 +271,9 @@ export default function DashboardAppPage() {
             <AppCurrentVisits
               title="Dinning Chart"
               chartData={[
-                { label: 'Basic Consumed', value: basicConsumed },
-                { label: 'Basic Wasted', value: basicTotal-basicConsumed },
-                { label: 'Add-On Consumed', value: amtSum },
+                { label: 'Basic Consumed', value: 9000 },
+                { label: 'Basic Wasted', value: 3000 },
+                { label: 'Add-On Consumed', value: 4500 },
                 { label: 'Add-On Left', value: totalAmount - amtSum },
               ]}
               chartColors={[
