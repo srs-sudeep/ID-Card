@@ -26,7 +26,6 @@ function getCurrentDay() {
   const currentDayIndex = currentDate.getDay();
   return daysOfWeek[currentDayIndex];
 }
-
 export default function DashboardAppPage() {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -38,6 +37,8 @@ export default function DashboardAppPage() {
   const [day, setday] = useState(getCurrentDay());
   const [menu, setMenu] = useState([]);
   const [todaymenu, updtmenu] = useState([]);
+  const [timeline, setTimeline] = useState([]);
+
 
   // function formatNumber(num) {
   //   if (num >= 1000 && num < 1000000) {
@@ -163,7 +164,7 @@ export default function DashboardAppPage() {
 
   filteredData.forEach(item => {
     const trnsDate = new Date(item.trns_date).toISOString().split('T')[0]; // Get only the date part
-  
+
     if (Object.prototype.hasOwnProperty.call(sumsByDate, trnsDate)) {
       sumsByDate[trnsDate] += parseFloat(item.amount); // Add the amount to the existing sum for the date
     } else {
@@ -186,6 +187,36 @@ export default function DashboardAppPage() {
   // Convert the sumsByDate object into an array of objects with date and sum
   const sumsArray = Object.keys(sumsByDate).map(date => sumsByDate[date]);
   const amtSum = txn.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+
+
+  useEffect(() => {
+    // Function to format the date in the required format
+    const formatDate = (date) => {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      };
+      return new Date(date).toLocaleDateString('en-US', options);
+    };
+
+    // Function to update the timeline state
+    const updateTimeline = () => {
+      const updatedTimeline = txn.map((transaction) => ({
+        category: transaction.category,
+        time: formatDate(transaction.trns_date),
+      }));
+      setTimeline(updatedTimeline);
+    };
+
+    // Call the updateTimeline function
+    updateTimeline();
+  }, [txn]);
+  // console.log(txn);
+  // console.log(timeline);
   const amount = `${totalAmount-amtSum}/${totalAmount}`;
   return (
     <>
@@ -217,17 +248,17 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Daily Add On Spent"
+              title="Daily Consumption"
               subheader="Last 7 Days"
               chartData={[
-                // {
-                //   name: '',
-                //   type: 'area',
-                //   fill: 'gradient',
-                //   data: [],
-                // },
                 {
-                  name: 'Add-On',
+                  name: 'Basic Consumed',
+                  type: 'bar',
+                  fill: 'solid',
+                  data: [48, 96 ,0,48, 0, 96, 48],
+                },
+                {
+                  name: 'Add-On Consumed',
                   type: 'bar', // Change type to 'bar' for histogram
                   fill: 'solid',
                   data: sumsArray, // Replace with your histogram data
@@ -241,10 +272,10 @@ export default function DashboardAppPage() {
             <AppCurrentVisits
               title="Dinning Chart"
               chartData={[
-                { label: 'Basic Consumed', value: basicConsumed },
-                { label: 'Basic Wasted', value: basicTotal-basicConsumed },
-                { label: 'Add-On Consumed', value: amtSum },
-                { label: 'Add-On Left', value: totalAmount-amtSum },
+                { label: 'Basic Consumed', value: 9000 },
+                { label: 'Basic Wasted', value: 3000 },
+                { label: 'Add-On Consumed', value: 4500 },
+                { label: 'Add-On Left', value: totalAmount - amtSum },
               ]}
               chartColors={[
                 theme.palette.primary.main,
@@ -275,19 +306,41 @@ export default function DashboardAppPage() {
           <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
               title="Meal Timeline"
-              list={[...Array(4)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: [
-                  '1983, orders, $4220',
-                  '12 Invoices have been paid',
-                  'Order #37745 from September',
-                  'New order placed #XF-2356',
-                  'New order placed #XF-2346',
-                ][index],
-                type: `order${index + 1}`,
-                time: faker.date.past(),
-              }))}
+              list={timeline
+                .filter((item) => {
+                  // Check if the transaction date belongs to the current date
+                  const currentDate = new Date();
+                  const transactionDate = new Date(item.time);
+                  return (
+                    currentDate.getDate() === transactionDate.getDate() &&
+                    currentDate.getMonth() === transactionDate.getMonth() &&
+                    currentDate.getFullYear() === transactionDate.getFullYear()
+                  );
+                })
+                .map((item, index) => ({
+                  id: item.id,
+                  title: item.category, // Set title to the 'category' from timeline
+                  type: `order${index + 1}`,
+                  time: item.time,
+                }))
+              }
             />
+            {/* <AppOrderTimeline
+                title="Meal Timeline"
+                list={[...Array(4)].map((_, index) => ({
+                  id: faker.datatype.uuid(),
+                  title: [
+                    '1983, orders, $4220',
+                    '12 Invoices have been paid',
+                    'Order #37745 from September',
+                    'New order placed #XF-2356',
+                    'New order placed #XF-2346',
+                  ][index],
+                  type: `order${index + 1}`,
+                  time: faker.date.past(),
+                }))}
+              /> */}
+            {/* <AppOrderTimeline title="Current Day Transactions" list={formattedTransactions} /> */}
           </Grid>
 
 
