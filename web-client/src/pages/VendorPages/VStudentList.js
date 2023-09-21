@@ -36,13 +36,13 @@ import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 
 
 const TABLE_HEAD = [
-  { id: 'date', label: 'Date', alignRight: false },
-  { id: 'to', label: 'To', alignRight: false },
-  { id: 'from', label: 'From', alignRight: false },
-  { id: 'amount', label: 'Amount', alignRight: false },
-  { id: 'type', label: 'Type', alignRight: false },
-  { id: 'mode', label : 'Mode', alignRight: false },
-  { id: 'ref', label : 'Reference', alignRight: false }
+  { id: 'name', label: 'Name', alignRight: false },
+  // { id: 'id', label: 'From', alignRight: false },
+  { id: 'id', label: 'Id', alignRight: false },
+  // { id: 'amount', label: 'Amount', alignRight: false },
+  // { id: 'type', label: 'Type', alignRight: false },
+  // { id: 'mode', label : 'Mode', alignRight: false },
+  // { id: 'ref', label : 'Reference', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -70,35 +70,52 @@ function applySortFilter(array, comparator, query) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
+
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    query = query.toLowerCase(); // Convert query to lowercase for case-insensitive search
+    return stabilizedThis.filter(([user]) => {
+      return Object.values(user).some((value) => {
+        if (typeof value === 'string') {
+          // If the value is a string, check if it contains the query
+          return value.toLowerCase().includes(query);
+        }
+        if (typeof value === 'number') {
+          // If the value is a number, convert it to a string and check
+          return value.toString().includes(query);
+        }
+        // For other data types, skip the filter
+        return false;
+      });
+    }).map(([user]) => user);
   }
-  return stabilizedThis.map((el) => el[0]);
+
+  return stabilizedThis.map(([el]) => el);
+
 }
 
 export default function UserPage() {
-  const [txn, setTxn]= useState([]);
+  const [stud, setStud]= useState([]);
   const [firstVisitH, setFirstVisitH] = useState(true);
     useEffect(()=>{
-      const id = localStorage.getItem('id');
-      async function txnData(){
+      const mess = localStorage.getItem('name');
+      async function studDet(){
         try{
-        const res = await axios.post('http://localhost:5000/api/txn/history',{id});
+        const res = await axios.post('http://localhost:5000/api/stud/students',{mess});
         // console.log(res.data);
-        setTxn(res.data);
-        localStorage.setItem('txn',res.data);
+        setStud(res.data);
+        // localStorage.setItem('txn',res.data);
         }
         catch(error){
-          console.log("Error fetching transaction");
+          console.log("Error fetching students");
           console.log(error);
         }
       }
-      const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
-    if (!hasVisitedBeforeH) {
-      txnData();
-      setFirstVisitH(false);
-      sessionStorage.setItem('hasVisitedPageH', 'true');
-    }
+      // const hasVisitedBeforeH = sessionStorage.getItem('hasVisitedPageH');
+    // if (!hasVisitedBeforeH) {
+      studDet();
+    //   setFirstVisitH(false);
+    //   sessionStorage.setItem('hasVisitedPageH', 'true');
+    // }
     },[]);
   // console.log(USERLIST)
 
@@ -130,14 +147,10 @@ export default function UserPage() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const users = txn.map((num, index) => ({
-    accountFrom: num.account_from,
-    accountTo: num.account_to,
-    amount: num.amount,
-    trnsType: num.trns_type,
-    trnsMode: num.trns_mode,
-    trnsDate: num.trns_date,
-    trnsRef: num.trns_reference,
+  const users = stud.map((num, index) => ({
+    stud: num.name,
+    userId: num.id,
+    
   }));
 
   const handleSelectAllClick = (event) => {
@@ -224,42 +237,30 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, trnsDate, accountFrom, trnsType, accountTo, trnsMode, amount, trnsRef } = row;
-                    const selectedUser = selected.indexOf(trnsDate) !== -1;
+                    const { id, stud, userId } = row;
+                    const selectedUser = selected.indexOf(stud) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, trnsDate)} /> */}
+                          {/* <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, stud)} /> */}
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {trnsDate}
+                              {stud}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{accountTo}</TableCell>
+                        <TableCell align="left">{userId}</TableCell>
 
-                        <TableCell align="left">{accountFrom}</TableCell>
+                        
 
-                        <TableCell align="left">{amount}</TableCell>
-
-                        <TableCell align="left">
-                          <Label>{sentenceCase(trnsType)}</Label>
-                        </TableCell>
-                        <TableCell align="center">{trnsMode}</TableCell>
-                        <TableCell align="center">{trnsRef}</TableCell>
-                        {/* <TableCell align="center">{trnsRef}</TableCell> */}
-
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            {/* <Iconify icon={'eva:more-vertical-fill'} /> */}
-                          </IconButton>
-                        </TableCell>
+                       
+                       
                       </TableRow>
                     );
                   })}

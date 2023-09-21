@@ -85,8 +85,8 @@ export default function VDashboard() {
 
       <Container maxWidth="xl">
 
-        <Typography variant="h3" sx={{ mb: 5 }}>
-          Hi, Welcome {name}.
+        <Typography variant="h2" sx={{ mb: 5 }}>
+        Welcome! {name}
         </Typography>
         <Typography variant="h4" sx={{ mb: 5 }}>
           Today's Menu
