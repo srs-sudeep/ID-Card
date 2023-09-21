@@ -29,7 +29,7 @@ const auth = async (req, res, next) => {
         // req.user = verified.id;
         if (!user) return res.status(404).json({ msg: 'User not found' });
         const userInfo = await userData(String(user.userId), person);
-        console.log(userInfo);
+        // console.log(userInfo);
         res.json({ userInfo });
         next();
     } catch (err) {

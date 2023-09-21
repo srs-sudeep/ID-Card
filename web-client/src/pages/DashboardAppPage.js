@@ -215,8 +215,8 @@ export default function DashboardAppPage() {
     // Call the updateTimeline function
     updateTimeline();
   }, [txn]);
-  console.log(txn);
-  console.log(timeline);
+  // console.log(txn);
+  // console.log(timeline);
   return (
     <>
       <Helmet>
