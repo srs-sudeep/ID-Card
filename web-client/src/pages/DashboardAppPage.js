@@ -230,21 +230,21 @@ export default function DashboardAppPage() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Registered Mess" total={messName} icon={'ant-design:home-filled'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Up Coming Meal" total={meal} color="info" icon={'ant-design:interaction-twotone'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Add On Status" total={amount} color="warning" icon={'ant-design:money-collect-twotone'} />
           </Grid>
 
-          {/* <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Add On" total= color="error" icon={'ant-design:bank-twotone'} />
-          </Grid> */}
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="Basic Status" total="9000/30000" color="error" icon={'ant-design:bank-twotone'} />
+          </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
