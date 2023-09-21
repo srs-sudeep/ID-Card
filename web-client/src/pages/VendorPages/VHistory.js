@@ -148,13 +148,31 @@ export default function UserPage() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  function formatDate(trnsDate){
+    const date = new Date(trnsDate);
+
+    // Define options for formatting the date
+    const options = {
+      year: 'numeric',
+      month: 'short', // Use 'short' for abbreviated month name
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true // Use 12-hour format with AM/PM
+    };
+
+    // Format the date using the options
+    return date.toLocaleString('en-US', options);
+  }
+
   const users = txn.map((num, index) => ({
     accountFrom: num.account_from,
     accountTo: num.account_to,
     amount: num.amount,
     trnsType: num.trns_type,
     foodMode: num.food_type,
-    trnsDate: num.trns_date,
+    trnsDate: formatDate(num.trns_date),
     category: num.category,
     trnsRef: num.trns_reference,
   }));
@@ -244,21 +262,7 @@ export default function UserPage() {
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, trnsDate, accountFrom, trnsType, accountTo, foodMode, amount, trnsRef , category} = row;
-                    const selectedUser = selected.indexOf(trnsDate) !== -1;
-                    const date = new Date(trnsDate);
-
-                    // Define options for formatting the date
-                    const options = {
-                      year: 'numeric',
-                      month: 'short', // Use 'short' for abbreviated month name
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      hour12: true // Use 12-hour format with AM/PM
-                    };
-
-                    // Format the date using the options
-                    const formattedDate = date.toLocaleString('en-US', options);
+                    const selectedUser = selected.indexOf(trnsDate) !== -1;                
 
 
                     return (
@@ -271,7 +275,7 @@ export default function UserPage() {
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {formattedDate}
+                              {trnsDate}
                             </Typography>
                           </Stack>
                         </TableCell>
@@ -286,7 +290,7 @@ export default function UserPage() {
                           <Label>{sentenceCase(foodMode)}</Label>
                         </TableCell>
                         <TableCell align="center">{category}</TableCell>
-                        <TableCell align="center">{foodMode}</TableCell>
+                        <TableCell align="center">{trnsType}</TableCell>
                         {/* <TableCell align="center">{category}</TableCell> */}
                         <TableCell align="center">{trnsRef}</TableCell>
                         {/* <TableCell align="center">{trnsRef}</TableCell> */}

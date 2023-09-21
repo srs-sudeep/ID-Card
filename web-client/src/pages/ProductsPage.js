@@ -1,7 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Container, Stack, Typography, Grid } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import {
   ProductSort,
   ProductList,
@@ -9,12 +13,11 @@ import {
   ProductFilterSidebar,
   ProductCard,
 } from '../sections/@dashboard/products';
-import PRODUCTS from '../_mock/products';
 
 function getCurrentDay() {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const currentDate = new Date();
-  const currentDayIndex = currentDate.getDay(); 
+  const currentDayIndex = currentDate.getDay();
   return daysOfWeek[currentDayIndex];
 }
 export default function ProductsPage() {
@@ -50,13 +53,13 @@ export default function ProductsPage() {
     menuList();
   }, []);
 
-  useEffect(()=>{
-      menu.forEach((d, index) => {
+  useEffect(() => {
+    menu.forEach((d, index) => {
       if (d.name === day) {
         updtmenu(d.meals);
       }
     });
-  },[menu, day])
+  }, [menu, day]);
 
   return (
     <>
@@ -90,29 +93,36 @@ export default function ProductsPage() {
         {/* <div key={mealIndex}> */}
         {todaymenu.map((item, itemIndex) => (
           <>
-            <Typography
-              variant="h4"
-              my={'20px'}
-              style={{ backgroundColor: '#d0f2ff', padding: '0px 10px', color: '#04297a' }}
+            <Accordion
+              style={{
+                backgroundColor: 'white',
+                marginTop: '20px',
+                padding: '0px 10px',
+                color: '#313131',
+                borderRadius: '10px',
+              }}
+              TransitionProps={{ unmountOnExit: false }} 
             >
-             {item.type}
-            </Typography>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
-            
-              {/* <br/> */}
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                <Typography variant="h4">{item.type}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+                  {/* <br/> */}
 
-              {item.items.map((i, index) => (
-                <ProductCard
-                  key={index}
-                  name={i.name}
-                  price={i.price}
-                  category={i.category}
-                  type={i.type}
-                  time={item.type}
-                />
-              ))}
-            </div>
-            <hr />
+                  {item.items.map((i, index) => (
+                    <ProductCard
+                      key={index}
+                      name={i.name}
+                      price={i.price}
+                      category={i.category}
+                      type={i.type}
+                      time={item.type}
+                    />
+                  ))}
+                </div>
+              </AccordionDetails>
+            </Accordion>
           </>
         ))}
         {/* </ul> */}

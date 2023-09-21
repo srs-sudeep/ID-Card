@@ -79,7 +79,7 @@ function applySortFilter(array, comparator, query) {
         if (typeof value === 'string') {
           // If the value is a string, check if it contains the query
           return value.toLowerCase().includes(query);
-        } 
+        }
         if (typeof value === 'number') {
           // If the value is a number, convert it to a string and check
           return value.toString().includes(query);
@@ -89,9 +89,9 @@ function applySortFilter(array, comparator, query) {
       });
     }).map(([user]) => user);
   }
-  
+
   return stabilizedThis.map(([el]) => el);
-  
+
 }
 
 export default function UserPage() {
@@ -148,16 +148,31 @@ export default function UserPage() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  // console.log(txn);
+  function formatDate(trnsDate) {
+    const date = new Date(trnsDate);
+
+    // Define options for formatting the date
+    const options = {
+      year: 'numeric',
+      month: 'short', // Use 'short' for abbreviated month name
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true // Use 12-hour format with AM/PM
+    };
+
+    // Format the date using the options
+    return date.toLocaleString('en-US', options);
+  }
   const users = txn.map((num, index) => ({
     accountFrom: num.account_from,
     accountTo: num.account_to,
     amount: num.amount,
     trnsType: num.trns_type,
     foodMode: num.food_type,
-    trnsDate: String(num.trns_date),
+    trnsDate: formatDate(num.trns_date),
     trnsRef: num.trns_reference,
-    category : num.category
+    category: num.category
   }));
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -227,9 +242,11 @@ export default function UserPage() {
           </Button>
         </Stack> */}
 
+        <Typography component="h1" variant="h1" mb='40px' align="center">
+          Transaction History
+        </Typography>
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -246,20 +263,7 @@ export default function UserPage() {
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, trnsDate, accountFrom, trnsType, accountTo, foodMode, amount, trnsRef, category } = row;
                     const selectedUser = selected.indexOf(trnsDate) !== -1;
-                    const date = new Date(trnsDate);
 
-                    // Define options for formatting the date
-                    const options = {
-                      year: 'numeric',
-                      month: 'short', // Use 'short' for abbreviated month name
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      hour12: true // Use 12-hour format with AM/PM
-                    };
-
-                    // Format the date using the options
-                    const formattedDate = date.toLocaleString('en-US', options);
 
 
                     return (
@@ -272,7 +276,7 @@ export default function UserPage() {
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {formattedDate}
+                              {trnsDate}
                             </Typography>
                           </Stack>
                         </TableCell>
