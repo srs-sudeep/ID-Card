@@ -39,7 +39,7 @@ export default function Profile() {
         <title> Profile Page | IIT Bhilai Dinning System </title>
       </Helmet>
       <Typography component="h1" variant="h1" mt='0px' mb='30px' align='center' color='#333c3c'>
-            Profile
+            My Profile
           </Typography>
       <section style={{ backgroundColor: '' }}>
         <MDBContainer className="py-5">
