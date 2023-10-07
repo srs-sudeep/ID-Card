@@ -49,7 +49,7 @@ const { galavMenu, kumarMenu, saiMenu } = require('../models/Menu');
 // });
 
 const menuList = async (req, res) => {
-  const mess = req.header("messName");
+  const mess = req.cookies.mess;
   try {
     let menuData = null;
     if (mess == 'Galav Mess')

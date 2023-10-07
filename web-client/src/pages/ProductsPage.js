@@ -38,11 +38,11 @@ export default function ProductsPage() {
   async function menuList() {
     try {
       const mess = localStorage.getItem('mess');
-      const response = await axios.get('http://localhost:5000/api/menu/list', {
-        headers: {
-          messName: mess,
+      const response = await axios.post('http://localhost:5000/api/menu/list', {
+        xhrFeilds: {
+          withCredentials: true
         },
-      });
+      }, {withCredentials: true});
       const data = response.data;
       setMenu(data);
     } catch (error) {

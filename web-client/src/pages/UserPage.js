@@ -101,7 +101,8 @@ export default function UserPage() {
     const id = localStorage.getItem('id');
     async function txnData() {
       try {
-        const res = await axios.post('http://localhost:5000/api/txn/history', { id });
+        const res = await axios.post('http://localhost:5000/api/txn/history', { id },  
+        {withCredentials: true});
         // console.log(res.data);
         setTxn(res.data);
         localStorage.setItem('txn', res.data);

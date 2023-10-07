@@ -7,8 +7,9 @@ const tokenValid = require("../middleware/tokenValid");
 
 router.post("/signup", signUp);
 router.post("/login", logIn);
-router.get("/verify", auth);
+router.post("/verify", auth);
 router.post("/validation", tokenValid);
+router.post("/logout", logOut);
 // router.get("/menu",menu);
 
 // router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));

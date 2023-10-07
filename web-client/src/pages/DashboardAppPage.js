@@ -65,35 +65,14 @@ export default function DashboardAppPage() {
   //   menuList();
   // }, []);
 
-  useEffect(() => {
-    menu.forEach((d, index) => {
-      if (d.name === day) {
-        updtmenu(d.meals);
-      }
-    });
-  }, [menu])
+  
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Get the JWT token from local storage (or wherever you store it)
-        const token = localStorage.getItem("jwtToken");
-        const person = localStorage.getItem("person");
-        // console.log('token', token,'person', person);
-        if (!token) {
-          navigate('/login', { replace: true });
-        }
-        // else{
-        const response = await axios.get("http://localhost:5000/api/auth/verify", {
-          headers: {
-            "x-auth-token": token,
-            "person": person // Pass the JWT token in the request header
-          },
-        });
 
+        const response = await axios.post("http://localhost:5000/api/auth/verify",{xhrFields:{withCredentials:true}},{ withCredentials: true });
         const user = response.data.userInfo;
-        if (person !== 'Student')
-          navigate('/login', { replace: true });
 
         localStorage.setItem('email', user.email);
         localStorage.setItem('mess', user.mess);
@@ -108,13 +87,13 @@ export default function DashboardAppPage() {
         // console.log(trxnHis);
 
 
-        const menu = await axios.get('http://localhost:5000/api/menu/list', {
-          headers: {
-            messName: user.mess,
+        const menu = await axios.post('http://localhost:5000/api/menu/list', {
+          xhrFields: {
+            withCredentials: true,
           },
-        });
+        }, {withCredentials: true});
         setMenu(menu.data);
-        // console.log(menu);
+        // console.log(menu.data);
 
 
 
@@ -136,6 +115,13 @@ export default function DashboardAppPage() {
 
     fetchData();
   }, [navigate]); // Empty dependency array, runs once on mount
+  useEffect(() => {
+    menu.forEach((d, index) => {
+      if (d.name === day) {
+        updtmenu(d.meals);
+      }
+    });
+  }, [menu])
   let meal = '';
   const currentHour = new Date().getHours();
   if (currentHour >= 10 && currentHour < 15)
@@ -171,19 +157,19 @@ export default function DashboardAppPage() {
       sumsByDate[trnsDate] = parseFloat(item.amount); // Initialize the sum for the date
     }
   });
-  const basicConsumed = (txn.reduce((count, item) => (item.amount === '0' ? count + 1 : count), 0))*48;
+  const basicConsumed = (txn.reduce((count, item) => (item.amount === '0' ? count + 1 : count), 0)) * 48;
   function countDays() {
     // Define the start date (August 2nd)
-    const startDate = new Date('2023-08-02');    
+    const startDate = new Date('2023-08-02');
     // Get the current date
-    const currentDate = new Date();    
+    const currentDate = new Date();
     // Calculate the time difference in milliseconds
     const timeDifference = currentDate - startDate;
     // Calculate the number of days by dividing milliseconds by (1000ms * 60s * 60min * 24h)
     const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return numberOfDays;
   }
-  const basicTotal = countDays()*96;
+  const basicTotal = countDays() * 96;
   // Convert the sumsByDate object into an array of objects with date and sum
   const sumsArray = Object.keys(sumsByDate).map(date => sumsByDate[date]);
   const amtSum = txn.reduce((sum, item) => sum + parseFloat(item.amount), 0);
@@ -217,7 +203,7 @@ export default function DashboardAppPage() {
   }, [txn]);
   // console.log(txn);
   // console.log(timeline);
-  const amount = `${totalAmount-amtSum}/${totalAmount}`;
+  const amount = `${totalAmount - amtSum}/${totalAmount}`;
   return (
     <>
       <Helmet>
@@ -255,7 +241,7 @@ export default function DashboardAppPage() {
                   name: 'Basic Consumed',
                   type: 'bar',
                   fill: 'solid',
-                  data: [48, 96 ,0,48, 0, 96, 48],
+                  data: [48, 96, 0, 48, 0, 96, 48],
                 },
                 {
                   name: 'Add-On Consumed',

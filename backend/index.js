@@ -3,14 +3,29 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
+const cookieParser = require('cookie-parser');
+const tokenValid = require("./middleware/tokenValid");
+
 // const {galavMenu} = require('./models/Menu');
 // const userInfo = require('./models/Userinfo');
 const txn_data = require('./models/CardTransection');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [`http://${process.env.SERVER_NAME}`, 'http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true,
+  exposedHeaders: ["Set-Cookie"],
+  }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(passport.initialize());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
 
 // Import API routes
 const authRoutes = require("./routes/auth");

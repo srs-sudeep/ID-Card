@@ -17,16 +17,14 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
+    // const token = localStorage.getItem('jwtToken');
     const person = localStorage.getItem('person');
-    if (token) {
-      if(person === 'Student')
-        navigate('/dashboard/app', { replace: true });
-      else if(person === 'Vendor')
+    if (person === 'Student')
+      navigate('/dashboard/app', { replace: true });
+    else if (person === 'Vendor')
       navigate('vendor/dashboard/', { replace: true });
-      else{
-        navigate('/admin/dashboard/', { replace: true });
-      }
+    else if (person === 'Admin') {
+      navigate('/admin/dashboard/', { replace: true });
     }
     else {
       navigate('/login', { replace: true });
@@ -37,13 +35,24 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const response = await axios.post("http://localhost:5000/api/auth/login", { email, password }, { withCredentials: true });
       // console.log(response.data.person);
-      localStorage.setItem("jwtToken", response.data.token);
+      // localStorage.setItem("jwtToken", response.data.token);
       localStorage.setItem("person", response.data.person);
-      if(response.data.person === 'Student')
+      // const authTokenCookie = document.cookie
+      //   .split('; ')
+      //   .find((cookie) => cookie.startsWith('authToken='));
+
+      // if (authTokenCookie) {
+      //   const authToken = authTokenCookie.split('=')[1];
+      //   console.log('AuthToken:', authToken);
+      // } else {
+      //   console.log('AuthToken cookie not found.');
+      // }
+
+      if (response.data.person === 'Student')
         navigate('/dashboard/app', { replace: true });
-      else if(response.data.person === 'Vendor')
+      else if (response.data.person === 'Vendor')
         navigate('/vendor/dashboard', { replace: true });
       else
         navigate('/admin/dashboard', { replace: true });
@@ -89,7 +98,7 @@ export default function LoginForm() {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2}}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         {/* <Checkbox name="remember" label="Remember me" />
         <Link variant="subtitle2" underline="hover">
           Forgot password?

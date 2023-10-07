@@ -8,8 +8,8 @@ async function userData(Id, person) {
             data = await userInfo.findOne({ id: Id });
         else if (person === 'Vendor' || person === 'Admin')
             data = await vendor.findOne({ id: Id });
-
-           return data;
+        // console.log(data);
+        return data;
     }
     catch (error) {
         return error;

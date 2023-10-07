@@ -33,23 +33,13 @@ export default function VDashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Get the JWT token from local storage (or wherever you store it)
-        const token = localStorage.getItem("jwtToken");
-        const person = localStorage.getItem("person");
-        if (!token) {
-          navigate('/login', { replace: true });
-        }
-        // else{
-        const response = await axios.get("http://localhost:5000/api/auth/verify", {
-          headers: {
-            "x-auth-token": token, 
-            "person": person// Pass the JWT token in the request header
-          },
-        });
+       
+        const response = await axios.post("http://localhost:5000/api/auth/verify", {
+          xhrFields: {withCredentials: true}
+        },
+        {withCredentials: true});
         // If the response is successful, you can access the protected user data here
         const user = response.data.userInfo;
-        if(person !== 'Vendor')
-          navigate('/loginss', { replace: true });
         localStorage.setItem('email', user.email);
         localStorage.setItem('name', user.name);
         // localStorage.setItem('mess', user.mess);

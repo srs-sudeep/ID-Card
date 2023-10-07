@@ -46,7 +46,8 @@ export default function Nav({ openNav, onCloseNav }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   const name = localStorage.getItem('name');
-  const role = localStorage.getItem('person');
+  const person = localStorage.getItem('person');
+  console.log(name ,person); 
   const renderContent = (
     <Scrollbar
       sx={{
@@ -70,7 +71,7 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {role}
+                {person}
               </Typography>
             </Box>
           </StyledAccount>

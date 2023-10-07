@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
@@ -35,6 +36,7 @@ export default function AccountPopover() {
     e.preventDefault();
     localStorage.clear();
     sessionStorage.clear();
+    const res = await axios.post('http://localhost:5000/api/auth/logout', {xhrFields:{withCredentials: true}},{withCredentials: true});
     navigate('/login', { replace: true });
   };
   const handleClose = () => {
