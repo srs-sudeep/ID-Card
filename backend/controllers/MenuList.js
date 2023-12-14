@@ -52,9 +52,9 @@ const menuList = async (req, res) => {
   const mess = req.cookies.mess;
   try {
     let menuData = null;
-    if (mess == 'Galav Mess')
+    if (mess === 'Galav Mess')
       menuData = await galavMenu.find({}).exec();
-    else if (mess == 'Kumar Mess')
+    else if (mess === 'Kumar Mess')
       menuData = await kumarMenu.find({}).exec();
     else
       menuData = await saiMenu.find({}).exec();

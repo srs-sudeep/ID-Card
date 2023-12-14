@@ -30,9 +30,12 @@ const auth = async (req, res, next) => {
         const user = await User.findById(verified.id);
         // req.user = verified.id;
         if (!user) return res.status(404).json({ msg: 'User not found' });
-        const userInfo = await userData(String(user.userId), verified.person);
-        // console.log(userInfo);
-        res.cookie('mess', userInfo.mess, {path: '/', domain: 'localhost', httpOnly: true, maxAge: 1800000});
+        const userInfo = await userData(String(user.userId), verified.person);        
+        if(verified.person==='Vendor'){
+            res.cookie('mess', userInfo.name, {path: '/', domain: 'localhost', httpOnly: true, maxAge: 1800000});
+        }
+        else
+            res.cookie('mess', userInfo.mess, {path: '/', domain: 'localhost', httpOnly: true, maxAge: 1800000});
         res.json({ userInfo });
         next();
     } catch (err) {

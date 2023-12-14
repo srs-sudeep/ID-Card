@@ -2,6 +2,7 @@ const userInfo = require('../models/Userinfo');
 const vendor = require('../models/vendors');
 
 async function userData(Id, person) {
+    
     try {
         let data = null;
         if (person === 'Student')
