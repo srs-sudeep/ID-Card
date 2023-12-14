@@ -33,20 +33,19 @@ export default function Router() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
     const person = localStorage.getItem('person');
-    if (!token) {
-      localStorage.clear();
-      sessionStorage.clear();
-      navigate('/login', { replace: true });
-    }
+    // if (!token) {
+    //   localStorage.clear();
+    //   sessionStorage.clear();
+    //   navigate('/login', { replace: true });
+    // }
     async function validation() {
       try {
-        const response = await axios.get("http://localhost:5000/api/auth/validation", {
-          headers: {
-            "x-auth-token": token, // Pass the JWT token in the request header
-          },
-        });
+        const response = await axios.post("http://localhost:5000/api/auth/validation", {
+          
+            withCredentials: true
+          }
+        );
         // if(!response.status==200)
         // navigate('/login', { replace: true });
         if(person === 'Student' && (location.pathname.startsWith('/vendor') || location.pathname.startsWith('/admin')))
@@ -58,7 +57,13 @@ export default function Router() {
 
       }
       catch(error){
-        if (error.response && error.response.data && error.response.data.msg) {
+        if (error.status(401)){
+          localStorage.clear();
+          sessionStorage.clear();
+          navigate('/login', { replace: true });
+
+        }
+        else if (error.response && error.response.data && error.response.data.msg) {
           const errorMessage = error.response.data.msg;
           // Display the error message to the user (e.g., using an alert or on the UI)
           alert(errorMessage);

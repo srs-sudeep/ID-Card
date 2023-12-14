@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React from 'react';
 import Button from '@mui/material/Button';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import {
   MDBCol,
@@ -20,11 +20,14 @@ import {
   MDBListGroup,
   MDBListGroupItem,
 } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const navigate = useNavigate();
   const handleOut = async (e) => {
     e.preventDefault();
+    const res = await axios.post('http://localhost:5000/api/auth/logout',{withCredentials: true});
+    console.log('logged out');
     localStorage.clear();
     sessionStorage.clear();
     navigate('/login', { replace: true });

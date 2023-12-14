@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 // @mui
 import { styled } from '@mui/material/styles';
 //
@@ -34,6 +35,28 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function validation() {
+      try {
+        const res = await axios.post('http://localhost:5000/api/auth/validation', { xhrFields: { withCredentials: true } }, { withCredentials: true });
+        // console.log(res);
+        if (res.data.person !== 'Vendor') {
+          sessionStorage.clear();
+          localStorage.clear();
+          navigate('/login', { replace: true });
+        }
+
+      }
+      catch (error) {
+        console.log(error);
+        sessionStorage.clear();
+        localStorage.clear();
+        navigate('/login', { replace: true });
+      }
+    }
+    validation();
+  }, [navigate]);
 
   return (
     <StyledRoot>

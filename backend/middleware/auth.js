@@ -3,13 +3,15 @@ const jwt = require('jsonwebtoken');
 const jwt_decode = require('jwt-decode');
 const userData = require('../controllers/userData');
 // const Userinfo = require("../models/Userinfo");
-
+const {logOut} = require("../controllers/auth");
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.header("x-auth-token");
-        const person = req.header("person");
-        // console.log(person, 'middle');
+        // const token = req.header("x-auth-token");
+        const token = req.cookies.authToken;
+        // if(!token)
+        //  logOut(req, res);
+        // console.log(token);
         const decodedToken = jwt_decode(token); // Use a JWT library to decode the token
         const currentTimeInSeconds = Math.floor(Date.now() / 1000);
         if (!token)
@@ -28,8 +30,12 @@ const auth = async (req, res, next) => {
         const user = await User.findById(verified.id);
         // req.user = verified.id;
         if (!user) return res.status(404).json({ msg: 'User not found' });
-        const userInfo = await userData(String(user.userId), person);
-        // console.log(userInfo);
+        const userInfo = await userData(String(user.userId), verified.person);        
+        if(verified.person==='Vendor'){
+            res.cookie('mess', userInfo.name, {path: '/', domain: 'localhost', httpOnly: true, maxAge: 1800000});
+        }
+        else
+            res.cookie('mess', userInfo.mess, {path: '/', domain: 'localhost', httpOnly: true, maxAge: 1800000});
         res.json({ userInfo });
         next();
     } catch (err) {

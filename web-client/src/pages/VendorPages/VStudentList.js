@@ -100,7 +100,7 @@ export default function UserPage() {
       const mess = localStorage.getItem('name');
       async function studDet(){
         try{
-        const res = await axios.post('http://localhost:5000/api/stud/students',{mess});
+        const res = await axios.post('http://localhost:5000/api/stud/students',{mess}, {withCredentials: true});
         // console.log(res.data);
         setStud(res.data);
         // localStorage.setItem('txn',res.data);
